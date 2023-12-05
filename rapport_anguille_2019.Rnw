@@ -1,0 +1,3989 @@
+% !arara: pdflatex:  { action: nonstopmode, synctex: True }
+% arara: bibtex
+% !arara: makeglossaries
+% arara: pdflatex: {action: nonstopmode, synctex: True }
+% arara: pdflatex: {action: nonstopmode, synctex: True }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% 
+%%   Liste des choses à faire pour mettre à jour le rapport en nouvelle version
+%%   1- copier sous un nouveau nom le Rnw
+%%   2- dans pdata/traitement_stacomi/rapport_anguille créer des sous répertoires
+%%   avec l'année en cours dans data, image, et table. Y coller les valeurs de l'année 
+%%   précédente pour data (pour pouvoir lancer)
+%%   3 - changer la valeur de CY dans le chunk init
+%%   4 - Lancer les chunks, si des données externes sont à charger voir avec cédric
+%%   
+%%    A LANCER AVEC SWEAVE
+%%   
+%%   
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%
+%%
+%% This file has content of the `elsarticle-template',
+%% It is modified version by me, dedicated to scientists that want quick 
+%% template for their scientific reports...
+%%
+%%
+%% Copyright 2009 Elsevier Ltd (original copyright notes)
+%%
+%% This file is part of the 'Elsarticle Bundle'.
+%% ---------------------------------------------
+%%
+%% It may be distributed under the conditions of the LaTeX Project Public
+%% License, either version 1.2 of this license or (at your option) any
+%% later version.  The latest version of this license is in
+%%    http://www.latex-project.org/lppl.txt
+%% and version 1.2 or later is part of all distributions of LaTeX
+%% version 1999/12/01 or later.
+%%============================================================
+%%============================================================
+%% DOCUMENT CLASS SETUP
+%%
+%% choose document class = type of the document...
+%% Here you have Elsevier article, but you can override
+%% page settings later!
+\documentclass[final,authoryear,5p,times,twocolumn,twoside]{elsarticle}
+%\documentclass[final,authoryear,5p,times,twocolumn]{elsarticle}
+
+%% Use the option review to obtain double line spacing
+%\documentclass[preprint,authoryear,review,12pt]{elsarticle}
+
+%% Use the options 1p,twocolumn; 3p; 3p,twocolumn; 5p; or 5p,twocolumn
+%% for a journal layout:
+%\documentclass[final,authoryear,1p,times]{elsarticle}
+%\documentclass[final,authoryear,1p,times,twocolumn]{elsarticle}
+%\documentclass[final,authoryear,3p,times]{elsarticle}
+%\documentclass[final,authoryear,3p,times,twocolumn]{elsarticle}
+%\documentclass[final,authoryear,5p,times]{elsarticle}
+%\documentclass[final,authoryear,5p,times,twocolumn]{elsarticle}
+
+\usepackage{float}
+\usepackage[section]{placeins}  %The placeins package provides the command \FloatBarrier
+%%============================================================
+%%============================================================
+%% PACKAGE SETUP
+\usepackage{Sweave}
+%\SweaveOpts{pdf=TRUE, echo=FALSE, fig=FALSE, eps=FALSE, tidy=T, width=4,
+%height=4, keep.source=TRUE}
+\usepackage{fixltx2e} %textsubscript
+%% Input and language packages.
+\usepackage[latin1]{inputenc} %encodage du fichier source
+\usepackage[T1]{fontenc}  %gestion des accents (pour les pdf) 
+
+%\usepackage[english]{babel}
+\usepackage[francais]{babel} % guillemets \og text \fg{}
+\usepackage{aeguill} % guillemets
+
+\addto\captionsfrench{\def\tablename{Tableau}}
+\addto\captionsfrench{\renewcommand*{\contentsname}{Sommaire:}}
+\usepackage{amsmath} %equation
+%% Parskip is the extra vertical space inserted before a paragraph. It has a natural length of zero but should be a rubber length so that it may be stretched in a flushbottom environment. To increase \parskip to skip a line between paragraphs one could use \addtolength{\parskip} {\baselineskip}.
+\usepackage{parskip}
+\usepackage{latexsym} % pour les carrés
+%% Sets space between lines.
+\usepackage{setspace} 
+\usepackage{supertabular}
+
+\usepackage{caption} % pour éviter les problème de place entre le header et le tableau
+\captionsetup[table]{skip=5pt}
+
+%% If you use PostScript figures in your article
+%% use the graphics package for simple commands
+%\usepackage{graphics}
+%% or use the graphicx package for more complicated commands (places the float at precisely the location in the LaTeX code [H]).
+\usepackage{graphicx} \usepackage{float}
+%% or use the epsfig package if you prefer to use the old commands.
+%\usepackage{epsfig}
+
+%% Using captions in floating environment. Note: might not work with other packages.
+%\usepackage{caption}
+
+%% Making numbered and bulleted lists.
+\usepackage{enumerate}
+
+
+%% Math packages
+%\usepackage{amsmath, amssymb}
+
+%% The amsthm package provides extended theorem environments.
+%\usepackage{amsthm}
+
+%% The verbatim environment, \begin{verbatim} ... \end{verbatim}, permits us to insert large sections of reformatted text in a LaTeX file (including block of comments). It is very handy for inserting large chunks of code in a document, for example, literal TeX code or the Maple code you sweated over and now want to comment on.
+%\usepackage{verbatim}
+
+%% Add hyperlinks, so that you can click on references, theorem numbers etc. to jump to the place where they are in the paper (at least for the DVI and PDF versions), it seems that \documentclass{article} does not work with hyperref; use instead \documentclass{amsart}. Note: first test it with Elsevier template!
+\usepackage{hyperref} 
+\hypersetup{
+colorlinks=true, 
+linkcolor=marron, 
+citecolor=blueazur, 
+filecolor=bleufonce, 
+urlcolor=bleufonce, 
+pdftitle= {Suivi des migrations d'anguilles (\textit{Anguilla anguilla}, L.)
+au barrage d'Arzal. Rapport 2019 )}, pdfauthor={Cédric Briand},
+pdfsubject={anguille},
+ pdfkeywords={anguille} {pêche électrique} {marquage}
+}
+\renewcommand{\sectionmark}[1]{\markboth{}{\emph{\thesection~#1}}}
+\renewcommand{\subsectionmark}[1]{\markboth{}{\emph{\thesubsection~#1}}}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\rightmark}
+\lhead{Rapport anguilles 2019}
+\cfoot{Page \thepage}
+
+%% The numcompress package shorten the last page in references.
+%% `nodots' option removes dots from firstnames in references.
+%\usepackage[nodots]{numcompress}
+
+%% The lineno packages adds line numbers. Start line numbering with
+%% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
+%% for the whole article with \linenumbers after \end{frontmatter}.
+%% \usepackage{lineno}
+
+%% If you are printing how many pages you submitted...
+\usepackage{lastpage}
+
+%% The \url{...} command does all the work: It sets the enclosed expression in the appropriate typewriter style font, it takes care of any necessary linebreaking, and it chooses break points intelligently (e.g., between components of an address), and it ensures that special symbols such as the tilde symbol or the "at" symbol get typeset correctly.
+\usepackage{url}
+
+%% A new implementation of LATEX's tabular and array environment.
+ \usepackage{array}
+ 
+\usepackage{longtable}
+\usepackage{booktabs}
+
+
+%%============================================================
+%%============================================================
+%% BIBLIOGRAPHY SETUP
+
+%% natbib.sty is loaded by default. However, natbib options can be
+%% provided with \biboptions{...} command. Following options are
+%% valid:
+
+%%   round  -  round parentheses are used (default)
+%%   square -  square brackets are used   [option]
+%%   curly  -  curly braces are used      {option}
+%%   angle  -  angle brackets are used    <option>
+%%   semicolon  -  multiple citations separated by semi-colon (default)
+%%   colon  - same as semicolon, an earlier confusion
+%%   comma  -  separated by comma
+%%   authoryear - selects author-year citations (default)
+%%   numbers-  selects numerical citations
+%%   super  -  numerical citations as superscripts
+%%   sort   -  sorts multiple citations according to order in ref. list
+%%   sort&compress   -  like sort, but also compresses numerical citations
+%%   compress - compresses without sorting
+%%   longnamesfirst  -  makes first citation full author list
+%%
+%%  e.g. \biboptions{longnamesfirst,comma}
+
+%\biboptions{round,colon,sort}
+
+
+%%============================================================
+%%============================================================
+%% PAGE SETUP
+%% Use this section to override Elsevier article page settings!!!
+
+	%% Easier way...
+	\usepackage[a4paper, inner=1.5cm, outer=1.5cm, top=2cm, bottom=3cm]{geometry}
+	%% The hard way involves setting all the desired values manually. Here are some values that can be set: 
+	%% Dimensions of the PDF file.
+	%\pdfpageheight \pdfpagewidth
+	%% Length of margin at top of page above all printing. 1 inch is added to this value.
+	%\topmargin   
+	%% Left margin on even numbered pages. 1 inch is added to this value.
+	%\evensidemargin  
+	%% Left margin on odd numbered pages. 1 inch is added to this value.
+	%\oddsidemargin
+	%% Height of the page header.
+	%\headheight
+	%% Distance from bottom of header to the body of text on a page.
+	%\headsep
+	%% Distance from top of main text box to the baseline of the first line of text in the main text box.
+	%\topskip 
+	%% Height and width of main text box.
+	%\textheight \textwidth
+	%% Distance from bottom of body to the bottom of the footer.
+	%\footskip
+	%% Distance between paragraphs.
+	%\parskip
+	%% Amount of indentation at the first line of a paragraph.
+	%\parindent
+	%% Uncomment if don't want page numbers.
+	%\pagestyle{empty}
+	%% Uncomment for 1.5 spacing between lines...
+	%\renewcommand{\baselinestretch}{1.5}
+	%% or use some of these
+		%\singlespacing
+		%\onehalfspacing
+		%\doublespacing
+		%\setstretch{1.1}
+	%% Sets up hyphenation threshold.
+	%\hyphenpenalty=675 \tolerance=950
+
+
+
+
+%%============================================================
+%%============================================================
+%% DEFINING NEW COMMANDS AND ABBREVIATIONS
+%% Use this section to define new commands that you will use in
+%% your report.
+
+%% Makes a path to your graphics' folder.
+\graphicspath{{../../../pdata/traitement_stacomi/rapport_anguille/image/2019/}}
+
+\newcommand{\tab}{\hspace*{2em}}
+\newcommand{\DD}{D\&D}
+\newcommand{\oxygen}{O$ _2 $}
+
+\renewcommand{\labelitemi}{--}
+
+
+%% Add extra space to multi-line equation environments
+%\setlength{\jot}{9pt}
+
+% use \mbox{...} for no separation of the defined word
+
+%%===============================================%%
+%%==========    END OF THE PREAMBLE    ==========%%
+
+
+
+
+%%============================================================
+%%============================================================
+%%============================================================
+% BEGINNING OF THE TEXT BODY
+
+%% You can write here small footer that will go on the first page, together with
+%% the date stamp; comment the line if you don't want that!
+%\footme{Submitted to Someone Somewhere\hspace{2mm}(\pageref{LastPage} pages)} \datestamp{Andrej Korenic, 27$^{th}$ October, 2011}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE}
+
+	\begin{frontmatter}
+
+	%% Title, authors and addresses
+
+	%% use the tnoteref command within \title for footnotes;
+	%% use the tnotetext command for the associated footnote;
+	%% use the fnref command within \author or \address for footnotes;
+	%% use the fntext command for the associated footnote;
+	%% use the corref command within \author for corresponding author footnotes;
+	%% use the cortext command for the associated footnote;
+	%% use the ead command for the email address,
+	%% and the form \ead[url] for the home page:
+	%%
+	%% \title{Title\tnoteref{label1}}
+	%% \tnotetext[label1]{}
+	%% \author{Name\corref{cor1}\fnref{label2}}
+	%% \ead{email address}
+	%% \ead[url]{home page}
+	%% \fntext[label2]{}
+	%% \cortext[cor1]{}
+	%% \address{Address\fnref{label3}}
+	%% \fntext[label3]{}
+
+	\title{Suivi des migrations d'anguilles (\textit{Anguilla anguilla}, L.)
+au barrage d'Arzal, rapport 2019}
+
+	%% use optional labels to link authors explicitly to addresses:
+	\author[iav]{Cédric Briand}
+	\author[iav]{Brice Sauvaget}	
+	\author[iav]{Gérard Eriau}	
+	\address[iav]{EPTB Vilaine, boulevard de Bretagne, 56130 La Roche Bernard}
+	%\author[label1,label2]{Andrej Korenic}
+	%\address[label1]{My address}
+	%\address[label2]{second address}
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% CHUNK DE CHARGEMENT INITIAL  %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+<<init,echo=FALSE,eval=TRUE,results=hide>>=
+#######################################################################"
+# dans le fichier "C:\Program Files\R\R-3.3.2\etc\Rprofile.site" 
+# je stocke mes password admin qui sont chargés au lancement des sessiosn R
+# .First <- function(){
+# passwordlocal<<-"********************"
+# passworddistant<<-"*******************"
+# cat("\n Creation des passwords passwordlocal passworddistant", date(), "\n") 
+#}
+# pour sauvegarde de la base iav
+#pg_dump -U postgres -f "iav.sql" --schema iav -h w3.eptb-vilaine.fr bd_contmig_nat_iav
+# pour restauration en localhost
+# psql -U postgres -f "iav.sql" bd_contmig_nat
+###########################################################################
+# ci dessous nettoye tout sauf mes deux password
+# attention de bien configurer bd_contmig_nat pour qu'il pointe vers la base bd_contmig_nat_iav
+obj<-ls(all=TRUE)
+obj<-obj[!obj%in%c("passworddistant","passwordlocal","hostpostgres","userdistant")]
+rm(list=obj) # nettoyage complet sauf passwords
+# fermeture de tous les graphiques
+graphics.off()
+# petite fonction de Laurent pour charger les packages quand ils ne sont pas installés
+load_library=function(necessary) {
+  if(!all(necessary %in% installed.packages()[, 'Package']))
+	install.packages(necessary[!necessary %in% installed.packages()[, 'Package']], dep = T)
+  for(i in 1:length(necessary))
+	library(necessary[i], character.only = TRUE)
+}
+setwd("C:/workspace/p/traitement_stacomi/rapport_anguille")
+datawd<-"C:/workspace/pdata/traitement_stacomi/rapport_anguille/data/"
+
+load_library('Hmisc')
+load_library('xtable')
+load_library('stacomirtools')
+load_library("stringr")
+load_library("stargazer")
+load_library('lubridate')
+load_library('reshape2')
+load_library('dplyr')
+load_library('XLConnect')
+require('stacomiR')
+require('ggthemr')
+load_library('tables')
+
+#swatch()
+#barplot(rep(1,11),col=as.character(swatch()))
+#ggthemr_reset()
+# style manuel pour ggthemr
+fresh2 <- define_palette(
+	swatch = c("#111111","#65ADC2","#233B43","#E84646","#C29365","#362C21","#316675",
+		"#168E7F","#109B37","#003B10","#52002F"),
+	gradient = c(lower = "#111111", upper = "#109B37"))
+#ggthemr(fresh2, type="outer", layout="scientific", spacing=0.8)
+#ggthemr_reset()
+# l'annee en cours (c'est la valeur à changer en début de script
+CY<-2019
+# le repertoire contenant les données
+datawdy<-str_c(datawd,CY,"/")
+datawdym1<-str_c(datawd,CY-1,"/")
+# le repertoire contenant mes images (très important pour sweave)
+imgwd<-"C:/workspace/pdata/traitement_stacomi/rapport_anguille/image/"
+# le répertoire contenant les tableaux en latex
+tabwd<-"C:/workspace/pdata/traitement_stacomi/rapport_anguille/table/"
+# en vrai les données annuelles sont dans des sous répertoires par année
+imgwdy<-str_c(imgwd,CY,"/")
+tabwdy<-str_c(tabwd,CY,"/")
+# une petite option pour simplifier la construction des tableaux en latex
+# avec xtable, par défaut je ne veux pas des titres des lignes
+options("xtable.include.rownames"=FALSE)
+#'==========================================================
+#' fonction de nettoyage du code latex
+#'==========================================================
+
+sanitizeLatexS <- function(str) {
+  gsub('([#$%&~_\\^\\\\{}])', '\\\\\\\\\\1', str, perl = TRUE);
+}
+#'==========================================================
+#' fonction d'impression des nombres
+#'==========================================================
+sn <- function(x,digits=0,scientific=FALSE)
+{
+  if (class(x)=="character") {                
+	warning("sn appliqué a un character")
+	return(x)
+  }
+  if (is.infinite(x)) {                
+	warning("sn appliqué à Inf")
+	return(x)
+  }
+  if (length(x)==0) {                
+	warning("sn length 0")
+	return("???")
+  }
+  if (x==0) return("0")
+  ord <- floor(log(abs(x),10))
+  if (scientific==FALSE&ord<9){
+	if (digits==0) {
+	  digits=max(1,ord) # digits must be >0
+	  nsmall=0
+	}else {
+	  nsmall=digits
+	}
+	x<-format(x,big.mark="~",small.mark="~",digits=digits,nsmall=nsmall)
+	return(str_c("$",as.character(x),"$"))                
+  } else {
+	x <- x / 10^ord
+	if (!missing(digits)) x <- format(x,digits=digits)
+	if (ord==0) return(as.character(x))
+	return(str_c("$",x,"\\\\times 10^{",ord,"}$"))
+  }
+}
+#'==========================================================
+#' fonction d'application de la transparence à des couleurs.
+#'==========================================================
+makeTransparent = function(..., alpha=0.5) {
+  
+  if(alpha<0 | alpha>1) stop("alpha must be between 0 and 1")
+  
+  alpha = floor(255*alpha)  
+  newColor = col2rgb(col=unlist(list(...)), alpha=FALSE)
+  
+  .makeTransparent = function(col, alpha) {
+	rgb(red=col[1], green=col[2], blue=col[3], alpha=alpha, maxColorValue=255)
+  }
+  
+  newColor = apply(newColor, 2, .makeTransparent, alpha=alpha)
+  
+  return(newColor)
+  
+}
+#'==========================================================
+#' Quelques options de couleur
+#' ==========================================================
+mycolorramp1<-colorRampPalette(c("#011A2D","#4F7EA2"))
+mycolorramp2<-colorRampPalette(c("#462800","#B68B52"))
+col1<-makeTransparent(mycolorramp1(8),0.1)[1:6]
+col2<-makeTransparent(mycolorramp2(8),0.1)[1:6]
+couleur_mois_tr<-c(col1,rev(col2))
+col1<-mycolorramp1(8)[1:6]
+col2<-mycolorramp2(8)[1:6]
+couleur_mois<-c(col1,rev(col2))
+rm(mycolorramp1,mycolorramp2,col1,col2)
+#'==========================================================
+#' Chargement des données par défaut
+#' certains chunks (bouts de code) qui suivent ne sont pas lancés 
+#' de manière systématique, pour gagner du temps de compilation
+#' du coup je stock les résultats intermédiaires dans une liste
+#' nommée vvv. Le script vérifie si elle existe, sinon il la crée
+#' car il faudra la recréer lorsqu'on relancera le script lors d'une
+#' nouvelle année de traitement.
+#'==========================================================
+if (file.exists(file=str_c(datawdy,"vvv.Rdata"))){
+  load(file=str_c(datawdy,"vvv.Rdata"))
+} else {
+  #crétation de la variable vvv
+  vvv<-list()
+}
+#'==========================================================
+#' Option de base donnée
+#'==========================================================
+# pour changer la base
+# editer le lien ODBC bd_contmig_nat pour pointer vers la bonne base
+require('RPostgreSQL')
+require('sqldf')
+stacomi(gr_interface=FALSE,
+	login_window=FALSE,
+	database_expected=TRUE)
+
+
+# the following script will load the Arzal dataset if connected to iav schema
+baseODBC<-get("baseODBC",envir=envir_stacomi)
+baseODBC[c(2,3)]<-rep("iav",2)
+assign("baseODBC",baseODBC,envir_stacomi)
+sch<-get("sch",envir=envir_stacomi)
+assign("sch","iav.",envir_stacomi)
+baseODBC<-get("baseODBC",envir=envir_stacomi)
+options(sqldf.RPostgreSQL.user = baseODBC[2], 
+	sqldf.RPostgreSQL.password =baseODBC[3],
+	sqldf.RPostgreSQL.dbname = "bd_contmig_nat_iav", # "bd_contmig_nat_iav"
+	sqldf.RPostgreSQL.host =  "185.135.126.250", # "w3.eptb-vilaine.fr" "localhost"
+	sqldf.RPostgreSQL.port = "5432")
+sqldf.options<-get("sqldf.options",envir=envir_stacomi)
+sqldf.options["sqldf.host"]<-"w3.eptb-vilaine.fr" # "w3.eptb-vilaine.fr" "localhost"
+assign("sqldf.options",sqldf.options,envir=envir_stacomi)
+@
+
+	\begin{abstract}
+    
+    La migration sur les deux passes du barrage d'Arzal est estimée à
+    \Sexpr{sn(vvv$CIV$N)} civelles pour un poids de \Sexpr{sn(vvv$CIV$P)} kg en 
+    \Sexpr{CY} ce qui place cette année au
+    \Sexpr{vvv[["CIV"]][["rank"]]} ème rang sur
+    \Sexpr{vvv[["AGJ"]][["maxrank"]]} années de suivi. La migration sur le
+    gabion, passe principale au centre du barrage, est estimée à
+    \Sexpr{sn(vvv[["CIV"]][["6"]][["N"]])} civelles soit \Sexpr{sn(vvv[["CIV"]][["6"]][["P"]])} kg. 
+    Sur le mur guide eau, passe secondaire, la migration est estimée à 
+    \Sexpr{sn(vvv[["CIV"]][["12"]][["N"]])} civelles soit \Sexpr{sn(vvv[["CIV"]][["12"]][["P"]])}
+    kg.
+    
+    \Sexpr{sn(vvv[["AGJ"]][["NCY"]])} anguilles jaunes ont migré sur les passes, ce
+    qui classe cette année comme la \Sexpr{vvv[["AGJ"]][["rank"]]} ème sur
+    \Sexpr{vvv[["AGJ"]][["maxrank"]]} années de suivi. 
+    
+    Ce rapport détaille les
+    conditions de recrutement, capture, migration ainsi que l'évolution des
+    caractéristiques biologiques des civelles en 2019. Il constitue la première
+    version d'une automatisation de l'édition du rapport de suivi à l'aide des
+    commandes du logiciel stacomiR \url{http://stacomir.r-forge.r-project.org/}.
+    
+  \textbf{Abstract}
+  
+    \textit{ The migration on the two main eel fishways of the Arzal dam is
+    estimated at \Sexpr{sn(vvv$CIV$N)} glass eel for a weight of \Sexpr{sn(vvv$CIV$P)} kg in 
+    \Sexpr{CY} which ranks this year as the
+    \Sexpr{vvv[["CIV"]][["rank"]]}$^{th}$ on
+    \Sexpr{vvv[["AGJ"]][["maxrank"]]} years of monitoring. The migration on the
+    "Gabion", the main fishway is estimated at
+    \Sexpr{sn(vvv[["CIV"]][["6"]][["N"]])} glass eel, which correspond to a
+    weight of \Sexpr{sn(vvv[["CIV"]][["6"]][["P"]])} kg.
+    On the waterflow guide wall, (secondary trap) the migration is estimated as
+    \Sexpr{sn(vvv[["CIV"]][["12"]][["N"]])} glass eel or
+    \Sexpr{sn(vvv[["CIV"]][["12"]][["P"]])} kg.}
+    
+    \textit{ \Sexpr{sn(vvv[["AGJ"]][["NCY"]])} yellow eel have migrated on the
+    ladders, which classifies this year as the \Sexpr{vvv[["AGJ"]][["rank"]]}$^{th}$ on
+    \Sexpr{vvv[["AGJ"]][["maxrank"]]} years of monitoring. 
+    This report details
+    the catch, migration, and evolution of biological characteristics of glass
+    eel in 2019. It is the first version of an automated report using the
+    stacomiR package \url{http://stacomir.r-forge.r-project.org/}.}
+   
+	\end{abstract}
+	\begin{keyword}
+% keywords here, in the form: keyword \sep keyword
+	anguille \sep civelle \sep capture \sep recrutement fluvial \sep recrutement
+	estuarien
+    
+     \textit{Keywords:}
+     \textit{yellow eel} \sep \textit{glass eel}   \sep
+     \textit{fluvial recruitment} \sep \textit{estuarine recruitment}  
+    \end{keyword}
+   
+
+\end{frontmatter}
+\setcounter{page}{2}
+
+%% Switch on the line numbers for the whole article at this place.
+%\linenumbers
+
+
+
+\tableofcontents
+
+
+
+%% Switch on the line numbers for the whole article at this place.
+%\linenumbers
+
+
+%% Main text is going here.
+
+\bigskip
+
+\section*{Introduction}
+\label{Introduction}
+
+    Le stock d'anguilles a subit depuis le début du siècle dernier un fort
+    déclin qui s'est traduit à partir du début des années 1980 par un déclin du
+    recrutement (arrivées de juvéniles). Aujourd'hui l'espèce est considérée par
+    L'IUCN comme étant en danger critique d'extinction, et depuis 1998, l'avis
+    du CIEM (Conseil pour l'Exploration de la Mer) est de réduire au plus bas
+    niveau possible l'ensemble des mortalités affectant le stock d'anguilles.
+    Pour tenter de restaurer le stock, les états membres de l'UE ont adopté en
+    2007 un règlement européen pour la sauvegarde de l'espèce. Il s'est traduit
+    en France par un Plan de Gestion de l'anguille visant à réduire les
+    mortalités en s'attaquant à l'ensemble des causes de réduction du stock.
+    Pour gérer, il faut connaître le niveau du stock. Cette connaissance est
+    issue à la fois de la modélisation et d'un réseau de suivi permettant de
+    rapporter des données concernant l'anguille. 
+    
+    Ainsi, la Vilaine est intégrée au
+    réseau de suivi des rivières index dont l'objectif est la quantification des arrivées de civelles, 
+    du stock en place  et de la dévalaison.
+    
+    Sur la
+    Vilaine, les arrivées de civelles (recrutement) sont évaluées par un suivi
+    de la pêcherie, des prélèvements biologiques
+    réalisés auprès de la pêcherie professionnelle et des arrivées en estuaire non capturées , les tendances du
+    stock en place sont évaluées par un réseau de pêches électriques, et la
+    dévalaison des anguilles argentées est suivie à l'aide d'un didson placé dans le pertuis de
+    la quatrième vanne du barrage d'Arzal .
+    
+Les montées de civelles et d'anguilles jaunes sont suivies depuis 1996 au
+    niveau de la passe à anguilles du barrage d'Arzal. Cette série de données,
+    accompagnée de la série de captures des pêcheurs professionnels en estuaire,
+    fournit une estimation de l'abondance de civelles arrivées en estuaire
+    (recrutement estuarien). Les opérations de transport vers le bassin
+    versant, le fonctionnement de la passe et les manoeuvres ponctuelles
+    d'écluse dans des "éclusées" spécifiques pour les civelles fournissent une
+    série chronologique de recrutements fluviaux annuels.
+    
+    L'objectif de ce rapport est de présenter le bilan du suivi de l'année 2019
+    sur le barrage d'Arzal.
+    
+\section{Matériel et méthodes}
+
+\subsection{Site d'étude}
+
+L'estuaire de la Vilaine est limité à sa portion aval par le barrage d'Arzal,
+construit par l'IAV en 1970, et qui à 12 km de la mer bloque l'onde de marée.
+L'estuaire en amont, jusqu'à la limite historique de l'estuaire tital (barrages de Malon et de la Potinais 
+à 70- 80 km en amont) 
+a été transformé en rivière. Le plan d'eau ainsi créé a vu se développer de
+nouveaux usages dont les principaux sont la navigation et
+l'eau potable.
+Le barrage d'Arzal joue aussi un rôle majeur dans la protection contre les crues de l'aval du bassin versant, 
+en empêchant les conjonctions de
+forts débits amont et de surcotes de marées.
+Ce barrage constitue ainsi une rupture nette entre des eaux saumâtres et douces. Il évacue le débit
+de la Vilaine qui avec 12400 km$^2$ couvre le tiers de la surface la Bretagne.
+L'embouchure, située au nord de la Loire, consitue une zone très favorable au
+recrutement de civelles, et la pêcherie installée au pied du barrage d'Arzal est
+très importante en volume de captures quand on la compare à l'ensemble des
+bassins du golfe de Gascogne. 
+
+\subsection{Captures de la pêcherie}
+
+Les captures de la pêcherie ont été collectées à partir de plusieurs sources.
+Historiquement les déclarations des mareyeurs aux affaires maritimes, plus
+récemment le système télécapêche mis en place par le comité régional des pêches
+donne des informations précises sur les captures de la pêcherie.
+
+\subsection{Suivi des passes}
+\subsubsection{Description des passes}
+La passe à anguilles du gabion est située au centre de l'ouvrage, près de
+l'exutoire de la passe à fente verticales, en rive gauche du pertuis des vannes
+(Voir Figure \ref{figure_plan_localisation}).
+Cette passe dispose de deux rampes. La première est accrochée au bajoyer du
+barrage, et plonge dans l'estuaire près des vannes (Figure
+\ref{figure_passe_gabion} D). Elle était sensée être placée au niveau d'un
+contre courant, à un endroit où les navires de pêche rasant le barrage
+réalisaient les meilleures prises.
+En pratique elle est peu efficace, car les courants générés par les volets (ou clapets de surface) et les vannes (lorsque les
+ouvertures se font par levée d'une vanne wagon) sont généralement assez
+violents dans la zone en hiver et au printemps. C'est à pleine mer, lorsque les
+niveaux mer dépassent le niveau Vilaine, et que la rampe est en eau, qu'elle est
+probablement la plus efficace. Lors des pics de migration, on observe une
+migration sur cette rampe mais qui est probablement bien moindre que celle de
+la deuxième rampe. Les deux rampes étant connectées par le même canal au piège à
+anguille (Figure
+\ref{figure_passe_gabion} AB), il n'a pas jusqu'à présent été possible de
+déterminer l'efficacité respective de chacune des rampes.
+
+\begin{figure}[htpb]
+\centering
+\includegraphics[width=0.45\textwidth]{plan_localisation.png}
+\caption{Situation géographique des deux passes à anguilles du barrage d'Arzal. 
+Le point au sud représente la passe en rive gauche, située sur le gabion, le
+point au nord représente la passe en rive droite, située sur le mur guideau à l'entrée de l'écluse. 
+Le rectangle orange correspond à l'emplacement de l'écluse.
+}
+\label{figure_plan_localisation}
+\end{figure}
+La deuxième rampe à anguilles de la passe
+du gabion plonge dans l'estuaire dans une échancrure construite dans les gabions. 
+Les gabions sont des cercles en paleplanches qui soutiennent et ancrent le
+barrage au milieu de l'ancien lit estuarien (Figure
+\ref{figure_passe_gabion_vue_aerienne} E).
+Cette rampe, beaucoup plus longue que la première, débouche à l'aval immédiat de
+la passe à bassins. L'entrée de la passe est protégée par un déflecteur. Ainsi,
+le long du gabion, un contre courant propice à l'accumulation des civelles et
+anguillettes est établit, lorsque le barrage et la passe fonctionnent. Ce contre courant est exacerbé
+lorsque les débits sont très importants. Il se prolonge alors bien au delà de
+l'emprise des gabions et explique probablement la bonne efficacité de la passe à
+anguilles lors des crues. Les civelles repoussées par le courant des vannes
+viennent s'accumuler à gauche du pertuis de vannes et remontent dans le contre
+courant (Figure \ref{figure_passe_gabion_vue_aerienne}). 
+
+Un deuxième facteur explique l'attractivité de la passe, mais dans des
+conditions de débit plus réduites. Un peu en aval de l'exutoire de la rampe du
+gabion (Figure \ref{figure_passe_gabion_vue_aerienne} E), on trouve
+l'arrivée en estuaire des tuyaux des siphons. Ces tuyaux captent l'eau dans les
+fosses en amont immédiat du barrage et la rejettent en aval pour évacuer les lentilles d'eau salées qui s'accumulent en
+amont du barrage du fait du fonctionnement de l'écluse, avec un débit de
+l'ordre de 6 m $^3.s^{-1}$.
+En pratique ces tuyaux rejettent l'essentiel du débit de la Vilaine lors des périodes d'étiage, et
+comme ils sont situés tout près de l'entrée de la rampe aval de la passe à
+anguilles du gabion, ils constituent un excellent débit d'attrait, qui vient
+s'ajouter à celui généré par la passe à bassins (1 à 2 m$^3.s{-1}$), et par la
+pompe (0.05 m$^3.s{-1}$).
+Ainsi à l'exception du fonctionnement de l'écluse, le débit d'attrait est
+presque exclusivement concentré en rive gauche près de l'entrée de la passe à
+anguilles.
+
+La passe du gabion dispose d'une conduite d'évacuation des anguilles. Ces
+dernières sont relâchées dans un bac où s'évacue le trop plein du piège à
+anguilles. Le tuyau traverse le barrage par la passe à bassins
+puis débouche en amont derrière les gabions (Figure \ref{figure_passe_gabion_vue_aerienne})
+
+\begin{figure}[htpb]
+\centering
+\includegraphics[width=0.45\textwidth]{passe_gabion_vue_aerienne.png}
+\caption{Implantation de la passe du gabion, B pompe, C rampe
+aérienne du bajoyer, D local de stockage, E rampe dans le gabion. L'évacuation
+des civelles se fait par une conduite vers l'amont du barrage.}
+\label{figure_passe_gabion_vue_aerienne}
+\end{figure}
+\begin{figure}[htpb]
+\centering
+\includegraphics[width=0.45\textwidth]{passe_gabion.png}
+\caption{La passe à anguilles du Gabion, passe principale 1996-2019.}
+\label{figure_passe_gabion}
+\end{figure}
+
+Pour tenter d'augmenter l'efficacité de la passe à anguilles, une deuxième rampe
+à été construite en 2008, de l'autre côté du pertuis de vannes, en 2007 (Figure
+\ref{figure_passe_guide_eau} B). Cette rampe, aux dimensions plus modestes, 
+capte également l'eau en amont du barrage par une pompe de 70 m $^3.h{-1}$
+située en rive droite à l'amont immédiat de l'écluse. Elle est entourée d'un
+bâti blindé pour éviter le braconnage (Figure \ref{figure_passe_guide_eau} A).
+Cette rampe est équipée d'un bac de repos intermédiaire et d'un piège 
+(Figure \ref{figure_passe_guide_eau} C D). Elle ne dispose pas de conduite d'évacuation
+et en pratique, toutes les anguilles qui y sont collectées sont transportées
+dans des seaux, jusqu'à la passe du gabion, puis
+dénombrées, pesées et relâchées dans la conduite qui les ramène à l'amont du
+barrage (Figure \ref{figure_passe_gabion}).
+
+Comme la rampe aérienne de la passe du gabion, cette rampe relativement courte
+permet aux civelles de monter à partir de la mi-marée. Il arrive parfois que
+cette passe capture beaucoup de civelles, lorsque les civelles s'accumulent le
+long du mur guide eau (Figure \ref{figure_passe_guide_eau} B), mais son efficacité 
+est en général plus réduite que la
+passe du gabion.
+
+
+
+
+\begin{figure}[htpb]
+\centering
+\includegraphics[width=0.45\textwidth]{passe_guide_eau.png}
+\caption{La passe à anguilles du mur Guide Eau, passe secondaire, 2008-2019.}
+\label{figure_passe_guide_eau}
+\end{figure}
+
+\subsubsection{Protocole de suivi}
+Les
+opérations de relève sont quotidiennes, week-end inclus quand les civelles sont
+nombreuses, mais plus espacées lorsque les effectifs d'anguilles jaunes et de
+civelles sont plus réduit (Figures \ref{bmm},
+\ref{bmm_agj_12}, \ref{bmm_agj_6}).
+Une caméra vidéo permet aux opérateurs de surveiller le bac, de s'assurer du fonctionnement de la pompe, et d'intervenir lorsque les
+effectifs augmentent.
+
+
+
+Le protocole de suivi dépend des effectifs présents dans le bac, les civelles
+et les anguillettes sont séparées. Les civelles sont pesées avec un égoûtage
+léger et le poids "humide" des civelles est évalué à partir d'échantillons de 50
+civelles égoûtées de la même manière que les civelles capturées lors du
+comptage. La structure en taille des anguilles est mesurée à partir d'un
+échantillon composé au minimum de 600 anguillettes par mois, quand celà est
+possible en fonction de la migration. Une séparation à l'oeil des anguilles
+de plus de 16 cm et moins de 16 cm est effectuée afin de
+s'assurer, à la fin du mois, de la représentativité des échantillons, et
+éventuellement d'en corriger à postéri la composition. Les grosses anguilles
+de plus de 30 cm sont pesées et mesurées à part des autres, car elles peuvent
+former une part très importante du poids d'un lot pesé. Elles sont classées dans
+la classe de taille anguille (caractère qualitatif) et ce caractère permet de
+les distinguer de l'échantillonnage aléatoire des anguilles pour la structure en
+taille.
+Des lots de civelles sont prélevés afin de faire l'objet d'une analyse
+de détail avec stades pigmentaires, taille et poids.
+
+\subsubsection{Saisie et calcul}
+Les données de migration sont saisies à l'aide de l'interface JAVA du logiciel
+stacomi, avec des opérations de durée variable en fonction de la fréquentation de la passe. 
+
+Dans les traitements, les effectifs journaliers sont calculés dans stacomiR au
+pro rata de la durée de l'opération dans chaque journée. Pour obtenir des
+traitements cohérents, les effectifs à cheval sur deux années, sont
+également répartis sur chaque année \footnote{Ce traitement, plus complexe
+qu'une simple somme avec une requète par groupe sur la date de début peut donner des sommes différentes.}. 
+
+
+\subsubsection{Conversion poids - effectif}
+Comme il n'est pas possible de dénombrer les civelles lorsque les migrations
+sont importantes, la mesure de l'effectif de civelles est faite sur la base de
+pesées. Ensuite les effectifs sont recalculés sur la base d'un coefficient de
+conversion basé sur le "poids humide" \footnote{Les civelles ne sont égoutées que partiellement lors
+des pesées} des civelles. La relation entre
+les poids et les effectifs n'est pas constante dans le temps car les civelles changent de poids et de taille
+en fonction du mois où elles arrivent en estuaire, mais aussi d'une année sur l'autre. Pour disposer
+de coeffients journaliers de conversion poids-effectif il est nécessaire de
+modéliser cette évolution.
+
+Le poids moyen des civelles est mesuré sur des lots de 50 civelles, toutes les
+semaines, lorsque les effectifs sont suffisants. Des échantillons collectés en
+estuaire durant la saison de pêche, peuvent permettre de compléter la mesure de
+poids moyen. La mesure des poids moyen est faite sur trois sous-échantillons, 
+les civelles sont épuisettées rapidement après leur sortie de l'eau afin de garder
+de l'humidité dans l'épuisette. L'objectif lors du suivi est que les civelles ne
+perdent pas de mucus lors de leur pesée.
+
+Le même lot de 50 civelles est pesé trois fois successivement et le poids moyen
+est entré en base. 
+
+Les poids moyens humides sont ensuite analysés en fin de saison à l'aide de
+plusieurs types de modèles. La classe \textsf{report\_ge\_weight} du logiciel
+stacomiR est utilisée pour collecter les données depuis la base de données,
+les scripts sont adaptés pour aller également
+chercher les données de poids moyen provenant de la base de donnée "estuaire". 
+Plusieurs modèles sont proposés par cette classe et ils sont utilisés pour caler
+l'évolution saisonnière des poids moyens de civelles.
+
+\citet{desaunay_seasonal_1997} ont utilisé un modèle
+sinusoïdal pour modéliser les variations de poids et de taille des civelles à
+leur arrivée en estuaire (Formule \ref{eqn_guerault_desaunay}). 
+\begin{equation}
+\label{eqn_guerault_desaunay}
+\begin{aligned}
+ w &\sim a cos(2\pi(d'-T)/365)+b \\
+ doy&=d_{0}+d'~avec~d_{0}=212 \\
+ doy&=jours juliens \\
+\end{aligned}
+\end{equation}
+Avec $t$ =jour, $T$= 365 jours, $a$, $b$, $c$ paramètres. Le jour $d'$ commence le
+premier août.
+Ce modèle a été utilisé lors des premières années de suivi de la passe, il
+permet d'ajuster une courbe par an.
+
+Le problème du modèle sinusoïdal est qu'il va ajuster une courbe différente
+pour les différentes années, ce qui crée une coupure entre les valeurs des
+coefficients d'une année sur l'autre, car les courbes ont des ajustements
+différents en fonction des poids moyens des civelles d'une année sur l'autre.
+Un modèle gam ajustant une tendance de long terme et une sinusoïde 
+\textsf{model.type="seasonal2"} a donc été utilisé à la place du modèle annuel.
+La tendance saisonnière est ajustée à l'aide d'une sinusoïde commune à l'ensemble des années, 
+$sin(\omega vt) + cos(\omega vt)$, pour laquelle $vt$ est une variable temporelle et $\omega$ 
+une constante qui permet d'établir la tendance cyclique de la variable temporelle sur une année $2\pi/365=0.0172$. 
+Le modèle s'écrit alors $w~cos(0.0172doy)+sin(0.0172doy)+s(time)$.
+
+Un modèle équivalent \textsf{model.type="seasonal"} utilisant des smoother de
+gam au lieu des sinusoïdes est également testé. Ce modèle va ajuster la tendance
+annuelle à l'aide d'une fonction gam commune à l'ensemble des années. En terme
+de fonctionnement, il est relativement similaire aux modèles précédents.
+
+Enfin, le dernier modèle est un modèle adapté manuellement et qui prend en
+compte une tendance "annuelle", une tendance interannuelle de long terme et un
+terme d'interactions.
+
+\subsubsection{Caractéristiques morphologiques des civelles de Vilaine}
+Des lots de civelles collectées dans la passe ou en estuaire font l'objet d'une
+analyse individuelle. Sur chaque individu, les paramètres suivants sont
+examinés : le stade pigmentaire, la taille au millimètre près, le poids à 0.001
+gramme près.  En préalable à la mesure du poids, les civelles sont essuyées
+doucement à l'aide d'un tissu. Ces mesures ont pour objectif de comparer, année
+après année, les caractéristiques biologiques des civelles arrivant de l'océan. 
+
+\section{Résultats}
+\subsection{Captures de la pêcherie}
+
+<<captures,eval=FALSE,results=hide,echo=FALSE>>=
+# les données ont été copiées depuis "X:\Migrateur\Migration\Arzal\Pêcherie civelle\serie_pro_vilaine.xls"
+# onglet feuille_base. elles correspondent aux données du tableau ci-dessous
+capt<-read.table(str_c(datawd,"serie_vilaine.csv"),header=TRUE, sep=";")
+# je passe en stack
+capt<-capt[,c(1,3,4)]
+colnames(capt)<-c("Saison","Capture","Echappement")
+
+capt<-melt(capt,id.vars="Saison",variable.name="type",value.name="Q")
+capt$type<-factor(capt$type,levels(capt$type)[c(2,1)])
+
+
+transparent_theme <- theme(
+    axis.title.x = element_blank(),
+    axis.title.y = element_blank(),
+    #axis.text.x = element_blank(), 
+    axis.text.y = element_blank(),
+    axis.ticks = element_blank(),
+    panel.grid = element_blank(),
+    axis.line = element_blank(),
+    panel.background = element_rect(fill = "transparent",colour = NA),
+    plot.background = element_rect(fill = "transparent",colour = NA))
+
+png(filename=str_c(imgwdy,"captures.png"))
+ggthemr(fresh2, type="outer", layout="scientific", spacing=0.8)
+g<-ggplot(capt)+geom_col(aes(x=Saison,y=Q,fill=type))+ylab("Civelle (Tonnes)")
+g1<-ggplot(capt[capt$Saison>1995&capt$Saison<=2005,])+geom_col(aes(x=Saison,y=Q,fill=type),show.legend=FALSE)+
+    transparent_theme+ scale_x_continuous(breaks=c(1996,2000,2004))
+# Create the external graphical elements
+# called a "grop" in Grid terminology
+g1_grob = ggplotGrob(g1)
+g<-g+annotation_custom(g1_grob, xmin=1985, xmax=2020, ymin=50, ymax=200)
+print(g)
+ggthemr_reset()
+dev.off()
+@
+
+<<figure_recrutement_vilaine,eval=FALSE,results=hide,echo=FALSE>>=
+#######################
+## graphique presentation Vilaine
+##########################
+# Ces deux fichiers sont générés par les traitements wgeel de Cédric
+# Il faut lui demander et les coller dans data/2019
+load(str_c(datawd,CY,"/dat_ge.Rdat"))
+load(str_c(datawd,CY,"/wger.Rdata"))
+# j'utilise le fichier dat, pour lequel je remplace les valeurs
+# de la mer du nord par la Vilaine
+dat1<-dat
+levels(dat1$area)=c("Europe","Vilaine")
+dat1$year1=as.numeric(strftime(dat1$year,"%Y"))
+#dat1$p_std_1960_1970
+vil<-wger[wger$site=="Vil",c("value_std","year")]
+# ajout des données manquantes au début et à la fin de la série
+vil<-rbind(cbind("value_std"=NA,"year"=1960:1970),
+    vil,
+    cbind("value_std"=NA,"year"=c(2012:2014,2016,2017,2018,2019))
+)
+
+vil<-vil[order(as.numeric(vil$year)),]
+# ajout manuel des valeurs avant le barrage d'Arzal, 1971 était à 44
+# comme on a les valeurs standardisées on multiplie par le rapport valeur std 1971/ valeur reelle 1971
+vil[6:11,"value_std"]<-c(5,4,9,12,10,8)*vil$value_std[vil$year==1971]/44
+#vilpred<-data_bis[data_bis$nam==17&data_bis$area=="Elsewhere Europe",c("p_std_1960_1970","year")]
+#vilpred<-vilpred[order(as.numeric(vilpred$year)),]
+dat1[dat1$area=="Vilaine","p_std_1960_1970"]<-vil$value_std[1:nrow(dat1[dat1$area=="Vilaine",])]
+sca<-mean(dat1$p_std_1960_1970[dat1$area=="Europe"&dat1$year1>=1979 & dat1$year1<1994],na.rm=TRUE)
+sca_vil<-mean(vil$value_std[vil$year>=1979 & vil$year<1994],na.rm=TRUE)#1.47
+dat1[dat1$area=="Vilaine","p_std_1960_1970"]<-dat1[dat1$area=="Vilaine","p_std_1960_1970"]*sca/sca_vil
+colnames(dat1)[2]<-"zone"
+
+png(filename=str_c(imgwdy,"recrutement_vilaine_europeen.png"))
+ggthemr(fresh2, type="outer", layout="scientific", spacing=0.8)
+g1<-ggplot(dat1,aes(x=year,y=p_std_1960_1970))+xlab("")+
+	geom_line(aes(colour=zone,lty=zone),lwd=1.3)+
+	geom_point(aes(colour=zone,shape=zone),size=3)+
+	scale_y_continuous(name="")+
+	scale_x_date(date_breaks= "10 years", date_minor_breaks= "5 years",date_labels = "%Y")
+print(g1)
+dev.off()		
+
+
+
+@
+Les captures de la pêcherie ont diminué depuis un maximum de
+209 tonnes en 1979 jusqu'à une valeur minimale de 2.1 tonnes en 2013.
+Globalement ces captures reflètent bien la fluctuation du recrutement. Le
+médaillon en figure \ref{figure_captures} illustre la part des échappements à la
+pêcherie, c'est à dire les montées sur la passe et l'estimation d'arrivées en
+estuaire non pêchées et n'ayant pas franchi la passe
+\citep{briand_dynamique_2009}.
+
+
+\begin{figure}[htpb]
+\centering
+\includegraphics[width=0.45\textwidth]{captures.png}
+\caption{Tendances des captures de civelles en estuaire de Vilaine \Sexpr{CY}.
+Les échappements estimés à l'aide du modèle GEMAC ou d'une hypothèse
+d'efficacité de la passe sont comparés aux captures en estuaire (données 1996-2005
+\citep{briand_dynamique_2009}).}
+\label{figure_captures}
+\end{figure}
+Après 2005, pour estimer l'échappement à la pêche civellière, il serait
+nécessaire de disposer des données d'efforts journaliers de la pêcherie ainsi
+que des captures totales journalières. Ces données sont nécessaires à la
+calibration du modèle GEMAC \citep{beaulaton_effect_2007}. Depuis 1996, l'effort
+nominal de la pêcherie a été divisé par plus que deux, mais l'impact réel de cette réduction d'effort de
+pêche n'est pas immédiat compte tenu du blocage de la migration des civelles par
+le barrage. Il serait nécessaire d'analyser finement la pêcherie et les montées
+sur passe pour tenter de comprendre l'efficacité du dispositif en période
+hivernale. 
+
+En effet, la passe a fait l'objet d'une mesure d'efficacité en période
+printanière, mais les chiffres obtenus alors que les
+conditions de température sont favorables à la montée sont difficiles à
+transposer à la capture des civelles en hiver. Il est nécessaire de rappeller
+ici que la mise en place des quotas de pêche s'est traduit par des montées massives de civelles en janvier, alors que
+de telles montées n'avaient jamais lieu quand la pêche fonctionnait en continu
+au pied du barrage, les nuits de relève et les échappements à la pêcherie ne
+permettant pas aux civelles de disposer du temps nécessaire à leur changement de
+comportement les conduisant à utiliser les passes.
+
+\small
+\begin{table}[htpb]
+\centering
+\caption{Captures de la pêcherie de civelles d'Arzal de 1995 à 2019, sources : 
+1= Affaires Maritimes (données mareyeurs), 
+2= De Casamajor et Briand 2009 (OFIMER),
+3= Comité des pêches maritimes Auray-Vannes,
+4=télécapêche Vilaine (Comité des pêches maritimes Auray-Vannes). 
+La date d'arrêt correspond à la date de fermeture de la pêche en fin de saison.}
+\label{tableau_captures}
+\begin{tabular}{llll}
+\toprule
+Année & Capture (t) & Source & Arrêt \\ 
+\midrule
+1995  & 29.50  &  1 & 30-avr \\
+1996  & 22.40  &  1 & 15-avr \\
+1997  & 22.60  &  1 & 30-avr \\
+1998  & 17.50  &  1 & 06-avr \\
+1999  & 14.93  &  1 & 05-avr \\
+2000  & 13.94  &  1 & 15-avr \\
+2001  & 7.93   &  1 & 30-mars \\
+2002  & 14.51  &  1 & 23-mars \\
+2003  & 9.14 &  1   & 23-mars \\
+2004  & 7.26 &  1  & 27-mars \\
+2005  & 6.72 &  1  & 20-mars \\
+2006  & 6.99 &  1  & 23-mars \\
+2007  & 6.78 &  1  & 11-mars \\
+2008  & 4.57 (4.2) & 3 (2) & 11-mars\\
+2009  & 2.61 & 3  & 31-mars \\
+2010  & 3.03 & 3 & 30-avril \\
+2011  & 3.92 & 3  & 30-avril \\
+2012  & 2.99 & 3  & 30-avril \\
+2013  & 2.10 & 4  & 30-avril \\
+2014  & 2.68 & 4  & 25 avril \\
+2015  & 4.86 & 4  & 30 avril \\
+2016  & 4.62 & 4 & 19 avril \\ 
+2017  & 5.87 & 4 & 30 avril \\
+2018  & 6.53 & 4 & 13 mars \\
+2019  & 5.13  &  4 & 9 mars \\
+%2018  &      & 4 & 11 mars \\ A vérifier et ajouter en 2018
+\bottomrule
+\end{tabular}
+\end{table}
+\normalsize
+Les arrivée de civelles sont estimées à l'échelle du stock par les données d'un
+ensemble de sites mesurant les arrivées sur le long terme sur l'ensemble du
+territoire européen. Ces sites peuvent être des passes, des zones où sont
+effectuées des suivis scientifiques, ou des séries de captures issues de la
+pêche. Un indice de recrutement européen est calculé chaque année par le groupe
+de travail du CIEM. Lorsqu'on compare la série de recrutement provenant des
+captures de la pêcherie de Vilaine à la série européenne, la Vilaine est la
+station présentant le moins d'écart à la tendance moyenne des séries européennes
+(indice wgeel, Figure \ref{figure_recrutement}).
+
+\begin{figure}[htpb]
+\centering
+\includegraphics[width=0.45\textwidth]{recrutement_vilaine_europeen}
+\caption{Indice de recrutement européen du WGEEL: moyenne géométrique des
+prédiction de recrutement (GLM) pour tous les sites en dehors de la mer du nord
+jusqu'à \Sexpr{CY}. Le modèle GLM ($recruit \sim area:year+site$) est calé sur
+les séries de recrutement européenne comprenant soit des civelles soit un mélange de
+  civelles et de jeunes anguilles jaunes. Ces données sont comparées à la
+  série de recrutement de la Vilaine. Les deux séries sont
+  ajustées pour que la moyenne des années 1960 et 1970 soit à 1. Les valeurs avant la fermeture du barrage 
+  (avant 1970) ne sont pas inclues dans cette standardisation ni dans la série de
+  recrutement européen. Les valeurs de 2012 à 2014 pour lesquelles les captures
+  ont été influencées par les quotas n'ont pas non plus été inclues.}
+\label{figure_recrutement}
+\end{figure}
+\subsection{Conversion poids - effectif}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%   POIDS MOYEN DES CIVELLES   %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+<<calcul_coeff_conversion, echo=FALSE, eval=FALSE,results=hide >>=
+#'========================================================
+#' LANCEMENT
+#' Ce script utilise le BilanPoidsMoyen qu'il combine avec la base de données
+#' "mortciv" qui va chercher des données de poids moyen en estuaire
+#' ATTENTION DE BIEN POINTER VERS LA BONNE BASE (chunk init ET lien odbc bd_contmig_nat)
+#' La base mortciv n'est pas en localhost sur l'ordinateur de Cédric
+#' =======================================================
+# teste qu'on a bien chargé CY dans le chunk init
+stopifnot(exists("CY"))
+
+
+bilPM<-new("report_ge_weight")
+anneedebut=1995
+anneefin=CY
+listechoix=">1" # ">1" "=1" # "tous"
+type_poids= switch (listechoix,
+	">1"="humides",
+	"=1"="secs",
+	"tous"="humides et secs")  
+
+
+bilPM@liste<-charge(object=bilPM@liste,listechoice=c("=1",">1","tous"),label="")
+
+# here I'm using weights when number are larger than 1 ie wet weight
+
+bilPM<-choice_c(bilPM,
+	dc=c(6),			
+	anneedebut=anneedebut,
+	anneefin=anneefin,
+	selectedvalue=listechoix,
+	silent=FALSE)
+bilPM<-stacomiR::connect(bilPM)	
+#coe<-bilPM@coe@data
+#x11();plot(coe$coe_date_debut,1/coe$coe_valeur_coefficient)
+#'========================================================
+#' Données Estuaire (traitement spécifique IAV ... et oui on en a quand même...)
+#' Requète pour rechercher les données de poids moyen provenant d'échantillons de l'estuaire
+#'========================================================
+library(getPass)
+pois <- getPass(msg="Main password")
+host <- decrypt_string(hostpostgres,pois)
+user <- decrypt_string(userdistant,pois)
+password<- decrypt_string(passworddistant,pois)
+baseODBC<-c("bd_contmig_nat","iav","iav")
+baseODBCmortciv=c("mortciv",user,password)
+# below to work with class RefPoidsMoyenest in package....
+assign("baseODBCmortciv",baseODBCmortciv,envir_stacomi)
+# ci dessous pour être cohérent avec le bilan migration
+datedebut=strptime(paste(anneedebut-1,"-08-01",sep=""),format="%Y-%m-%d")
+datefin=strptime(paste(anneefin,"-08-01",sep=""),format="%Y-%m-%d")
+requete=new("RequeteODBCwheredate")
+requete@datedebut=datedebut
+requete@datefin=datefin
+requete@colonnedebut="datedebutpeche"
+requete@colonnefin="datefinpeche"
+requete@baseODBC<-baseODBCmortciv
+requete@select="SELECT lot_identifiant,
+	datedebutpeche AS ope_date_debut ,
+	datefinpeche AS ope_date_fin,
+	lot_effectif,
+	car_valeur_quantitatif as poids,
+	(car_valeur_quantitatif/lot_effectif) AS w, 
+	(datefinpeche-datedebutpeche)/2 AS duree,
+	datedebutpeche+(datefinpeche-datedebutpeche)/2 AS datemoy,
+	date_part('year', datedebutpeche) AS annee,
+	date_part('month',datedebutpeche) AS mois  
+	FROM vue_ope_lot_poids"
+requete@and=ifelse(listechoix=="tous", "",paste(" AND  lot_effectif", listechoix))
+requete=connect(requete)  
+peche<-requete@query
+#####################
+# Ci dessous je combine les données provenante de l'estuaire ("pêche") et 
+# les données provenant de la passe ("passe")
+# je remet le tout dans data
+#########################
+peche$source="peche"
+passe<-bilPM@data
+passe$source="passe"
+#str(passe)
+#str(peche)
+donnees=rbind(peche,passe)
+donnees<-donnees[order(donnees$datemoy),]
+bilPM@data<-donnees
+save(bilPM,file=str_c(datawdy,"bilPM.Rdata"))
+#%#%##%#%#%#%##%#%#%#%##%#%#%#%##%#%#%#%##%#%#
+#load(file=str_c(datawdy,"bilPM.Rdata"))
+#%#%##%#%#%#%##%#%#%#%##%#%#%#%##%#%#%#%##%#%#
+#'========================================================
+#' Calcul des données
+#'========================================================
+
+bilPM<-calcule(bilPM)
+plot(bilPM, plot.type=3)
+# verification des données déjà en base
+plot(bilPM, plot.type=2)
+# Il doit y avoir des lots de civelles mal classées ou des erreurs
+# TODO Brice : vérifier les données en base
+lots_trop_grands<-bilPM@data[bilPM@data$w>0.45,]
+lots_trop_grands<-bilPM@data[bilPM@data$w>0.45&bilPM@data$annee%in%c(2006,2007),]
+
+bilPM@data<-bilPM@data[!bilPM@data$lot_identifiant%in%lots_trop_grands$lot_identifiant,]
+bilPM<-calcule(bilPM)
+don<-bilPM@calcdata$data
+## ci dessous j'utilise le tableau provenant de calcdata (car c'est le format
+## utilisé par le modèle, mais pour faire de beaux graphes j'y rattache les sources
+## peche et passe que je vais rechercher dans le slot data et que je recolle avec un merge
+dat<-bilPM@data[,c("lot_identifiant","source")]
+colnames(dat)<-c("lot","source")
+don<-merge(don,dat)
+
+#'========================================================
+#' Graphique avec la source "passe" et pêche
+#'========================================================
+
+# Le graphique ci dessous reprend le code du graphique
+# plot.type=3 du bilPM mais ajoute une couleur en 
+# fonction de la source des civelles.
+cols<-c("peche"="#B6792D","passe"="#042B45")
+png(file=str_c(imgwdy,"pm.png"),width=14,height=10,unit="cm",res=300)
+p<-ggplot(aes(x=date,y=w,colour=source),data=don)
+p+geom_point(aes(size=effectif))+
+	xlab("date")+ylab("poids moyen humide (g)")+theme_bw()+
+	scale_size_continuous("effectif",range=c(1,4))+
+	scale_colour_manual("source",
+		values = cols,
+		labels=c("passe","estuaire")
+	)
+dev.off()
+
+
+#'========================================================
+#' Nombre de poids moyen en fonction de l'année et de la source
+#' génération d'un tableau latex pour le rapport
+#'========================================================
+
+#nombre de poids moyens npm
+npm<-bilPM@data%>%group_by(annee,source)%>%summarize(N=n())
+tnpm<-dcast(npm,annee~source,value.var="N")
+colnames(tnpm)<-c("annee","passe","estuaire $^*$")
+xtnpm<-xtable(tnpm,
+	caption=str_c("Nombre d'échantillons de poids moyen de civelles depuis ",anneedebut, " et jusqu'au 01 août ",
+			CY, " $^*$Données collectées en pêches expérimentales et par pêche professionnelle"),
+	label="tnpm",
+	digits=0)
+path_tmpm=file.path(tabwdy,"tnpm.tex",fsep ="")
+print(xtnpm,file=path_tmpm, sanitize.colnames.function = function(x){x})
+vvv[["PM"]]<-list()
+vvv[["PM"]][["CY"]]<-list()
+vvv[["PM"]][["CY"]][["N"]]<-
+	sum(tnpm[tnpm$annee==CY,c(2,3)],na.rm=TRUE)
+vvv[["PM"]][["path_tnpm"]]<-gsub("C:/workspace/","../../../",path_tmpm)
+#'========================================================
+#' Modélisation de l'évolution des poids moyens
+#'========================================================
+
+png(file=str_c(imgwdy,"smpm_seasonal.png"),width=12,height=10,unit="cm",res=300)
+bilPM<-model(bilPM,model.type="seasonal")
+dev.off()
+
+fndate<-function(data){
+  if (!"date"%in%colnames(data)) stop ("date should be in colnames(data)")
+  if (!class(data$date)[1]=="POSIXct") stop("date should be POSIXct")
+  data$year<-lubridate::year(data$date)
+  # lubridate::yday(lubridate::dmy(01082008))
+  data$yday=lubridate::yday(data$date)
+  data$doy=data$yday-212 # year begins in august to be consistent with the class 			
+  data$season<-stringr::str_c(lubridate::year(data$date)-1,"-",lubridate::year(data$date)) # year-1-year
+  data$season[data$doy>0]<-stringr::str_c(lubridate::year(data$date),"-",lubridate::year(data$date)+1)[data$doy>0] # for november and december it's year - year+1
+  data$yearbis<-data$year # same as season but with a numeric
+  data$yearbis[data$doy>0]<-data$yearbis[data$doy>0]+1 # same as season but a numeric
+  data$doy[data$doy<0]<-data$doy[data$doy<0]+365
+  data$time=as.numeric(data$date-origine)
+  return(data)
+}
+#import_coe=get('import_coe',envir_stacomi)
+#origine<-as.POSIXct(trunc(min(import_coe$coe_date_debut),"day"))		
+#mycols<-colnames(import_coe)
+#import_coe$date<-import_coe$coe_date_debut
+#import_coe2<-fndate(import_coe)
+#import_coe2<-import_coe2[import_coe2$season%in%c("1996-1997","1997-1998","1998-1999","1999-2000","2000-2001","2002-2003","2003-2004","2004-2005","2006-2007","2009-2010",
+#		"2010-2011","2011-2012","2012-2013","2013-2014","2014-2015","2015-2016"),]
+## je remplace le tableau des coefficients à écrire à la bonne place
+#bilPM@calcdata[['import_coe']]<-import_coe2
+
+# DECOMMENTER CI DESSOUS POUR ECRIRE!!!!!!!!!!!
+#write_database(bilPM,dbname="bd_contmig_nat_iav")
+
+#########################
+# Modèle seasonal2 (non retenu)
+#########################
+
+bilPM<-model(bilPM,model.type="seasonal2")
+# edition manuelle de l'échelle des dates (illisible sinon)
+p<-get("p",envir_stacomi)
+png(file=str_c(imgwdy,"smpm_seasonal2.png"),width=12,height=10,unit="cm",res=300)
+p+scale_x_datetime(date_breaks="2 years",date_labels="%Y")
+dev.off()
+#import_coe=get('import_coe',envir_stacomi)
+##inspection des graphiques je choisis de ne modéliser que depuis août 2011
+#import_coe<-import_coe[import_coe$coe_date_debut>=strptime("2007-08-01",format="%Y-%m-%d")&
+#		import_coe$coe_date_debut<strptime("2008-08-01",format="%Y-%m-%d"),]
+## je remplace le tableau des coefficients à écrire à la bonne place
+#bilPM@calcdata[['import_coe']]<-import_coe
+# DECOMMENTER CI DESSOUS POUR ECRIRE !!!!!!!!!!!!!
+#write_database(bilPM,dbname="bd_contmig_nat_iav")
+
+#########################
+# Modèle manual (le bon)
+#########################
+bilPM<-calcule(bilPM)
+bilPM<-model(bilPM,model.type="manual")
+newcoe<-get("newcoe",envir=envir_stacomi)
+don<-get("don",envir=envir_stacomi)
+don$effectif[don$effectif>200]<-200 # pour le graphe
+# Ci dessous, ce n'est qu'au moment de caler le modèle qu'on se rend compte des outliers
+# le code ci dessous montre comment aller chercher les "coordonnées" des points
+# pour les virer du jeu de données
+# il est mis en tête de script par cohérence pour les sorties
+#install.packages("iplots",dep=TRUE,repos="http://cran.irsn.fr")
+#library(iplots)
+#iplot(don$time,don$w)
+# removing outliers
+don<-don[!don$w>0.44,]
+don<-don[!(don$time%in%c(17100,17460,91707.05,42372,121629,78285)&don$w<0.25&round(don$w,3)!=0.179),]
+
+#don<-don[don$date>=strptime("2008-08-01",format="%Y-%m-%d"),]
+#require(mgcv)
+#season<-as.factor(don$season)
+#don$season<-as.factor(don$season)
+#g1 = gam(w~s(yday,by=season,bs="cc",k=6)+s(time,k=8),data=don,knots = list(yday = c(1, 365)))
+## the knots=list(yday=c(1,365) is necessary fr a smooth construction of the model
+#summary(g1)
+#png(file=str_c(imgwdy,"smpm_manual.png"),width=480,height=480)
+#plot(g1,page=2)
+#dev.off()
+#
+predata<-newcoe
+## no data for the first year
+predata$season[predata$season=="1995-1996"]<-"1996-1997"
+predata<-predata[predata$season!=str_c(CY,"-",CY+1),]
+#pred<-predict(g1, newdata=predata,se.fit=TRUE)
+#predata$pred_weight<-pred$fit
+#predata$pred_weight_lwr<-pred$fit-1.96*pred$se.fit
+#predata$pred_weight_upr<-pred$fit+1.96*pred$se.fit
+nyears<-length(unique(don$season))
+#
+#ggplot(don)+ geom_jitter(aes(x=date,y=w),col="aquamarine4")+
+#		geom_line(aes(x=date,y=pred_weight),data=predata)+
+#		geom_ribbon(data=predata,aes(x=date,ymin=pred_weight_lwr,ymax=pred_weight_upr),alpha=0.3,fill="saddlebrown")+
+#		scale_x_datetime(date_breaks="years",date_minor_breaks="month")+
+#		theme_minimal() +
+#		theme(panel.border = element_blank(),
+#				axis.line = element_line())+
+#		xlab("Date")
+#
+#g2<-gam(w~s(yday,bs="ps",k=12)+s(time, bs = "cr", k = nyears), 
+#			   data=don,
+#             family = gaussian)
+#summary(g2)
+#
+#pred<-predict(g2, newdata=predata,se.fit=TRUE)
+#predata$pred_weight<-pred$fit
+#predata$pred_weight_lwr<-pred$fit-1.96*pred$se.fit
+#predata$pred_weight_upr<-pred$fit+1.96*pred$se.fit
+#nyears<-length(unique(don$season))
+#
+#ggplot(don)+ geom_jitter(aes(x=date,y=w),col="aquamarine4")+
+#		geom_line(aes(x=date,y=pred_weight),data=predata)+
+#		geom_ribbon(data=predata,aes(x=date,ymin=pred_weight_lwr,ymax=pred_weight_upr),alpha=0.3,fill="saddlebrown")+
+#		scale_x_datetime(date_breaks="years",date_minor_breaks="month")+
+#		theme_minimal()+
+#		theme(panel.border = element_blank(),
+#				axis.line = element_line())+
+#		xlab("Date")
+require(mgcv)
+g3<-gam(w~s(yday,bs="cc",k=12)+
+		s(time, bs = "cr", k = nyears)+				
+		ti(yday,time,
+			k=c(12,nyears),
+			bs = c("cc", "cr")),		
+	data=don,
+	family = gaussian)
+summary(g3)
+
+pred<-predict(g3, newdata=predata,se.fit=TRUE)
+predata$pred_weight<-pred$fit
+predata$pred_weight_lwr<-pred$fit-1.96*pred$se.fit
+predata$pred_weight_upr<-pred$fit+1.96*pred$se.fit
+
+
+# premier graphique de 1996 à 2006
+png(file=str_c(imgwdy,"smpm_manual1.png"),width=12,height=10,unit="cm",res=300)
+p<-ggplot(don)+ geom_point(aes(x=date,y=w,size=effectif),col="#043C6B")+
+	scale_size_continuous(range=c(0.5,4))+
+	geom_line(aes(x=date,y=pred_weight),data=predata)+
+	geom_ribbon(data=predata,aes(x=date,ymin=pred_weight_lwr,ymax=pred_weight_upr),alpha=0.3,fill="#BF8330")+
+	theme_minimal()+
+	theme(panel.border = element_blank(),
+		axis.line = element_line())+
+	scale_x_datetime(limits=as.POSIXct(c(as.Date("1996-01-01"),as.Date("2006-01-01")),date_labels = "%Y",date_breaks="2 years"))+
+	xlab("Date")+
+	ylim(0.1,0.5)
+print(p)
+dev.off()
+png(file=str_c(imgwdy,"smpm_manual2.png"),width=12,height=10,unit="cm",res=300)
+p<-ggplot(don)+ geom_point(aes(x=date,y=w,size=effectif),col="#043C6B")+
+	scale_size_continuous(range=c(0.5,4))+
+	geom_line(aes(x=date,y=pred_weight),data=predata)+
+	geom_ribbon(data=predata,aes(x=date,ymin=pred_weight_lwr,ymax=pred_weight_upr),alpha=0.3,fill="#BF8330")+	theme_minimal()+
+	theme(panel.border = element_blank(),
+		axis.line = element_line())+
+	scale_x_datetime(date_labels = "%Y",limits=as.POSIXct(c(as.Date("2006-01-01"),as.Date("2019-01-01"))),date_breaks="2 years")+
+	xlab("Date")+
+	ylim(0.1,0.5)
+print(p)
+dev.off()
+
+#gam.check(g3)
+#plot(g3, rug = FALSE, se = FALSE, n2 = 80, main = "gam with t2")
+
+png(file=str_c(imgwdy,"smpm_t2.png"),width=14,height=14,unit="cm",res=300)
+vis.gam(g3, n.grid = 50, theta = 20, phi = 50, zlab = "",
+	ticktype = "detailed", color = "topo", main = "t2(yday,time)")
+dev.off()
+com=str_c("manual edited model with gam as :",print(str_c(as.character(g3$formula)[c(2,1,3)],collapse=" "),quote = FALSE))
+# a la main ça va plus vite
+smpm.form<-"w \\sim s(yday,bs=cc,k =12)+s(time,bs=cr,k=20)+ti(yday,time,k=c(12,nyears),bs=c(cc,cr))"
+
+import_coe=data.frame(
+	"coe_tax_code"='2038',
+	"coe_std_code"='CIV',
+	"coe_qte_code"=1,
+	"coe_date_debut"=Hmisc::roundPOSIXt(predata$date,digits="days"),
+	"coe_date_fin"=Hmisc::roundPOSIXt(predata$date,digits="days")+as.difftime(1,units="days"),
+	"coe_valeur_coefficient"=1/predata$pred_weight,
+	"coe_commentaires"=com)
+bilPM@calcdata[["import_coe"]]<-import_coe	
+# DECOMMENTER CI DESSOUS POUR ECRIRE!!!!!!!!!!!!!!!
+
+# write_database(bilPM)
+
+# récupération des composants du "summary"
+# deux composants pour le gam, l'un pour les termes fixes
+# l'autre pour les smoother
+# je récupère aussi la formule (que je mets dans vvv
+# pour pouvoir mettre eval=FALSE et ne pas lancer le tableau de données)
+# que je mets dans des tableaux de données
+options("xtable.include.rownames"=TRUE)
+smpm<-g3
+smpm.parametric_coefficients<-summary(g3)$p.table
+smpm.smooth_terms<-summary(g3)$s.table 
+xt.smpm.pc<-xtable(smpm.parametric_coefficients,label="smpm.pc",
+	caption ="Intercept pour le modèle GAM de poids moyen.",
+	digits=c(0,2,3,2,4),
+	display=c("s","f","d","f","e")
+)
+xt.smpm.st<-xtable(smpm.smooth_terms,label="smpm.st",
+	caption ="Termes de lissage pour le modèle gam, edf = degrés de liberté estimés.",
+	digits=c(0,2,0,2,3),
+	display=c("s","f","d","f","e"))
+# ecriture du tableau de données (xtable) dans un fichier
+# editer pour caractères spéciaux à la main si manual launch
+path.smpm.pc=file.path(tabwdy,"smpm.pc.tex",fsep ="")
+print(xt.smpm.pc,file=path.smpm.pc,table.placement="!ht")
+path.smpm.st=file.path(tabwdy,"smpm.st.tex",fsep ="")
+print(xt.smpm.st,file=path.smpm.st,table.placement="!ht")
+options("xtable.include.rownames"=FALSE)
+vvv[["PM"]][["path_spm_pc"]]<-gsub("C:/workspace/","../../../",path.smpm.pc)
+vvv[["PM"]][["path_spm_st"]]<-path_smpm_st<-gsub("C:/workspace/","../../../",path.smpm.st)
+vvv[["PM"]][["formula"]]<-smpm.form
+save(vvv,file=str_c(datawdy,"vvv.Rdata"))
+@
+Les données de poids moyen proviennent essentiellement de la
+passe, mais elles peuvent également provenir d'échantillons collectés en
+estuaire, lorsque la pêche est continue sans arrêt dans la saison et que le
+nombre de civelles montant sur la passe n'est pas suffisant pour collecter des
+informations sur les caractéristiques biométriques des civelles. 
+
+Au total, en \Sexpr{CY} \footnote{jusqu'au 01/08/\Sexpr{CY})}, 
+\Sexpr{vvv[["PM"]][["CY"]][["N"]]} échantillons de poids moyen ont été collectés  (Tableau \ref{tnpm}). 
+%==========================================================================
+%           Tableau des nombres de poids moyens
+\small
+\input{\Sexpr{vvv[["PM"]][["path_tnpm"]]}}
+\normalsize
+%==========================================================================
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{pm.png}
+  \caption{\og Poids moyens humides \fg{} collectés en 
+  estuaire de Vilaine sur des échantillons achetés aux pêcheurs de civelles
+  (source pêche) et sur la passe en rive gauche du barrage d'Arzal (source passe).
+  Les effectifs des échantillons sont indiqués par la taille du point.}
+  \label{pm}
+  \end{center}
+\end{figure}
+%==========================================================================
+ 
+ Parmi les modèles testés, le modèle des poids moyens
+ \textsf{model.type="seasonal2"} ajuste bien la tendance de long terme.
+ Il traduit l'évolution positive du poids moyen des civelles
+ depuis un minimum en 2009 juqu'à un maximum en 2014 (Figure
+ \ref{smpm_seasonal2}).
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.45\textwidth]{smpm_seasonal2.png}
+  \caption{Tendance saisonnière des poids moyens de 1996 à \Sexpr{CY}, calée
+  avec une tendance de long terme et une tendance saisonnière sinusoïde (model.type="seasonal2" dans
+  stacomiR). L'ajustement de long terme est correct mais les valeurs extrêmes
+  sont mal ajustées.}
+  \label{smpm_seasonal2}
+  \end{center}
+\end{figure}
+%==========================================================================
+
+ Toutefois, ce modèle, ainsi que le modèle \textsf{model.type = "seasonal1"} -
+ non présenté - basé sur des gam au lieu de sinusoides, imposent une tendance
+ cyclique commune à l'ensemble des années qui a du mal à ajuster les valeurs aux extrêmes.
+ 
+ \textit{A contrario}, le modèle ajustant par année une tendance sinusoïde
+ ajuste bien les tendances saisonnières de chaque année, mais pose deux autres problèmes.
+ D'une part il introduit des ruptures de tendance d'une année sur l'autre,
+ d'autre part il ajuste mal les années où des données sont manquantes (Figure
+ \ref{smpm_seasonal}).
+ Dans l'ensemble, les données de poids moyen des premières 10 années, moins
+ standardisées, sont plus difficiles à ajuster.
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.45\textwidth]{smpm_seasonal.png}
+  \caption{Tendance saisonnière des poids moyens de 2006 à \Sexpr{CY}. Ajustement par
+  le modèle de \citet{desaunay_seasonal_1997}. Les années avec des données
+  manquantes sont moins bien ajustées.}
+  \label{smpm_seasonal}
+  \end{center}
+\end{figure}
+%==========================================================================
+
+Au final, le script utilise la sortie \textsf{"manual"} de stacomi pour caler un
+modèle \textit{ad hoc} (Formule \ref{formule_model_manual}).
+\begin{equation}
+\begin{align}
+\label{formule_model_manual}
+w \sim & s(yday,bs=cc,k=12)+s(time,bs=cr,k=20) \\
+         &+ti(yday,time,k=c(12,20), bs=c(cc,cr)) \\
+\end{align}
+\end{equation}
+L'objectif est également de fournir dans le script
+de ce rapport, un exemple d'ajustement manuel tel que prévu dans le logiciel
+stacomiR.
+Les coefficients du modèle pour la partie linéaire (coefficients
+paramétriques) se réduisent à l'intercept (Tableau \ref{smpm.pc}).
+
+
+Les courbes saisonnières sont ajustées à l'aide de modèles gam, avec un terme
+cyclique pour la saison, une tendance de long terme, et une interaction à l'aide
+de produits tensoriels pour chaque saison \citep{wood_low-rank_2006} (Tableau
+\ref{smpm.st}, Figure \ref{smpm_t2}).
+
+Au final les prédictions du modèles et l'intervalle de confiance à 95\% sont
+données en Figure \ref{smpm_manual}. 
+\small
+\input{\Sexpr{vvv[["PM"]][["path_spm_pc"]]}}
+\normalsize
+
+\small
+\input{\Sexpr{vvv[["PM"]][["path_spm_st"]]}}
+\normalsize
+
+%==========================================================================
+\begin{figure}[htbp]
+  \begin{center}
+  \includegraphics[width=0.45\textwidth]{smpm_t2.png}
+  \caption{Réponses du modèle ajusté manuellement pour les années 2008 à \Sexpr{CY},
+ réponse croisée suivant la durée (time) et le jour. La méthode utilise les
+ produits tensoriels alternatifs (t2) du package mgcv. En résumé, la "vallée"
+ représente l'évolution au cours du temps de la forme de la sinusoïde des
+ poids moyens.}
+ \label{smpm_t2}
+  \end{center}
+\end{figure}
+%==========================================================================
+%==========================================================================
+\begin{figure}[htbp]
+  \begin{center}
+  \includegraphics[width=0.45\textwidth]{smpm_manual1.png}
+   \includegraphics[width=0.45\textwidth]{smpm_manual2.png}
+  \caption{Prédictions du modèle ajusté manuellement pour les années 2008 à
+  \Sexpr{CY}, les points représentent les poids moyens mesurés (en fonction des
+  effectifs), et les courbes les prédictions du modèle avec les intervalles de confiance à 95\%.}
+  \label{smpm_manual}
+  \end{center}
+\end{figure}
+%==========================================================================
+
+La tendance des poids moyens humides
+renseigne à la fois sur la tendance de poids des civelles mais elle intégre
+aussi une partie liée à l'opérateur (égouttage plus ou moins prononcé) lors de
+la mesure des poids (Figure \ref{smpm_manual}). Les tendances fines
+des variations interannuelles des caractéristiques des civelles doivent donc
+être analysées à l'aide des données de poids individuel et des données de taille.
+\FloatBarrier
+%\clearpage
+\subsection{Les migrations de civelles}
+
+
+La migration des civelles pour \Sexpr{CY} s'établit à
+\Sexpr{sn(vvv[["CIV"]][["N"]])} individus pour un poids de
+\Sexpr{sn(vvv[["CIV"]][["P"]])} kg ce qui place cette année au
+    \Sexpr{vvv[["CIV"]][["rank"]]} ème rang sur
+    \Sexpr{vvv[["AGJ"]][["maxrank"]]} années de suivi (Figure \ref{barplot_civelles_an}, tableau \ref{table_civelle}).
+
+ %==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{barplot_civelles_an.png}
+  \caption{Effectif de civelles estimés sur les deux passes du barrage d'Arzal
+  entre 1996 et \Sexpr{CY}.}
+  \label{barplot_civelles_an}
+  \end{center}
+\end{figure}
+%==========================================================================
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\small
+\input{\Sexpr{vvv[["CIV"]][["path_civ"]]}}
+\normalsize
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Les tendances interannuelles de migration montrent des montées sur les passes
+extrêmement variables d'une année à l'autre (Figure
+\ref{figure_barchart_bmi_civelles}).
+
+Cette variabilité de la migration en terme quantitatifs masque pourtant un
+phénomène migratoire essentiellement centré sur le mois d'avril avec un décalage
+récent sur les mois janvier -février (Figure
+\ref{figure_saisonnalite_civelles}).
+
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.4\textwidth]{saisonnalite_civelles.png}
+  \caption{Saisonnalité des migrations de civelles, données combinées sur les
+  deux dispositifs de franchissement du barrage.}
+  \label{figure_saisonnalite_civelles}
+  \end{center}
+\end{figure}
+%==========================================================================
+
+Pour interpréter les effectifs en migration sur les passes, il faut comprendre
+que ceux-cis sont dépendants de la pêcherie. Les arrivées estuariennes les plus
+importantes sont en janvier et février mais l'échappement nécessaire pour que la passe fonctionne
+n'intervient que lorsque la pêche est arrêtée sur plusieurs jours de rang.
+La transition de comportement nécessaire pour que les civelles passent en phase
+active prendrait entre 15 et 30 jours pour une température de 8 à 12 degrés
+\citep[voir][p 186]{briand_dynamique_2009}. 
+Ainsi, sur la période historique précédant la mise en \oe uvre du plan de
+gestion, le constat a été effectué par modélisation que seules des mesures de gestion
+basées sur des fermetures saisonnières de la pêcherie, pouvaient conduire à un
+échappement substantiel \citep[détails sur][figure 4]{beaulaton_effect_2007}.
+
+Les montées supérieures à quelques civelles par jour ont toujours
+débuté entre fin mars et début avril entre 1996 et 2009 (Figure
+\ref{figure_seasonal_civelles}). Après l'implémentation des plans de gestion, en
+2010 et 2011, l'exploitation a couvert l'ensemble de la saison, car les mesures
+de gestion saisonnières ont été retirées du plan de gestion dont la nouvelle
+mesure de régulation était le quota. Malheureusement, le quota a été basé sur
+des valeurs de captures qui correspondaient à un taux d'exploitation important
+sur la Vilaine, et la poursuite de la baisse du recrutement s'est traduite par
+des niveaux de quotas supérieurs aux arrivées effectives sur la Vilaine. Les effectifs totaux en migration sur les passes d'Arzal se sont
+vraiment effondrés avec des poids de 5.4 et 2.5 kg (pour des captures de 3 tonnes et 3.9 tonnes
+- Tableau \ref{tableau_captures}). Du point de vue de la saisonnalité, ces deux
+années sont donc difficilement interprétables car les effectifs y sont trop
+faibles.
+
+A partir de 2012, les arrivées de civelles connaissent une augmentation (Figure \ref{figure_recrutement}).
+Les quotas, qui sont alors toujours calculés sur une
+tendance à la baisse, ne dépassent plus le recrutement. La pression de pêche
+diminue aussi du fait d'une diminution du nombre de navires. Ainsi, l'estuaire
+connait des périodes continues sans pêche.
+
+La saisonnalité des arrivées en a été bouleversée. Les températures parfois
+clémentes, ont autorisé la migration de civelles sur les passes, dont les
+effectifs hebdomadaires en janvier, février ou mars pourront dépasser 1 million de
+civelles par semaine (Figure \ref{figure_seasonal_civelles}). 
+
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.45\textwidth]{plot_seasonal_civelles.png}
+  \caption{Migrations de civelles sur les deux dispositifs du barrage d'Arzal,
+  chaque cluster indique l'effectif ayant migré cette semaine, la barre
+  horizontale indique les quantiles 5\% et 95\% de la migration.
+  En couleurs période entre la première arrivée de civelles et la
+  dernière, avec une couleur relative à l'importance des effectifs en migration.
+  En gris, période inclue entre la première et la dernière arrivée de civelles
+  mais sans migration observée cette semaine.
+  Les points représentent la date médiane de migration des civelles, ils sont reliés par une ligne en pointillé
+  qui indique un changement de la saisonnalité après l'implémentation du plan
+  de gestion (2009).}
+  \label{figure_seasonal_civelles}
+  \end{center}
+\end{figure}
+%==========================================================================
+
+En 2015, le quota ne permet pas d'arrêts de la pêcherie pendant la
+saison.  La pêche s'étend sur toute la durée de la saison et on retrouve 
+les très faibles échappements de 2010 et 2011 (Tableau
+\ref{table_civelle} et Figure \ref{barplot_civelles_an}).
+
+En 2016, il y a eu plusieurs arrêts de pêche au cours de la saison, qui
+ont permis l'échappement de civelles. Les civelles destinées au
+repeuplement ont été pêchées en fin de saison. Les migrations de janvier et
+février sont les plus fortes jamais enregistrées pour ces mois.
+
+La pêche durant la saison 2017 est interrompue à quelques reprises, environ une
+semaine fin janvier et deux semaines courant mars. La première interruption
+ne permet pas la migration de civelles car les températures d'eau sont très basses.
+Les échappements à la pêcherie en mars atteignent à peine la moyenne historique,
+bien que la migration 2017 soit très majoritairement regroupée pendant ce mois
+\citep{briand_suivi_2018b}. Avec la reprise de la pêche ensuite
+jusqu'à fin avril, la migration est anecdotique.
+
+En 2018, les captures sont importantes dès le début de la saison. La pêche est quasi continue, 
+sans aucune migration sur les passes, et la fin de la saison est précoce malgré le transfert 
+de quota de 1300 kg depuis l'Adour. Bien que la fermeture intervienne le 13 mars, 
+les migrations restent faibles par la suite. 
+
+Les arrivées durant la saison 2019 sont très précoces et les captures fortes dès décembre. 
+Il y a peu d'interruptions de pêche, et très peu de migration sur les passes. 
+Aucun transfert de quota ne retarde la fin de saison qui intervient tôt, le 9 mars. 
+La migration sur les passes s'effectue à 80\% sur 2 semaines, la dernière de
+mars et la première d'avril.
+
+Les résultats pour les deux dernières années sont surprenants, car les
+arrêts de la pêcherie sont intervenus très tôt et sont une mesure de gestion
+importante, correspondant aux préconisations de "bonne gestion" de la ressource.
+Un examen particulier des montées sur la passe du mur guide eau (rive droite) et
+du gabion (en rive gauche) montre une diminution de la proportion de captures sur le gabion (la passe principale). Une des causes possible pourrait être une
+mauvaise répartition des débits entre la rampe amont et la rampe aval de la
+passe du gabion \footnote{La rampe amont adossée au bajoyer est globalement peu
+efficace, toutefois pour une configuration de débit similaire, l'année 2020 (rapport à venir)
+revient à un  \og pourcentage \fg{} normal du ratio entre la passe et le gabion
+}.
+Une analyse plus fine des fonctionnements des vannes du barrage et de leur influence
+sur les montées respectives du guide eau et du gabion serait également à
+conduire. Il est cependant possible que les arrivées tardives aient été faibles.
+Le suivi avec marquage recapture entre 1996 et 2005 a montré la grande
+variabilité des arrivées tardives et leur influence sur les montées.
+
+Enfin, on compare les arrivées sur une chronique historique, or le recrutement
+en civelles est de l'ordre de quatre à six fois moins important qu'en début de
+période. Même si en comparaison aux premières années, la pression de pêche a
+beaucoup diminué, les montées se font sur la base d'effectif estuariens très
+limités.
+
+
+Le détail mensuel de la migration de 2019 (en effectif) est donné en annexe aux
+Tableaux \ref{table_civelle_mois_6} et \ref{table_civelle_mois_12}. Les Tableaux
+\ref{table_civelle_6} et \ref{table_civelle_12} synthétisent la migration par
+an, à la fois en poids et en effectif.
+\onecolumn
+\subsection{Migration des civelles en \Sexpr{CY} (graphiques)}
+
+
+%==========================================================================
+\begin{figure}[htbp]
+  \begin{center}
+  \includegraphics[width=0.8\textwidth]{barchart_bmi_civelles.png}
+  \caption{Comparaison des migrations de civelles de l'année \Sexpr{CY} à la
+  tendance historique (en gris, valeurs min et max et moyenne (hist\_mean), en bleu valeurs maximales, en bleu clair
+  valeurs supérieures à la moyenne, en marron valeurs inférieures à la
+  moyenne.}
+  \label{figure_barchart_bmi_civelles}
+  \end{center}
+\end{figure}
+%==========================================================================
+%==========================================================================
+\begin{figure}[htbp]
+  \begin{center}
+  \includegraphics[width=\textwidth]{bmm_civelle_6}
+  \caption{Bilan migration du piège principal en rive gauche, le bilan montre
+  aussi la conversion entre les poids et les effectifs, 
+  les fonctionnement du dispostif de franchissement (DF), du
+  piège (DC), et les opérations de contrôle (Op).}
+  \label{bmm6}
+  \end{center}
+\end{figure}
+%==========================================================================
+%==========================================================================
+\begin{figure}[htbp]
+  \begin{center}
+  \includegraphics[width=\textwidth]{bmm_civelle_12}
+  \caption{Bilan migration du piège secondaire, en rive droite, le bilan montre aussi la conversion entre les poids et les effectifs, 
+  les fonctionnement du dispostif de franchissement (DF), du
+  piège (DC), et les opérations de contrôle (Op).}
+  \label{bmm_civelle_12}
+  \end{center}
+\end{figure}
+%==========================================================================
+\twocolumn
+
+
+<<miseajour_bilj_civelle, echo=FALSE, eval=FALSE,results=hide >>=
+# lancement manuel des bilans migration pour écrire dans la table les bilans journaliers
+# les données ont changé car j'ai re-modélisé les poids.
+# il faut relancer ça chaque année.
+bM=new("report_mig")
+for (Y in 1996:CY){  
+  cat(str_c("Y=",Y))
+  bM=choice_c(bM,
+	  dc=c(6),
+	  taxa=c("Anguilla anguilla"),
+	  stage=c("CIV"),
+	  datedebut=str_c(Y,"-01-01"),
+	  datefin=str_c(Y,"-12-31"))
+  bM<-charge(bM,silent=TRUE)
+  bM<-connect(bM,silent=FALSE)
+  bM<-calcule(bM,silent=FALSE)
+  if (nrow(bM@data)>0 ){
+	write_database(bM,silent=TRUE)
+  }
+}
+# changer si il est nécessaire de recalculer des données
+for (Y in 2019:CY){
+  cat(str_c("Y=",Y))
+  bM=choice_c(bM,
+	  dc=c(12),
+	  taxa=c("Anguilla anguilla"),
+	  stage=c("CIV"),
+	  datedebut=str_c(Y,"-01-01"),
+	  datefin=str_c(Y,"-12-31"))
+  bM<-charge(bM,silent=TRUE)
+  bM<-connect(bM,silent=TRUE)
+  bM<-calcule(bM,silent=FALSE)
+  if (nrow(bM@data)>0 ){
+	write_database(bM,silent=TRUE)
+  }
+}
+@
+
+
+<<bilan_interannuels_civelle, echo=FALSE, eval=FALSE,results=hide >>=
+# for the glass eel there are both numbers from weight, weight from numbers
+# weight and numbers, all those data are loaded in the report_mig_interannual class
+# La méthode n'est pas développée dans bilan annuel, je fais les calculs à la main
+# attention, si la méthode tourne en boucle c'est que le chemin vers la base est mal définit
+# dans C/program files/stacomi/calcmig.csv. Vérifier vers quelle base pointe 
+# le lien odbc bd_contmig_nat.
+# A partir de 2019 normalement cette valeur sera affichée
+# Les bilan migration journaliers civelle ne sont pas testé à cause des poids donc la classe ne 
+# vérifie pas si il y a une différence entre la base et les données stockées dans la table 
+# bilanmigrationjournalier. Faire attention
+bili<-new("report_mig_interannual")
+bili<-choice_c(bili,
+	dc=c(6,12),
+	taxa=c("Anguilla anguilla"),
+	stage=c("CIV"),
+	anneedebut="1996",
+	anneefin=CY,
+	silent=TRUE)
+bili<-charge(bili)
+bili<-connect(bili,check=TRUE,silent=FALSE)	
+bilidat<-bili@data
+bili<-calcule(bili)
+# extracting data from the report_mig_interannual table
+# and getting the sum of both weights and numbers, as entered in
+# report_mig_interannual.
+tab<-inner_join(
+	bilidat%>%filter(bjo_labelquantite%in%c("Effectif_total"))%>%
+		group_by(bjo_annee)%>%
+		summarize("N"=sum(bjo_valeur)),
+	bilidat%>%filter(bjo_labelquantite%in%c("Poids_total","poids_depuis_effectifs"))%>%
+		group_by(bjo_annee)%>%
+		summarize("P"=sum(bjo_valeur))%>%
+		mutate("P"=P/1000)
+)
+colnames(tab)<-c("Année","N","P")
+tab[,2]<-round(tab[,2])
+tab[,3]<-round(tab[,3],1)
+xtbili<-xtable(tab,caption="Montées de civelles dans les passes du barrage d'Arzal, $N$ nombre,
+		$P$ poids (en kg).",
+	label="table_civelle",
+	digits=c(0,0,0,2),
+	display = c("s","s","f","f"))
+path_civ=file.path(tabwdy,
+	paste(paste(bili@dc@dc_selectionne,collapse="_"),"_",
+		paste(bili@taxa@data$tax_code,collapse="_"),"_",
+		paste(bili@stage@data$std_code,collapse="_"),"_",
+		bili@start_year@annee_selectionnee,"to",
+		CY,".tex",sep=""),fsep ="")
+print(xtbili,
+	file=path_civ,
+	format.args = list(big.mark = " ", decimal.mark = ","),
+	table.placement=c("htbp")
+)
+tab<-as.data.frame(tab)
+colnames(tab)<-c("year","Ngl","Pgl")
+
+tabdetail<-inner_join(
+	bilidat%>%filter(bjo_labelquantite%in%c("Effectif_total"))%>%
+		group_by(bjo_annee,bjo_dis_identifiant)%>%
+		summarize("N"=sum(bjo_valeur)),
+	bilidat%>%filter(bjo_labelquantite%in%c("Poids_total","poids_depuis_effectifs"))%>%
+		group_by(bjo_annee,bjo_dis_identifiant)%>%
+		summarize("P"=sum(bjo_valeur))%>%
+		mutate("P"=P/1000)
+)
+tabdetail$bjo_dis_identifiant<-factor(tabdetail$bjo_dis_identifiant,levels=c(12,6),label=c("Guide eau RD","Gabion RG"))
+tabdetail$N=tabdetail$N/10^6
+png(filename=str_c(imgwdy,"barplot_civelles_an.png"),14,10,units="cm",res=300)
+ggthemr(fresh2, type="outer", layout="scientific", spacing=0.8)
+ggplot(tabdetail)+geom_col(aes(x=bjo_annee,y=N,fill=bjo_dis_identifiant))+xlab(iconv("Année","UTF8"))+
+    ylab("Effectif (millions)")+
+    scale_fill_discrete("Dispostif")
+dev.off()
+vvv[["CIV"]]<-list()
+vvv[["CIV"]][["path_civ"]]<-gsub("C:/workspace/","../../../",path_civ)
+vvv[["CIV"]][["data"]]<-tab
+vvv[["CIV"]][["N"]]<-tab[tab$year==CY,"Ngl"]
+vvv[["CIV"]][["P"]]<-tab[tab$year==CY,"Pgl"]
+# rank in descending order
+vvv[["CIV"]][["rank"]]<-nrow(tab)+1-rank(tab[,"Pgl"])[tab$year==CY]
+#######################
+# Detail pour chaque DC (DC=6)
+######################
+
+tab<-inner_join(
+	bilidat%>%filter(bjo_dis_identifiant==6)%>%filter(bjo_labelquantite%in%c("Effectif_total"))%>%
+		group_by(bjo_annee)%>%
+		summarize("N"=sum(bjo_valeur)),
+	bilidat%>%filter(bjo_dis_identifiant==6)%>%filter(bjo_labelquantite%in%c("Poids_total","poids_depuis_effectifs"))%>%
+		group_by(bjo_annee)%>%
+		summarize("P"=sum(bjo_valeur))%>%
+		mutate("P"=P/1000)
+)
+colnames(tab)<-c("Année","N","P")
+tab[,2]<-round(tab[,2])
+tab[,3]<-round(tab[,3],1)
+xtbili6<-xtable(tab,caption="Montées de civelles dans la passe principale du barrage d'Arzal (Gabion en rive gauche), $N$ nombre,
+		$P$ poids (en kg).",
+	label="table_civelle_6",
+	digits=c(0,0,0,2),
+	display = c("s","s","f","f"))
+path_civ6=file.path(tabwdy,
+	paste(6,"_",
+		paste(bili@taxa@data$tax_code,collapse="_"),"_",
+		paste(bili@stage@data$std_code,collapse="_"),"_",
+		bili@start_year@annee_selectionnee,"to",
+		bili@end_year@annee_selectionnee,".tex",sep=""),fsep ="")
+print(xtbili6,
+	file=path_civ6,
+	format.args = list(big.mark = " ", decimal.mark = ","),
+	table.placement=c("htbp")
+)
+vvv[["CIV"]][["path_civ6"]]<-gsub("C:/workspace/","../../../",path_civ6)
+vvv[["CIV"]][["6"]]<-list()
+vvv[["CIV"]][["6"]][["N"]]<-as.numeric(tab[tab[,1]==CY,"N"])
+vvv[["CIV"]][["6"]][["P"]]<-as.numeric(tab[tab[,1]==CY,"P"])
+#######################
+# Detail pour chaque DC (DC=12)
+######################
+
+tab<-inner_join(
+	bilidat%>%filter(bjo_dis_identifiant==12)%>%filter(bjo_labelquantite%in%c("Effectif_total"))%>%
+		group_by(bjo_annee)%>%
+		summarize("N"=sum(bjo_valeur)),
+	bilidat%>%filter(bjo_dis_identifiant==12)%>%filter(bjo_labelquantite%in%c("Poids_total","poids_depuis_effectifs"))%>%
+		group_by(bjo_annee)%>%
+		summarize("P"=sum(bjo_valeur))%>%
+		mutate("P"=P/1000)
+)
+colnames(tab)<-c("Année","N","P")
+tab[,2]<-round(tab[,2])
+tab[,3]<-round(tab[,3],1)
+vvv[["CIV"]][["12"]]<-list()
+vvv[["CIV"]][["12"]][["N"]]<-as.numeric(tab[tab[,1]==CY,"N"])
+vvv[["CIV"]][["12"]][["P"]]<-as.numeric(tab[tab[,1]==CY,"P"])
+xtbili12<-xtable(tab,caption="Montées de civelles sur la passe secondaire du barrage d'Arzal (Mur guide eau en rive droite), $N$ nombre,
+		$P$ poids (en kg).",
+	label="table_civelle_12",
+	digits=c(0,0,0,2),
+	display = c("s","s","f","f"))
+path_civ12=file.path(tabwdy,
+	paste(12,"_",
+		paste(bili@taxa@data$tax_code,collapse="_"),"_",
+		paste(bili@stage@data$std_code,collapse="_"),"_",
+		bili@start_year@annee_selectionnee,"to",
+		bili@end_year@annee_selectionnee,".tex",sep=""),fsep ="")
+print(xtbili12,
+	file=path_civ12,
+	format.args = list(big.mark = " ", decimal.mark = ","),
+	table.placement=c("htbp")
+)
+vvv[["CIV"]][["path_civ12"]]<-gsub("C:/workspace/","../../../",path_civ12)
+save(vvv,file=str_c(datawdy,"vvv.Rdata"))
+
+# utilisation de la méthode plot pour générer un graphique des densités
+# puis modification des couleurs du titre et de y
+plot(bili,plot.type="density",silent=TRUE)
+g<-get("g",envir=envir_stacomi)
+nb_annee<-length(unique(bili@data$bjo_annee))
+mycolorramp1<-colorRampPalette(c("#011A2D","#4F7EA2"))
+mycolorramp2<-colorRampPalette(c("#462800","#B68B52"))
+color_ope<-c(rev(mycolorramp1(10)),mycolorramp2(nb_annee-11),"#85A3BA")
+png(filename=str_c(imgwdy,"Saisonnalite_civelles.png"))
+g+ggplot2::scale_fill_manual(values=color_ope)+
+	ggplot2::ggtitle("")+
+	theme(
+		panel.border = element_blank(),
+		panel.background = element_blank(),
+		panel.grid.minor = element_line(colour = "white"),
+		panel.grid.major = element_line(colour = "white"),
+		panel.grid.major.x = element_line(colour = "white"))
+dev.off()
+plot(bili,plot.type="barchart",timesplit="mois",silent=TRUE)
+g<-get("g1",envir=envir_stacomi)
+cols <- c("max" = "#012746","min" = "#6C3E00",">=moy" = "#327AB5", "<moy" = "#D29035","hist_mean"="black","hist_range"="grey","?"="#D26435")
+fills <- c("max" = "#043C6B","min" = "#6C3E00",">=moy" = "#558AB5", "<moy" = "#D2A25F","hist_mean"="black","hist_range"="grey","?"="#D26435")
+g <- g+scale_colour_manual(name=CY,values=cols,limits=c("min","max","<moy",">=moy","hist_mean","hist_range","?"))
+g <- g+scale_fill_manual(name=CY,values=fills,limits=c("min","max","<moy",">=moy","hist_mean","hist_range","?"))
+g<-g+ggtitle("")
+png(filename=str_c(imgwdy,"barchart_bmi_civelles.png"))
+print(g)
+dev.off()
+lsm <- summary(bili,silent=TRUE) # list summary month
+lsm[['12']][,3:6]<-round(lsm[['12']][,3:6]/1000,3)
+lsm[['6']][,3:6]<-round(lsm[['6']][,3:6]/1000,3)
+lsm[['12']] <- lsm[['12']][,c("mois","min","mean","max","valeur")]
+lsm[['6']]  <- lsm[['6']][,c("mois","min","mean","max","valeur")]
+colnames(lsm[['12']]) <- c("Mois","Min*","Moyenne*","Max*","N (2016)")
+colnames(lsm[['6']])  <- c("Mois","Min*","Moyenne*","Max*","N (2016)")
+#==================== xtable6 ===================================
+xtsm6 <- xtable(lsm[['6']],caption=str_c("Montées de civelles \\textsf{(en milliers)} dans la passe principale du barrage
+ d'Arzal (Gabion en rive gauche), données par mois, \\textsf{N (",CY,")} effectifs par mois pour ",CY," , les trois statistiques * correspondent à la période
+        1996-",CY,".	\\textsf{min}* minimum mensuel, \\textsf{max}* maximum mensuel, 
+\\textsf{moyenne}* moyenne des effectifs mensuels."),
+	label="table_civelle_mois_6",
+	display = c("s","s","f","f","f","f"))
+path_civ6m <- file.path(tabwdy,
+	paste(6,"_",
+		paste(bili@taxa@data$tax_code,collapse="_"),"_",
+		paste(bili@stage@data$std_code,collapse="_"),"_",
+		bili@end_year@annee_selectionnee,
+        "mois",".tex",sep=""),fsep ="")
+print(xtsm6,
+	file=path_civ6m,
+	format.args = list(big.mark = " ", decimal.mark = ","),
+	table.placement=c("htbp"))
+vvv[["CIV"]][["path_civ6m"]]<-gsub("C:/workspace/","../../../",path_civ6m)
+#==================== xtable12 ===================================
+xtsm12 <- xtable(lsm[['12']],caption=str_c("Montées de civelles \\textsf{(en milliers)} sur la passe secondaire du barrage d'Arzal (Mur guide eau en rive droite), données
+        par mois, les trois statistiques * correspondent à la période
+        2008-",CY,". \\textsf{N (",CY,")} effectif par mois pour ",CY,
+        "\\textsf{min}* minimum mensuel, 
+        \\textsf{max}* maximum mensuel, 
+        \\textsf{moyenne}* moyenne des effectifs mensuels."),
+	label="table_civelle_mois_12",
+	display = c("s","s","f","f","f","f"))
+path_civ12m <- file.path(tabwdy,
+	paste(12,"_",
+		paste(bili@taxa@data$tax_code,collapse="_"),"_",
+		paste(bili@stage@data$std_code,collapse="_"),"_",
+		bili@end_year@annee_selectionnee,
+        "mois",".tex",sep=""),fsep ="")
+print(xtsm12,
+	file=path_civ12m,
+	format.args = list(big.mark = " ", decimal.mark = ","),
+	table.placement=c("htbp"))
+vvv[["CIV"]][["path_civ12m"]]<-gsub("C:/workspace/","../../../",path_civ12m)
+
+################################################################
+# graphique montrant qu'il n'y a pas eu de migration historique
+#################################################################"
+png(filename=str_c(imgwdy,"plot_seasonal_civelles.png"),width=14,height=10,unit="cm",res=300)
+plot(bili,plot.type="seasonal",timesplit="semaine") 
+dev.off()
+
+
+
+save(vvv,file=str_c(datawdy,"vvv.Rdata"))
+@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Les migrations d'anguilles jaunes}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\Sexpr{sn(vvv[["AGJ"]][["NCY"]])} anguilles jaunes ont migré sur la passe, ce qui classe cette année comme la \Sexpr{vvv[["AGJ"]][["rank"]]} ème sur \Sexpr{vvv[["AGJ"]][["maxrank"]]} années de suivi. Les migrations d'anguilles jaunes sont extrêmement variables d'une année sur l'autre. Le minimum des migrations a été connu en 2005 avec seulement 878 anguilles
+    jaunes dans l'ensemble de l'année (Tableau \ref{table_bilanannuel_ang}). Le
+    maximum a été trouvé en 2013 après deux saisons de fort échappement en
+    civelles avec $145 000$ anguilles jaunes, soit une fluctuation d'un facteur 
+    $160$. Globalement, la période récente montre une augmentation de la
+    migration d'anguilles jaunes depuis la mise en \oe uvre du plan de gestion
+    (Figure \ref{bilan_annuel_agj}).
+%==========================================================================
+\begin{figure}[htbp]
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{bilan_annuel_agj.png}
+  \caption{Tendance de migration des anguilles jaunes sur les trois dispositifs
+  du barrage, les anguilles migrant par la passe à bassins, peu nombreuses ne
+  sont pas attribuées à un stade particulier. 12 mur guide-eau, 5 passe à
+  bassins, 6 Gabion.}
+  \label{bilan_annuel_agj}
+  \end{center}
+\end{figure}
+%==========================================================================
+La majeure partie des effectifs concerne des petites anguilles d'âge zéro et un,
+puis la migration diminue pour les classes suivantes. La migration a un
+caractère saisonnier très marqué (Figure \ref{figure_saisonnalite_agj}) avec des
+pics de migration en avril-juin et septembre. Les débits de la Vilaine et les
+coefficients de marée sont des éléments prédicteurs de l'intensité migratoire.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\small
+\input{\Sexpr{vvv[["AGJ"]][["path_agj"]]}}
+\normalsize
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.4\textwidth]{saisonnalite_agj.png}
+  \caption{Saisonnalité des migrations d'anguilles jaunes, données combinées sur
+  les deux dispositifs de franchissement du barrage d'Arzal.}
+  \label{figure_saisonnalite_agj}
+  \end{center}
+\end{figure}
+%==========================================================================
+L'extension de la saison migratoire aux mois de janvier, février et mars observée
+sur les années 2013-2015 semble aussi concerner les anguilles jaunes (Figure
+\ref{figure_seasonal_agj}).
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.49\textwidth]{plot_seasonal_agj.png}
+  \caption{Migrations d'anguilles jaunes sur les deux dispositifs du barrage
+  d'Arzal, chaque cluster indique l'effectif ayant migré cette semaine, la barre
+  horizontale indique les quantiles 5\% et 95\% de la migration.
+  En couleur période entre la première arrivée d'anguilles jaunes et la
+  dernière, avec une couleur relative à l'importance des effectifs en migration.
+  En gris, période inclue entre la première et la dernière arrivée d'anguille
+  jaune mais sans migration observée cette semaine.
+  Les points représentent la date médiane de migration des anguilles jaunes.}
+  \label{figure_seasonal_agj}
+  \end{center}
+\end{figure}
+%==========================================================================
+
+La figure \ref{figure_barchart_bmi_agj} montre une migration \Sexpr{CY} modale centrée sur le
+mois de mai. Tous les effectifs sont largement inférieurs à la moyenne
+historique.
+
+
+%==========================================================================
+\begin{figure}[htbp]
+  \begin{center}
+  \includegraphics[width=0.45\textwidth]{barchart_bmi_agj.png}
+  \caption{Comparaison des migrations d'anguilles jaunes de l'année \Sexpr{CY} à la
+  tendance historique (en gris, valeurs min et max et moyenne (hist\_mean), en bleu
+  valeurs maximales, en bleu clair valeurs supérieures à la moyenne, en marron valeurs
+  inférieures à la moyenne.}
+  \label{figure_barchart_bmi_agj}
+  \end{center}
+\end{figure}
+%==========================================================================
+
+<<bilan_annuels_anguillejaune, echo=FALSE, eval=FALSE,results=hide >>=
+require(stacomiR)
+# launching stacomi without selecting the scheme or interface
+bilA<-new("report_annual")
+bilA<-choice_c(bilA,
+	dc=c(5,6,12),
+	taxa=c("Anguilla anguilla"),
+	stage=c("AGJ"),
+	anneedebut="1996",
+	anneefin=CY,
+	silent=FALSE)
+bilA<-connect(bilA)	
+# the following dataset has been generated by the previous code
+# there is a method for class ANY which overides the method for class bilA ?
+# the following works but xtable alone fails if the xtable package is loaded 
+xtbilA<-stacomiR::xtable(bilA,
+	caption="Migration des stades anguilles jaunes, dans les
+		trois passes du barrage d'Arzal (P. bassin = passe à fente verticale\footnote{Les anguilles jaunes migrent principalement dans les rampes à anguilles, mais
+peuvent emprunter la passe à bassins. Elles sont comptées lorsqu'elles sont observées
+devant la vitre de comptage mais elles peuvent passer au travers des grilles qui
+orientent les poissons vers les vitres, elles sont difficilement détectables par
+la caméra surtout quand elles passent au fond. Les effectifs d'anguilles
+fréquentant la passe à bassins sont juste présentés pour information.}, Piège RG = passe piège historique
+		sur le gabion, Piège RD = passe du mur guide eau. Les effectifs des opérations à cheval sur deux années sont re-
+		répartis au pro-rata des effectifs de chaque année ",
+	label="table_bilanannuel_ang",
+	dc_name=c("P. bassins","Piège RG","Piège RD"),
+	tax_name="Anguille",
+	std_name=c("Jaune"))
+# below not run but one can create a file as following
+
+path_agj=file.path(tabwdy,
+	paste(paste(bilA@dc@dc_selectionne,collapse="_"),"_",
+		paste(bilA@taxa@data$tax_code,collapse="_"),"_",
+		paste(bilA@stage@data$std_code,collapse="_"),"_",
+		bilA@anneedebut@annee_selectionnee,"to",
+		bilA@anneefin@annee_selectionnee,".tex",sep=""),fsep ="")
+# the following uses the "addtorow" argument which creates nice column headings,
+# format.args creates a thousand separator
+# again this will need to be saved in a file using the file argument
+print(xtbilA,
+	file=path_agj,
+	add.to.row=get("addtorow",envir_stacomi),
+	include.rownames = TRUE,
+	include.colnames = FALSE,
+	format.args = list(big.mark = " ", decimal.mark = ",")
+)
+#===================================================
+png(filename=str_c(imgwdy,"bilan_annuel_agj.png"))
+barplot(bilA,args.legend=list(x="topleft",bty = "n"),
+	col=c("#FF9400","#043C6B","#66A1D2"),
+	ylab="Effectif (anguilles jaunes)")
+dev.off()
+#===================================================
+# total ne correspond qu'aux effectifs sur les passes à anguilles
+total<-filter(bilA@data,ope_dic_identifiant!=5)%>%
+    group_by(annee)%>%
+    summarize(effectif=sum(effectif))%>%
+    mutate(effectif=round(effectif))
+#vvv[["AGJ"]]<-list() normalement ça vient du rapport de l'années précédente
+vvv[["AGJ"]][["path_agj"]] <- gsub("C:/workspace/","../../../",path_agj)
+# somme_agj correspond aux effectifs sur les trois passes
+somme_agj<-round(tapply(bilA@data$effectif,bilA@data$annee,sum))
+indiceCY<-match(as.character(CY),names(somme_agj))
+vvv[["AGJ"]][["N"]]<-as.data.frame(total)
+vvv[["AGJ"]][["NCY"]]<-somme_agj[indiceCY]
+
+vvv[["AGJ"]][["rank"]]<-nrow(somme_agj)+1-rank(somme_agj)[indiceCY]
+vvv[["AGJ"]][["maxrank"]]<-nrow(somme_agj)
+save(vvv,file=str_c(datawdy,"vvv.Rdata"))
+@
+<<bilan_interannuels_agj, echo=FALSE, eval=FALSE,results=hide >>=
+bilj<-new("report_mig_interannual")
+bilj<-choice_c(bilj,
+	dc=c(6,12),
+	taxa=c("Anguilla anguilla"),
+	stage=c("AGJ"),
+	anneedebut="1996",
+	anneefin=CY,
+	silent=TRUE)
+bilj<-charge(bilj)
+bilj<-connect(bilj,check=TRUE,silent=FALSE)	
+bilj<-calcule(bilj)
+
+
+
+
+# utilisation de la méthode plot pour générer un graphique des densités
+# puis modification des couleurs du titre et de y
+plot(bilj,plot.type="density",silent=TRUE)
+g<-get("g",envir=envir_stacomi)
+nb_annee<-length(unique(bilj@data$bjo_annee))
+mycolorramp1<-colorRampPalette(c("#011A2D","#4F7EA2"))
+mycolorramp2<-colorRampPalette(c("#462800","#B68B52"))
+color_ope<-c(rev(mycolorramp1(10)),mycolorramp2(nb_annee-11),"#85A3BA")
+#============================================
+png(filename=str_c(imgwdy,"saisonnalite_agj.png"))
+g+ggplot2::scale_fill_manual(values=color_ope)+
+	ggplot2::ggtitle("")+
+	theme(
+		panel.border = element_blank(),
+		panel.background = element_blank(),
+		panel.grid.minor = element_line(colour = "white"),
+		panel.grid.major = element_line(colour = "white"),
+		panel.grid.major.x = element_line(colour = "white"))
+dev.off()
+#============================================
+plot(bilj,plot.type="barchart",timesplit="mois",silent=TRUE)
+g<-get("g1",envir=envir_stacomi)
+cols <- c("max" = "#012746","min" = "#6C3E00",">=moy" = "#327AB5", "<moy" = "#D29035","hist_mean"="black","hist_range"="grey","?"="#D26435")
+fills <- c("max" = "#043C6B","min" = "#6C3E00",">=moy" = "#558AB5", "<moy" = "#D2A25F","hist_mean"="black","hist_range"="grey","?"="#D26435")
+g <- g+scale_colour_manual(name=CY,values=cols,limits=c("min","max","<moy",">=moy","hist_mean","hist_range","?"))
+g <- g+scale_fill_manual(name=CY,values=fills,limits=c("min","max","<moy",">=moy","hist_mean","hist_range","?"))
+g<-g+ggtitle("")
+#============================================
+png(filename=str_c(imgwdy,"barchart_bmi_agj.png"))
+print(g)
+dev.off()
+#============================================
+
+png(filename=str_c(imgwdy,"plot_seasonal_agj.png"),width=14,height=10,unit="cm",res=300)
+plot(bilj,plot.type="seasonal",timesplit="semaine") 
+dev.off()
+save(vvv,file=str_c(datawdy,"vvv.Rdata"))
+@
+\subsection{Structure en taille des migration d'anguilles jaunes}
+La taille de \Sexpr{sn(vvv[["AGJ"]][["str_tail"]][["effectif_mesure"]])} anguilles
+jaunes a été mesurée en \Sexpr{CY} (Figure \ref{boxplot_taille_agj}). Les
+anguilles jaunes mesurées sur la passe vont de la taille civelle (minimum 60 mm)
+à des tailles de 480 mm. De plus grandes anguilles peuvent être rencontrées dans
+la passe à bassins mais l'interprétation des migrations sur les vitres de vidéo
+comptage est difficile pour les plus petites anguilles (de moins de 25-30 cm).
+En période de migration, des civelles sont parfois observées devant les vitres de la passe, lorsque cette
+dernière est fermée à pleine mer. Il est possible que certaines puissent venir
+de amont, pour des civelles et des anguillettes relâchées par la conduite
+d'évacuation de la passe à anguilles. Il semble que l'essentiel correspond à des
+civelles rentrées au droit de fuites à l'aval.
+Les migrations de petites anguilles dans la passe, si elles interviennent parfois, 
+sont quand même limitées par l'importance de la chute aval de la passe à bassins qui est
+généralement règlée à 300 mm. Elles n'interviennent en général qu'autour de
+la marée haute, quand les vannes de la passe se ferment. Les effectifs très
+faibles des anguilles comptées dans la passe à bassins attestent d'eux même 
+de l'efficacité relative des passes, et de la sélectivité de la caméra vis à vis
+des classes de taille (Tableau \ref{table_bilanannuel_ang}).
+
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{boxplot_taille_agj.png}
+  \caption{Box plot des tailles d'anguilles jaunes (en mm) en \Sexpr{CY}
+  mesurées par mois sur la passe principale du barrage d'Arzal.}
+  \label{boxplot_taille_agj}
+  \end{center}
+\end{figure}
+%==========================================================================
+
+Les données sont réparties par classe de
+taille de 5 mm puis redressées à partir des effectifs mensuels migrant sur les
+deux passes à anguilles d'Arzal (Figure \ref{str_taille_mois_redress2019}). La
+taille médiane des anguilles jaunes varie entre 124 et 180 mm.
+Lorsqu'on compare la structure en taille de \Sexpr{CY} aux structures
+en taille des années précédentes (Figures \ref{str_taille_mois_redress2010}, 
+\ref{str_taille_mois_redress2011},
+\ref{str_taille_mois_redress2012},
+\ref{str_taille_mois_redress2013},
+\ref{str_taille_mois_redress2014},
+\ref{str_taille_mois_redress2015},  
+\ref{str_taille_mois_redress2016}, 
+\ref{str_taille_mois_redress2017} et
+\ref{str_taille_mois_redress2018}) on observe clairement la prédominance des anguilles de l'année en 2013 et
+2014, et des arrivées plus diffuses en 2010, 2011, 2012, 2016 et 2018. En 2017
+et 2019 le mode correspondant aux civelles de petite taille est absent. Ce
+constat est surprenant pour 2019 car la migration de civelles était importante.
+Peut être est-ce la conséquence de deux années de recrutement relativement
+faible au stade civelle (2017 et 2018) qui aurait libéré de la place en
+estuaire.
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2019.png}
+  \caption{Structure en taille des anguilles jaunes en \Sexpr{CY} (redressée par
+  les effectifs mensuels en migration).}
+  \label{str_taille_mois_redress2019}
+  \end{center}
+\end{figure}
+%==========================================================================
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ci dessous le package tables génère un tabular par un table
+% j'encapsule dans un environnement table
+\small
+\begin{table}[!ht]
+\centering
+\input{\Sexpr{vvv[["ANG"]][["path_angtaille"]]}}
+\label{summary_taille_yellow}
+\caption{Moyenne et écart types des tailles d'anguilles $\tau$ par mois, et nombre
+d'échantillons collectés en \Sexpr{CY}.}
+\end{table}
+\normalsize
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+La structure en taille de chaque mois est multipliée par une clé taille âge
+basée sur les mesure de croissance des anguilles d'estuaire (Lecture Mounaix, données 1998-1999) (Figure \ref{cletailleage}).
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{cletailleage.png}
+  \caption{A) Modélisation de la croissance des anguilles en milieu
+  estuarien, taille des anguilles en fonction du nombre de mois de croissance.
+  B) Clés taille/âge utilisées pour l'analyse, pourcentage cumulé de chacune des
+  classes d'âge pour les différents mois de l'année, par exemple pour 400mm au
+  mois de décembre, on trouve de l'ordre de 10\% d'âge 2, (60\% - 10\%=50\%)
+  d'âge 3 et 40\% d'âge 4 \dots}
+  \label{cletailleage}
+  \end{center}
+\end{figure}
+%==========================================================================
+Cette conversion permet d'obtenir une idée \og grossière \fg{} de la migration par
+classe d'âge pour répondre à la question suivante : pour une cohorte,
+est-il possible de suivre année après année une migration qui fut importante au stade civelle ? (Figure
+\ref{civ_ang_cohorte}).
+Dans tous les cas, la migration du stade civelle domine numériquement les
+effectifs (Figure \ref{migration_par_cohorte}).
+
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{civ_ang_cohorte.png}
+  \caption{Migration des anguilles jaunes et des civelles sur les passes du
+  barrage d'Arzal entre 1996 et \Sexpr{CY}. En haut, chaque tuile repésente une
+  année et une cohorte à l'exception de la cohorte d'âge zéro (en haut) qui est
+  séparée en une tuile correspondant aux civelles (à gauche) et une tuile
+  correspondant aux anguillettes d'âge zéro à droite. En ligne on peut lire
+  l'intensité migratoire d'une cohorte au cours de plusieurs années successives,
+  en colonne on peut lire la migration des différents groupes d'âge une année
+  donnée. La couleur correspond aux effectifs de la cohorte (anguille jaune)
+  ou des civelles pour l'année en cours. 
+  En bas : effectif en migration au stade civelle (multiplier par 1000). La
+  grosseur du point est relative à l'effectif et les couleurs correspondent aux
+  classes du premier graphique, avec une couleur plus intense lorsque l'effectif
+  est plus grand.}
+  \label{civ_ang_cohorte}
+  \end{center}
+\end{figure}
+%==========================================================================
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{migration_par_cohorte.png}
+  \caption{Migration d'anguille par cohorte. Chaque année sur l'axe des x
+  représente une cohorte. Les âge 0 et les civelles migrent dans l'année. Les
+  âge 1 migrent après une année (un hiver de plus) en estuaire... En onglet,
+  les civelles, en nombre sont portées sur le même graphique que le précédent.}
+  \label{migration_par_cohorte}
+  \end{center}
+\end{figure}
+%==========================================================================
+<<traitement_structures_taille, echo=FALSE, eval=FALSE,results=hide >>=
+# Nom fichier :        analyse_taille_age_2016
+# Projet :             controle migrateur / example
+# Date de creation :   03/03/2016
+# Description          Recalcul de la structure en taille/âge 2016
+
+# Brice S
+# ce fichier est modifié pour n'être adapté qu'à l'année 2015 puis réintégré à analyse_taille_age
+
+vvv[["AGJ"]][["str_tail"]]<-list()
+
+cle=read.csv("C:/workspace/pdata/traitement_stacomi/cletailleage.csv",sep=";")
+#########################################"
+# ci dessous une verification graphique
+##########################################
+str(cle)
+clem=subset(cle,cle$type=="mean")  # tableau des moyennes
+# identique à clem[cle$type=="mean",]
+clesd=subset(cle,cle$type=="sd")   # tableau des ecarts types
+agem=clem$age*12+clem$mois
+agem[1:2]<-1  #pour novembre et decembre
+
+
+#########################################"
+# creation des cles taille age loi normale
+##########################################
+vecteur_coupures=seq(from=65,to=600,by=5)
+tail=hist(vecteur_coupures,vecteur_coupures)$mids
+ar=array(dim=c(12,length(tail),5))
+for (i in 1:5){             # ages
+  for(j in 1:length(tail)) {      # tailles
+	for (k in 1:12) {   # mois
+	  #  ar=drnorm(N,mean,sd) loi normale
+	  moyenne=clem[clem$age==i-1 & clem$mois==k,"val"]
+	  ecart_type=clesd[clesd$age==i-1 & clesd$mois==k,"val"]
+	  taille=tail[j] 
+	  if (i==1 & taille<moyenne) taille<-moyenne # pour le premier age doit commencer par le max
+	  ar[k,j,i]=dnorm(taille,moyenne,ecart_type) 
+	}
+  }
+}
+# ar est un array de dimension(mois,classe taille 5cm, age(0-4))
+# Pour chaque mois et chaque age je veux que la somme d'une ligne fasse 1
+z=0.3
+age=0:4
+abondance=exp(-0.3*age) # coefficient de reduction d'abondance dans les cohortes
+#colSums(aperm(ar,perm=c(2,3,1)) )       # les deux sont equi rowsum fait somme sur dim+1 et au desus
+sommeclasstail=rowSums(aperm(ar,perm=c(1,3,2)),dims=2)  # colsums sur 1:dim
+for (i in 1:5){ 
+  for (k in 1:12) {
+	ar[k,,i]=abondance[i]*ar[k,,i]/sommeclasstail[k,i]  # on divise chaque vecteur classe de taille par sa somme (pour avoir une proportion par classe de taille ramenee entre O et 1 et multipliee par l'abondance relative de chaque cohorte
+  }
+}
+sommeage=colSums(aperm(ar,perm=c(3,1,2)),dims=1)
+for(j in 1:length(tail)) { 
+  for (k in 1:12) {
+	ar[k,j,]=ar[k,j,]/sommeage[k,j]  # on divise chaque vecteur classe de taille par sa somme (pour avoir une proportion par classe de taille ramenee entre O et 1 et multipliee par l'abondance relative de chaque cohorte
+  }
+}
+
+ar[1,,] # tableau des ages du premier mois
+
+# segment(x0,y0,X1,Y1)
+# creation d'un tableau
+tabseg=cbind(agem,clem$val-clesd$val,agem,clem$val+clesd$val)
+
+# Graphiques des cles tailles age
+age0=gray(0:12/12)
+bleus<-colorRampPalette(c("#457396","#011A2D"))
+marrons<-colorRampPalette(c("#A28849","#463100"))
+rouges<-colorRampPalette(c("#A26B49","#461B00"))
+age1=bleus(13)
+age2= marrons(13)
+age3= rouges(13)
+couleurs=cbind(age0,age1,age2,age3,"black")
+
+#==============================================================
+png(file=str_c(imgwdy,"cletailleage.png"),width=18,height=12,unit="cm",res=300)
+layout(matrix(c(1,2,2),1,3))
+plot(agem,clem$val,xlab="mois de croissance",ylab="taille mm",main="A",ylim=c(0,600))
+for (i in 1:nrow(tabseg)){
+  segments(tabseg[i,1],tabseg[i,2],tabseg[i,3],tabseg[i,4],col=rev(grey(i/(1.5*nrow(tabseg)))))
+}
+for (i in 1:12) {
+  cumar=apply(ar[i,,],1,function(X) cumsum(X)) #
+  if (i==1) matplot(tail,t(cumar),lwd=2,col=couleurs[i,],type="l",xlab="taille (mm)",ylab="% cumules", main="B") else matplot(tail,t(cumar),type="l",lwd=2,col=couleurs[i,],add=TRUE)
+}
+legend(x=400,y=1,col=couleurs[1,],lty=1,legend=as.character(0:4),title="ages",bty="n")
+legend(x=500,y=1,age0,lty=1,legend=1:12,title="mois",bty="n")
+dev.off()
+#==============================================================
+
+# colSums(ar)  pour verif OK vecteur de 1
+stopifnot(rowSums(ar,dims=1)==rep(length(tail),12))
+# les cle taille age de chaque mois sont dans ar (mois,classe taille 5cm, age(0-4))
+# save(ar,file=str_c(datawd,"ar.Rdata"))
+# 
+
+########################################
+# TRAITEMENT DES STRUCUTRES EN TAILLE
+# UTILISATION DE LA CLASSE REPORT MIG CHAR
+#########################################
+
+r_mig_char<-new("report_mig_char")
+r_mig_char<-choice_c(r_mig_char,
+	dc=c(6),
+	taxa=c("Anguilla anguilla"),
+	stage=c('AGJ'),
+	parquan=c('1786'), # taille (longueur totale)
+    parqual='B002', # classe de taille 
+	horodatedebut=str_c(CY,"-01-01"),
+	horodatefin=str_c(CY,"-12-31"),
+    echantillon="avec",
+	silent=FALSE)
+# r_mig_char<-charge(r_mig_char) not necessary there
+r_mig_char<-connect(r_mig_char)
+# certains paramètres (1786) ressortent dans les sous_lots
+r_mig_char<-calcule(r_mig_char)
+unique(r_mig_char@calcdata$car_par_code_quan)
+# correction manuelle, il y a des lots sans données
+r_mig_char@calcdata$car_par_code_quan[is.na(r_mig_char@calcdata$car_par_code_quan)]<-"NA"
+# ? plot.report_mig_char
+# nombre de mesures de taille
+plot(r_mig_char,plot.type="quant")
+# nombre de mesures de grosses anguilles
+plot(r_mig_char,plot.type="qual")
+# bilan croisé
+plot(r_mig_char,plot.type="crossed")
+
+
+r_mig_char2<-setasqualitative(r_mig_char,par='1786',
+    breaks=c(0,98,145,300,1000),
+    label=c("pa","ma","ga","ang"))
+r_mig_char2<-calcule(r_mig_char2)
+plot(r_mig_char2,plot.type="qual")
+## 2017 donnees_taille=r_mig_char@calcdata
+## On a pas besoin des données classées en ang (51)
+## il y a des anguilles >30 mesurées mais elles n'ont pas de classe 6002 => 5901
+## ce filtre est appliqué un peu plus loin (voir ndt)
+donnees_taille <- r_mig_char@calcdata[is.na(r_mig_char@calcdata$car_val_identifiant),]
+
+save(donnees_taille, file=str_c(datawdy,"donnees_taille_agj.Rdata"))
+# load(str_c(datawdy,"donnees_taille_agj.Rdata"))
+donnees_taille <- fun_date_extraction(donnees_taille,nom_coldt="ope_date_debut")
+
+
+# ci dessous pour les graphes, renommage des variables (fonction chnames de cedric)
+ndt<-chnames(object=donnees_taille[donnees_taille$annee==CY,],
+	old_variable_name=c("ope_date_debut","car_valeur_quantitatif"),
+	new_variable_name=c("date","taille"))
+# vérif si anguillettes avec taille >300 (problème lot père)
+sum(ndt$lot_effectif>1) # 65 données de taille avec eff>1 en 2016 # 85 en 2017
+ndt<-ndt[!is.na(ndt$taille),]
+sum(ndt$lot_effectif>1) #0 #ndt[ndt$lot_effectif>1,]
+ndt<-ndt[ndt$car_val_identifiant!="51"|is.na(ndt$car_val_identifiant),] # 0 ceci vire effectivement les "anguilles" mesurées à part
+# en attendant la correction de Brice, trois lots avec des effectifs de 3 dans la base
+# ndt$lot_effectif[ndt$lot_effectif>1]<-1
+
+
+save(ndt, file=str_c(datawdy,"ndt.Rdata"))
+# load(file=str_c(datawdy,"ndt.Rdata"))
+
+# sauve temporairement ndt dans une autre variable
+ndt1<-ndt
+
+nrow(ndt)
+#nrow(ndt1)
+sumeffmois<-tapply(ndt1$taille,ndt1$mois,function(X)length(X))
+sum(sumeffmois) #5577 # 5901 (2017)
+sumeffmois<-data.frame("mois"=names(sumeffmois),effectifmois=sumeffmois)
+ndt1<-merge(ndt1,sumeffmois, by="mois")
+sum(sumeffmois[,2]) #4710 # 5577 # 5901
+# boxplot tailles anguilles jaunes
+ndt1$mois<-as.factor(ndt1$mois)
+tapply(ndt1$taille, ndt1$mois, summary)
+###########################################"
+# table using the tables package
+# va créer un résumé bien formatté en calculant les stats de moyenne et écart type
+# et l'écrire dans table/ 2017
+#############################################
+# require(tables)
+
+save<-booktabs()
+tt<-tabular( (Factor(mois, "Mois") + 1) ~ (n=1) + Format(digits=2)*(Heading("$\\tau$")*taille*(mean + sd)),  data=ndt1)
+dimnames(tt)[["rowLabels"]]
+rowLabels(tt)[length(rowLabels(tt))]<-'Tous'
+colLabels(tt)[2,]<-c("n","moy","sd")
+path_taille_yellow<-file.path(tabwdy,	
+	"summary_taille_yellow.tex",fsep ="")
+vvv[["ANG"]][["path_angtaille"]]<-gsub("C:/workspace/","../../../",path_taille_yellow)
+tt<-latex(tt,file=vvv[["ANG"]][["path_angtaille"]],
+    label="summary_taille_yellow")
+table_options(save)
+
+###########################################"
+# boxplot par mois des structures en taille
+#############################################
+#===============================================================================
+png(str_c(imgwdy,"boxplot_taille_agj.png"),width=12,height=8,units="cm",res=300)
+p=ggplot(ndt)
+p+stat_boxplot(aes(x=mois,y=taille,fill=factor(mois))) +
+	#ggtitle(iconv(paste("Taille des anguillettes mesurées à Arzal en",CY," N=",nrow(ndt1)),"UTF8")) +
+	scale_fill_manual("mois",values=couleur_mois_tr)+
+    ylab("Taille (cm)")
+dev.off()
+#===============================================================================
+# boxplot tailles anguillettes
+#ndt2<- ndt1[ndt1$taille<300,]
+#x11(500,350)
+#p=ggplot(ndt2)
+#p+stat_boxplot(aes(x=mois,y=taille,fill=factor(mois))) +
+#		ggtitle("Taille des anguillettes mesurées à Arzal en 2015, N=5978") +
+#		scale_fill_brewer("mois",palette="Paired")
+
+# tailles mensuelles anguillettes
+ex(round(tapply(ndt$taille,ndt$mois,mean),2))
+
+# histogramme migration totale par classes de 5mm
+i=CY
+
+ndt=killfactor(ndt)
+x11(width=600,height=400)
+p<-ggplot(ndt1)
+p+aes(x=taille,y=..count..,fill=mois)+stat_bin(position='stack',binwidth=5,)+
+	facet_grid(annee ~ .)+
+	#ggtitle(paste("Taille des anguilles jaunes à Arzal en 2015,  N=",nrow(ndt1))) +
+	ggtitle(paste(iconv("Taille des anguilles jaunes à Arzal en","UTF8"), i,",  N=",nrow(ndt1))) +
+	scale_fill_brewer(palette="Paired")+
+	ylab("effectif")
+
+
+# les lots ont ils une caractéristique ? vérification de l'unicité du lot
+#which(duplicated(donnees_taille2$lot_identifiant)) # integer(0)
+
+# Je vais chercher le tableau de données 
+# ce tableau va chercher par année, par mois et par type de val_identifiant
+# la somme des effectifs d'anguilles transitant par la passe d'Arzal
+req=new("RequeteODBC")
+req@baseODBC=get("baseODBC",envir=envir_stacomi)
+req@sql="
+	SELECT 	ope_identifiant,
+	ope_date_debut,
+	effectif,
+	val_identifiant,
+	val_libelle
+	FROM (
+	SELECT  ope_identifiant,
+	ope_date_debut,
+	SUM (lot_effectif) AS effectif,
+	val_identifiant
+	FROM(
+	SELECT ope_identifiant,
+	ope_dic_identifiant,
+	ope_date_debut,
+	ope_date_fin,
+	lot.lot_identifiant , 
+	lot.lot_methode_obtention,
+	lot.lot_effectif, 
+	lot.lot_quantite,
+	lot.lot_tax_code,
+	lot.lot_std_code, 
+	tax_nom_latin,
+	std_libelle,
+	dev.dev_code,
+	dev.dev_libelle
+	FROM 
+	iav.t_operation_ope 
+	INNER JOIN 	iav.t_lot_lot lot			ON 		lot.lot_ope_identifiant = ope_identifiant
+	LEFT JOIN 	ref.tr_typequantitelot_qte	qte	ON 		qte.qte_code = lot.lot_qte_code 
+	LEFT JOIN 	ref.tr_devenirlot_dev dev		ON 		dev.dev_code = lot.lot_dev_code
+	INNER JOIN 	ref.tr_taxon_tax 			ON 		tax_code = lot_tax_code 
+	INNER JOIN 	ref.tr_stadedeveloppement_std 	ON 		std_code = lot_std_code
+	WHERE lot.lot_lot_identifiant IS NULL
+	AND ope_dic_identifiant=6
+	AND  lot_std_code='AGJ'
+	ORDER BY ope_date_debut
+	) AS effectifs
+	LEFT JOIN (
+	SELECT lot.lot_identifiant AS lot,
+	val.val_identifiant 
+	FROM 
+	iav.t_operation_ope 
+	INNER JOIN 	iav.t_lot_lot lot			ON 		lot.lot_ope_identifiant = ope_identifiant
+	LEFT JOIN 	ref.tr_typequantitelot_qte	qte	ON 		qte.qte_code = lot.lot_qte_code 
+	LEFT JOIN 	ref.tr_devenirlot_dev dev		ON 		dev.dev_code = lot.lot_dev_code
+	INNER JOIN 	ref.tr_taxon_tax 			ON 		tax_code = lot_tax_code 
+	INNER JOIN 	ref.tr_stadedeveloppement_std 	ON 		std_code = lot_std_code
+	LEFT JOIN   	iav.tj_caracteristiquelot_car car   ON 		car.car_lot_identifiant=lot.lot_identifiant
+	LEFT JOIN       ref.tg_parametre_par par		ON		car.car_par_code=par.par_code
+	LEFT JOIN       ref.tr_parametrequalitatif_qal qal	ON		qal.qal_par_code=par.par_code
+	LEFT JOIN 	ref.tr_valeurparametrequalitatif_val val ON		car.car_val_identifiant=val.val_identifiant
+	WHERE  lot.lot_lot_identifiant IS NULL
+	AND ope_dic_identifiant=6
+	AND lot_std_code='AGJ'
+	AND car.car_par_code ='B002'
+	ORDER BY lot.lot_identifiant
+	
+	) AS sous_selection
+	ON sous_selection.lot=effectifs.lot_identifiant
+	GROUP BY ope_identifiant,val_identifiant,ope_date_debut
+	ORDER BY ope_identifiant,val_identifiant) as belle_requete
+	LEFT JOIN (SELECT val_libelle, val_identifiant as id FROM ref.tr_valeurparametrequalitatif_val) as tableval
+	ON belle_requete.val_identifiant=tableval.id
+	"
+eff=connect(req)@query
+eff<- eff[eff$ope_date_debut>ISOdate(CY,01,01,0,tz = "CET")&eff$ope_date_debut<ISOdate(CY+1,01,01,0,tz = "CET"),]
+eff$val_identifiant[is.na(eff$val_identifiant)]<-"angll" 
+eff$val_libelle[is.na(eff$val_libelle)]<-"angll" 
+# ici on sélectionne les anguilles de la fin
+save(eff, file=str_c(datawdy,"eff.Rdata"))
+# load(file=str_c(datawdy,"eff.Rdata"))
+
+
+
+
+
+# Totaux des angll/ang migrantes par mois en 2015
+eff$mois=as.POSIXlt(eff$ope_date_debut)
+eff$mois=eff$mois$mon +1 # récupère le mois de puis le format liste de posixlt
+#sumeff<- tapply(eff$effectif,INDEX=list(eff$mois,eff$val_libelle),sum)
+sumeff<- tapply(eff$effectif,INDEX=list(eff$mois),sum)
+sum(sumeff) # 21245 (2017)
+#sumeff<-sumeff[,1]
+
+# sumeff<-chnames(objet=sumeff,
+# 		old_variable_name=c("angll","Anguilles >300"),
+# 		new_variable_name=c("total_angll","total_ang"))
+
+# Effectif des angll/ang mesurées par mois en CY
+unique(ndt$lot_effectif)
+#ndt$lot_pere_val_identifiant<-as.character(ndt$lot_pere_val_identifiant)
+#ndt$lot_pere_val_identifiant[is.na(ndt$lot_pere_val_identifiant)]<-"angll" 
+
+(XX=xtabs(ndt$lot_effectif~ndt$mois)) #+ndt$lot_pere_val_identifiant
+# 2015 : en fait on a pas besoin de différentier les classes puisque l'échantillonnage 
+# est fait au hasard. On fait la somme de tout le monde, 
+XX<-t(t(XX))
+YY=as.matrix(sumeff)
+save(YY,file=str_c(datawdy,"YYCY.Rdata"))
+
+
+# Construction de l'histogramme
+vecteur_coupures=seq(from=65,to=600,by=5)
+table_taille=as.data.frame(matrix(nrow=((length(vecteur_coupures))-1),ncol=1))  
+
+if (max(ndt$taille) > vecteur_coupures[length(vecteur_coupures)]) {
+  cat(paste("attention vous avez des donnees de taille au delà de ",vecteur_coupures[length(vecteur_coupures)]))
+}
+
+if (min(ndt$taille) < vecteur_coupures[1] ){
+  cat(paste("attention vous avez des donnees de taille en deça de ",vecteur_coupures[1]))
+}
+
+# correction !!!    des grandes
+cat (paste("attention ",
+		sum(ndt$taille > vecteur_coupures[length(vecteur_coupures)]) ,
+		"tailles",
+		paste(ndt$taille[ndt$taille > vecteur_coupures[length(vecteur_coupures)]],collapse=" "),
+		"ramenees à",
+		vecteur_coupures[length(vecteur_coupures)]))
+ndt$taille[ndt$taille > vecteur_coupures[length(vecteur_coupures)]]<- vecteur_coupures[length(vecteur_coupures)]
+# correction !!!    des petites
+cat (paste("attention ",
+		sum(ndt$taille < vecteur_coupures[1]) ,
+		"tailles",
+		paste(sort(ndt$taille[ndt$taille < vecteur_coupures[1]]),collapse=" "),
+		"ramenees à",
+		vecteur_coupures[1]))
+ndt$taille[ndt$taille < vecteur_coupures[1]]<-vecteur_coupures[1]
+
+#tailap extrait les anguilles d'un mois donné dans un élément de la liste.
+tailap=tapply(ndt$taille,INDEX=list(ndt$mois),function(X) X)
+# On stocke ça dans une matrice contenant des listes. Ici la matrice est simple
+#############################################################
+# Si il manque des effectifs certains mois, voir en 2013.
+#############################################################
+
+strtail=array(list(),dim=dim(tailap),dimnames=dimnames(tailap))
+for (i in 1:12){
+  strtail[i][[1]]<-hist(tailap[i][[1]],breaks = vecteur_coupures,right = FALSE,  plot=FALSE)
+}
+
+# On retrouve le nombre dans XX
+apply(strtail,1,function(X)sum(X[[1]]$"counts"))
+
+
+for (i in 1:12){              # mois
+  count=strtail[i][[1]]$counts
+  if (!is.null(count)){
+	strtail[i][[1]]$"effectifs_redresses"<- count*YY[i]/sum(count)#  t(count)*coeff_correct[i,j,k])#%*%ar[i,,]
+  }
+}
+
+# on retrouve les effectifs de YY
+apply(strtail,1,function(X)sum(X[[1]]$"effectifs_redresses"))
+
+# on récupère la structure du programme précédent qui est par mois
+load(str_c(datawdym1,"strtail_annee_mois.Rdata"))
+# On rajoute une colonne vide
+strtail_annee_mois<-cbind(strtail_annee_mois,CY=0)
+colnames(strtail_annee_mois)[length(colnames(strtail_annee_mois))]<-CY
+# A modifier par script 2013 si il manque des mois
+for (i in 1:dim(strtail)[1]){          
+  strtail_annee_mois[,as.character(CY)][[i]]=strtail[i][[1]]$"effectifs_redresses"
+}
+strtail_annee_mois[,as.character(CY)]
+unlist(lapply(strtail_annee_mois[,as.character(CY)],sum))
+vvv[["AGJ"]][["str_tail"]]<-list()
+vvv[["AGJ"]][["str_tail"]][["effectif_mesure"]]<-sum(apply(strtail,1,function(X)sum(X[[1]]$"counts"))) # 44007
+str(eff)
+sum(eff$effectif) 
+
+save(strtail_annee_mois,file=str_c(datawdy,"strtail_annee_mois.Rdata"))
+#load(file=str_c(datawdy,"strtail_annee_mois.Rdata"))
+
+
+
+
+######################################
+# sauvegarde d'un tableau de données
+########################################
+#vecteur_coupures=seq(from=65,to=600,by=5)
+#dim(strtail_annee_mois)
+#unlist(strtail_annee_mois[12,18])
+#X<-strtail_annee_mois[1,1]
+#X<-strtail_annee_mois[6,18]
+vecteur_coupures=seq(from=65,to=600,by=5)
+mat<-as.data.frame(t(unlist(sapply(strtail_annee_mois,function(X) {if (length(unlist(X))==107) X else rep(NA,107)}))))
+mois<-rep(dimnames(strtail_annee_mois)[[1]],ncol(strtail_annee_mois))
+annee<-rep(dimnames(strtail_annee_mois)[[2]],12)
+annee<-annee[order(annee)]
+mat<-cbind(mois,annee,mat)
+colnames(mat)<-c("mois","annee",vecteur_coupures[-length(vecteur_coupures)])
+options(warn=-1)
+# ci dessous le "_" n'est pas de la même longueur que les autres et c'est normal
+rownames(mat)<-str_c(mat[,2],"_",mat[,1])
+options(warn=0)
+save(mat,file=str_c(datawdy,"mat.Rdata"))
+write.table(mat,file=str_c(datawdy,"mat.csv"),sep=";",row.names=TRUE)
+
+# jusqu'en 2009 les données sauvegardées sont en pourcentage !
+# on repasse en pourcentage
+for (i in 1:dim(strtail_annee_mois)[1]){
+  for (j in 1:dim(strtail_annee_mois)[2]){
+	if (length(strtail_annee_mois[i,j][[1]])!=1){
+	  strtail_annee_mois[i,j][[1]]= strtail_annee_mois[i,j][[1]]/sum(strtail_annee_mois[i,j][[1]])
+	}
+  }
+}
+lapply(strtail_annee_mois[,as.character(CY)],sum) # vérifier que ça fait 1 chaque mois
+save(strtail_annee_mois,file=str_c(datawdy,"strtail_annee_moisenpourcentage.Rdata"))
+
+################################################
+# YY est uun array, et il faut il coller la valeur de CY
+# donc on récupère celui de l'année d'avant
+# on coupe une tranche pour qu'elle ait la bonne structure
+# On la remplit de NA
+# On la colle à l'autre sur le côté avec un abind
+# On la remplit !
+# 
+YYCY<-tapply(eff$effectif,INDEX=list(eff$mois,eff$val_libelle),sum)
+YYCY[is.na(YYCY)]<-0
+load(file=str_c(datawdym1,"YY.Rdata"))
+# a partir de 2014 les données sont seulement dans la classe 00
+# creation d'un tableau vide à rabouter dataCY
+dim(YY)
+dataCY<-YY[,ncol(YY),]
+dataCY[,]<-NA
+YYNEW<-abind::abind(YY,dataCY,along=2)
+dimnames(YYNEW)[[2]][dim(YYNEW)[2]]<-as.character(CY)
+YYNEW[,as.character(CY),"00"]<-YYCY[,"angll"]
+#YYNEW[,as.character(CY),"00"]<-c(YYCY[,"angll"],0)
+YYNEW[,as.character(CY),"51"]<-NA # YY2015[,"Anguilles >300"] # on en a pas besoin
+YY<-YYNEW
+save(YY, file=str_c(datawdy,"YY.Rdata"))
+
+# pour faire les graphes des tailles corrigées
+load(file=str_c(datawdy,"strtail_annee_mois.Rdata"))
+####################
+# Generation de plusieurs figures
+###################
+for (theCY in 2010:CY){
+  year<-as.character(theCY)
+  choix<-match(year,dimnames(strtail_annee_mois)[[2]])
+  stro<-strtail_annee_mois[,choix]
+  stro1<-matrix(NA,nrow=107,ncol=12)
+  for (j in 1:12){
+      stro1[,j]<-stro[[j]]
+  }
+  don=as.data.frame(stro1)
+  for( j in 1: nrow(don)){
+      don[j,]=cumsum(as.numeric(don[j,]))
+  }
+  rownames(don)= 1:107
+  colnames(don)=c("01","02","03","04","05","06","07","08","09","10","11","12")
+  don<-don[,12:1]
+#==============================================================
+  png(str_c(imgwdy,"str_taille_mois_redress",CY,".png"))
+  matplot(don,xaxt="n",type="n",ylab="effectif par classe",xlab="classe de taille",main=iconv(paste("Structures en tailles mensuelles redressées",year),"UTF8"))
+  lesgros<-match(c(seq(from=100, to =500,by=50)),vecteur_coupures)
+  abline(v=lesgros,col="grey60",lty=2)
+  matplot(don,lty=1,lwd=4,type="h",xaxt="n",col=couleur_mois,add=TRUE)
+  text(x=lesgros,y=10*(round(max(don/10))),labels=seq(from=100, to =500,by=50),pos=4,col="grey60")
+  legend("topright",legend=c(1:12), title="mois",col=couleur_mois,fill=rev(couleur_mois),horiz=FALSE)
+  axis(1,1:107,paste("[",vecteur_coupures[1:107],"-",vecteur_coupures[2:108],"]",sep=''))  
+  dev.off()
+#==============================================================
+}
+###########################
+# TRAVAIL CY
+##########################
+cat(CY)
+# Bien recharger le debut et pas le Rdata
+#save(file=str_c(datawdy,"strage_annee_mois.Rdata"))
+load(str_c(datawd,"ar.Rdata"))
+load(file=str_c(datawdy,"strtail_annee_moisenpourcentage.Rdata"))
+strtail_annee_moisp<-strtail_annee_mois
+#load(file="//srv-01/data/Migrateur/migration/Arzal/Suivi biologique/interannuel/strtail_annee_mois2013.Rdata")
+load(file=str_c(datawdy,"YY.Rdata"))
+#load(file="//srv-01/data/Migrateur/migration/Arzal/Suivi biologique/interannuel/strage_annee_mois2011.Rdata")
+##strtail_annee_mois
+##dimnames(strtail_annee_mois)
+
+strage_annee_mois=array(0,c(12,dim(strtail_annee_mois)[2],5))
+for (i in 1:dim(strtail_annee_mois)[1]){#mois
+  for (j in 1:dim(strtail_annee_mois)[2]){# annee
+	if (length(strtail_annee_mois[i,j][[1]])!=1){
+	  
+	  strage_annee_mois[i,j,]= (t(strtail_annee_mois[i,j][[1]])*rowSums(YY,dims=2,na.rm=TRUE)[i,j])%*%ar[i,,] # effectif par mois
+	  # produit matriciel pour obtenir la structure en age
+	}
+  }
+}
+dimnames(strage_annee_mois)<-c(dimnames(strtail_annee_mois),list(1:5))
+#
+
+# structure de taille et d'age annee
+#strage_annee=as.data.frame(matrix(0,nrow=15,ncol=5))
+strage_annee= round(colSums(strage_annee_mois,1))
+# la moyenne de 2008 est pourrite
+#sum((strage_annee["2007",]/sum(strage_annee["2007",])+strage_annee["2009",]/sum(strage_annee["2009",]))/2)
+#strage_annee["2008",]<-sum(strage_annee["2008",])*(strage_annee["2007",]/sum(strage_annee["2007",])+strage_annee["2009",]/sum(strage_annee["2009",]))/2
+# rowSums(strage_annee)
+# colSums(rowSums(YY,dims=2,na.rm=TRUE))
+# ci dessous en utilisant les pourcentages par mois ou les données de YY on ne retombe pas sur les chiffres de migration
+# probablement parce qu'il faudrait refaire l'analyse et les données on été mises à jour dans la base, parce que certains mois n'ont pas été échantillonnés et ça fout la merde
+# Autre cause : le mur guide eau.
+# on va corriger les chiffres
+
+# ci dessous correspond aux effectifs mur guide eau + gabion
+abondance_reelle<-vvv[["AGJ"]][["N"]]$effectif
+#2019 abondance_reelle<-vvv[["AGJ"]][["N"]]$effectif[-length(vvv[["AGJ"]][["N"]]$effectif)]
+abondance_danslaboite<-rowSums(strage_annee)
+abondance_reelle/abondance_danslaboite # max 2.03 min 0.78
+strage_annee<-strage_annee*abondance_reelle/abondance_danslaboite
+dimnames(strage_annee)[[1]]<-dimnames(strtail_annee_mois)[[2]]
+dimnames(strage_annee)[[2]]<-as.character(c(0:4))
+print(strage_annee)
+rowSums(strage_annee)
+#ex(strage_annee)
+
+save(strage_annee, file=str_c(datawdy,"strage_annee.Rdata"))
+vvv$AGJ$strage<-strage_annee
+load(file=str_c(datawdy,"strage_annee.Rdata"))
+# civelles sur les deux passes
+#save.image("C:\\Users\\brice.sauvaget\\Desktop\\travailstructureage.RData")
+# load(file="C:\\Users\\brice.sauvaget\\Desktop\\travailstructureage - Copie.RData")
+#save(strtail_annee_mois,file="//srv-01/data/Migrateur/migration/Arzal/Suivi biologique/interannuel/strtail_annee_mois_1996_2010.Rdata")
+
+rowSums(strage_annee)
+strage=cbind("civ"= vvv[["CIV"]][["data"]]$Ngl,
+	strage_annee)
+
+strage=as.data.frame(strage)
+mat=matrix(0,4,6)
+colnames(mat)=c("civ",0:4)
+rownames(mat)=c(1992:1995)
+(stra=rbind(mat,strage) )
+ex(stra)
+# décalage en fonction de la cohorte
+# rajouter + 1 si une année en plus
+# ci dessous fonctionne mais fait de manière plus élégante un peu plus loin
+stra[c(4:nrow(stra)),3]<-c(stra[c(5:nrow(stra)),3],NA)
+stra[c(3:nrow(stra)),4]<-c(stra[c(5:nrow(stra)),4],NA,NA)
+stra[c(2:nrow(stra)),5]<-c(stra[c(5:nrow(stra)),5],NA,NA,NA)
+stra[c(1:nrow(stra)),6]<-c(stra[c(5:nrow(stra)),6],NA,NA,NA,NA)
+vvv$AGJ$cohort<-stra
+# on utilise le stack pour retrancher l'age aux années pour obtenir les cohortes
+st=stack(strage)
+#ex(strage)
+
+colnames(st)=c("effectif","age")
+st=cbind(st,"annee"=rep(1996:CY,6))
+st$cohorte=st$annee-as.numeric(as.character(st$age)) # produces NA
+st$cohorte[is.na(st$cohorte)]<-c(1996:CY) # les civelles
+
+x11()
+
+#######ANGUILLES JAUNES
+theme_black <- function (base_size = 12,base_family=""){
+  theme_grey(base_size=base_size,base_family=base_family) %+replace%
+	  theme(
+		  axis.line = element_blank(), 
+		  axis.text.x = element_text(size = base_size * 0.8, colour = 'white', lineheight = 0.9, vjust = 1), 
+		  axis.text.y = element_text(size = base_size * 0.8, colour = 'white', lineheight = 0.9, hjust = 1), 
+		  axis.ticks = element_line(colour = "white", size = 0.2), 
+		  axis.title.x = element_text(size = base_size, colour = 'white', vjust = 1), 
+		  axis.title.y = element_text(size = base_size, colour = 'white', angle = 90, vjust = 0.5), 
+		  axis.ticks.length = unit(0.3, "lines"), 	  
+		  legend.background = element_rect(colour = NA, fill = 'black'), 
+		  legend.key = element_rect(colour = NA, fill = 'black'), 
+		  legend.key.size = unit(1.2, "lines"), 
+		  legend.key.height = NULL, 
+		  legend.key.width = NULL,     
+		  legend.text = element_text(size = base_size * 0.8, colour = 'white'), 
+		  legend.title = element_text(size = base_size * 0.8, face = "bold", hjust = 0, colour = 'white'), 
+		  legend.position = "right", 
+		  legend.text.align = NULL, 
+		  legend.title.align = NULL, 
+		  legend.direction = "vertical", 
+		  legend.box = NULL,    
+		  
+		  panel.background = element_rect(fill = "black", colour = NA), 
+		  panel.border = element_rect(fill = NA, colour = "white"), 
+		  panel.grid.major = element_line(colour = "white", size = 0.2), 
+		  panel.grid.minor = element_line(colour = "grey30", size = 0.1), 
+		  panel.spacing = unit(0.25, "lines"), 
+		  
+		  strip.background = element_rect(fill = "grey30", colour = "grey10"), 
+		  strip.text.x = element_text(size = base_size * 0.8, colour = 'white'), 
+		  strip.text.y = element_text(size = base_size * 0.8, colour = 'white', angle = -90), 
+		  
+		  plot.background = element_rect(colour = 'black', fill = 'black'), 
+		  plot.title = element_text(size = base_size * 1.2, colour = "white"), 
+		  plot.margin = unit(c(1, 1, 0.5, 0.5), "lines")
+	  )
+}
+nbcol<-dim(strtail_annee_mois)[2] #21
+sty=st[nbcol+1:nrow(st),] # j'enleve les civelles
+head(st,n=20L)
+# ci dessous la definition des limites doit etre faite dans les deux tableaux (civelles et anguille jaunes)
+# car les noms de colonne doivent etre les memes meme si on remplace le DF
+sty[,"xstart"]=sty[,"annee"]-0.5
+sty[,"xend"]=sty[,"annee"]+0.5
+sty[,"ystart"]=sty[,"cohorte"]+0.5
+sty[,"yend"]=sty[,"cohorte"]-0.5
+# p <- ggplot(sty, aes(x=annee,y=cohorte))
+# p + geom_tile(aes(fill=effectif)) + scale_fill_gradient(low="green", high="red") 
+# p + geom_tile(aes(fill=effectif)) + scale_fill_continuous(breaks=seq(from=0,to=2500,by=250)) 
+# p + geom_tile(aes(fill=effectif)) + scale_fill_continuous(trans="log10",low="green",high="red") 
+#  exp(cut(log(sty$effectif+1),5) exp(c(1.89,3.79,5.69,7.59,9.49))
+#sty$Cum_per_age=cut(log(sty$effectif+1),log(c(0,10,50,500,5000,15000)+1),right=FALSE)
+# p <- ggplot(sty, aes(x=annee,y=cohorte))
+# p + geom_tile(aes(fill=Cum_per_age)) 
+# display.brewer.all()
+sty$classe=cut(sty$effectif,c(0,100,1e+03,1e+04,1e+05,1e+06,2e+06,3e+06,5e+06),right=FALSE)
+#col=c(brewer.pal(5,"PuBuGn"),brewer.pal(7,"Oranges")[3:7])
+#col=c(rev(brewer.pal(10,"RdYlGn"))[c(5:1)],brewer.pal(5,"PuBuGn"))
+#col=rev(brewer.pal(10,"Spectral"))
+col=rev(c("magenta", "#D90071","orangered","orange","#F46D43","yellow","olivedrab1","limegreen","darkgreen","cyan","cornflowerblue"))
+require(colorRamps)
+
+
+#lab=c("[0,100)","[100,500)","[500,1e+03)","[1e+03,5e+03)","[5e+03,1e+04)",
+#		"[1e+04,1e+05)","[1e+05,5e+05)","[5e+05,1e+06)","[1e+06,2e+06)","[2e+06,3e+06)")
+cols=
+	c(
+		"[0,100)"= col[1],
+		"[100,1e+03)"= col[2] ,
+		#"[500,)"= col[3],
+		"[1e+03,1e+04)"=col[4],
+		#"[5e+03,1e+04)"=col[5],
+		"[1e+04,1e+05)"=col[6],
+		#"[1e+05,5e+05)"= col[7],
+		"[1e+05,1e+06)"= col[8],
+		"[1e+06,2e+06)"=col[9],				
+		"[2e+06,3e+06)"=col[10],
+		"[3e+06,5e+06)"=col[11]
+	)
+
+p <- ggplot(sty, aes(x=annee,y=cohorte))
+(p<- p + geom_tile(aes(fill=classe)) + 			
+	  xlab("")+ylab("Cohorte")+
+	  scale_y_continuous(breaks=c(1990,1995,2000,2005,2010,2015),minor_breaks=c(1991:2015))+
+	  scale_x_continuous(breaks=c(1995,2000,2005,2010,2015),minor_breaks=c(1992:2015))+
+	  theme_black())
+#### CIVELLES
+stc=st[1:nbcol,]
+stc[,"Cum_per_age"]=log(stc$effectif+1)
+stc[,"xstart"]=stc[,"annee"]-0.5
+stc[,"xend"]=stc[,"annee"]
+stc[,"ystart"]=stc[,"cohorte"]-0.5
+stc[,"yend"]=stc[,"cohorte"]+0.5
+stc$classe=cut(stc$effectif,c(0,100,1e+03,1e+04,1e+05,1e+06,2e+06,3e+06,5e+06),right=FALSE)
+# remplacement du jeu de donnees dans le ggplot
+#p<- p%+%stc  # pas besoin il suffit de changer dans le layer
+(p<-p+  geom_rect(aes(xmin = xstart, xmax = xend,ymin=ystart,ymax=yend,fill=classe),data=stc) +
+	  scale_fill_manual(name="Effectif",values =cols))
+
+civelles=data.frame("annee"=stc$annee,"N.e3"=strage$civ/1000)
+civelles$annee=as.numeric(civelles$annee)
+civelles$classe=cut(strage$civ,c(1e+04,1e+05,1e+06,2e+06,3e+06,5e+06),right=FALSE)
+
+cols=
+	c(
+		"[1e+04,1e+05)"=col[6],
+		"[1e+05,1e+06)"= col[8],
+		"[1e+06,2e+06)"=col[9],
+		"[2e+06,3e+06)"=col[10],
+		"[3e+06,5e+06)"=col[11])
+# 2015 pour graph a virer en 2015
+civelles<-rbind(civelles,c(2015,NA,NA))
+
+p2<-ggplot(civelles,aes(x=annee,y=N.e3))
+(p2<-p2+geom_point(aes(size=N.e3,colour=classe),show.legend=FALSE)+
+	  xlab("Annee")+ylab("Effectif civelles x1000")+
+	  scale_colour_manual(name="Effectif",values =cols)+
+	  scale_x_continuous(breaks=c(1995,2000,2005,2010,2015),minor_breaks=c(1992:2015))+
+	  theme_black())
+
+
+require(grid)
+svg(str_c(imgwdy,"CIV_ANG_COHORTE.svg"))
+vplayout <- function(x, y) {
+  viewport(layout.pos.row = x, layout.pos.col = y)  }
+grid::grid.newpage()
+grid::pushViewport(grid::viewport(layout = grid.layout(3,40,just="center")))
+print(p, vp=vplayout(1:2,1:40))
+for (i in (40:35)){
+  print(p2,vp=vplayout(3,1:i))
+}
+dev.off()
+
+#print(p)
+#print(p2)
+#####################"
+# Analyse des donnees
+#####################
+# migration des cohorte en fonction de l'âge
+require(ggthemr)
+png(str_c(imgwdy,"migration_par_cohorte.png"),width=16,height=12,units="cm",res=300)
+fresh4 <- define_palette(
+	swatch = c("#111111","#E84646","#65ADC2","#233B43","#C29365","#362C21","#316675",
+		"#168E7F","#109B37","#003B10","#52002F"),
+	gradient = c(lower = "#111111", upper = "#109B37"))
+ggthemr(fresh4, type="outer", layout="scientific", spacing=0.8)
+
+p3 <- ggplot(sty, aes(x=cohorte,y=effectif))
+p3<- p3 + geom_bar(aes(fill=age),stat="identity")+
+    xlab("Cohorte")+ylab("Effectif")+
+    scale_fill_manual(values=swatch()[3:7])
+
+
+# migration par cohorte, le même avec les civelles
+p4 <- ggplot(st)
+p4<- p4 + geom_bar(aes(x=cohorte,y=effectif,fill=age),stat="identity")+ ylab("")+xlab("")
+
+p4_grob <- ggplotGrob(p4)
+p3 <- p3+annotation_custom(p4_grob, xmin=1990, xmax=2010, ymin=45000, ymax=150000)
+print(p3)
+ggthemr_reset()
+dev.off()
+# migration annuelles des anguilles par âge
+#x11()
+#p <- ggplot(sty, aes(x=annee,y=effectif))
+#(p<- p + geom_bar(aes(fill=age),stat="identity")) +xlab("Annee")+ylab("Effectif")+theme_bw()
+
+# migration annuelles des anguilles par âge
+#library(RColorBrewer)
+#display.brewer.all()
+#couleurs=c(brewer.pal(9,"Set1"),brewer.pal(9,"Set3"))
+#x11()
+#sty$cohorte=as.factor(sty$cohorte)
+#p <- ggplot(sty, aes(x=annee,y=effectif))
+#p + geom_bar(aes(fill=cohorte),stat="identity") +xlab("Annee")+ylab("Effectif")+theme_bw()+
+#	scale_x_continuous(breaks=c(1995,2000,2005,2010),minor_breaks=c(1992:2013))
+#
+#
+#sty$civ=NA
+#
+#annee=rownames(strage)
+#for(i in 0:4){
+#  for (j in 1:19){
+#	sty[sty$cohorte==annee[j]&sty$age==i,"civ"]= strage[annee[j],"civ"]
+#  }
+#}
+#effcohorte=tapply(sty$effectif,sty$cohorte,sum)
+#ex(effcohorte)
+#effage=tapply(sty$effectif,list(sty$cohorte,sty$age),sum)[,1:5]
+#ex(effage)
+#plot(as.numeric(names(effcohorte)),effcohorte,xlab="annee",ylab="effectif d'anguilles jaunes par cohorte",main="Migration par cohorte au stade anguille jaune",type="h",lty=1)
+#points( as.numeric(names(effcohorte))[5:length(effcohorte)],effcohorte[5:length(effcohorte)],col="deepskyblue",pch=12)
+## le meme en ggplot (size)
+#datacohorte=data.frame("Annee"=as.numeric(names(effcohorte)),"Effectif"=as.numeric(effcohorte),"Civelles"=c(rep(0,4),strage[,"civ"]))
+#p<-ggplot(datacohorte)
+#p+geom_point(aes(x=Annee,y=Effectif,size=Civelles,colour=Civelles))+
+#	ggtitle("migrations d`anguilles jaunes par cohorte")+
+#	scale_x_continuous(limit=c(1996,2015))
+#
+#sty0=subset(sty,age==0)
+#sty0$labannee=as.character(sty0$annee)
+#p<-ggplot(sty0)
+#p+geom_point(aes(x=annee,y=effectif,size=civ,colour=civ))
+#p+geom_point(aes(x=civ,y=effectif,colour=annee),size=10)+
+#	geom_smooth(aes(x=civ,y=effectif),method="lm")+
+#	geom_text(aes(x=civ,y=effectif,label=annee),size=2.5,col="white")+
+#	ylab(iconv("effectif d'anguillettes d'âge 0","UTF8"))+
+#	xlab("effectif de civelles")
+#
+##+opts(drop ="legend")
+#x11()
+#ccf(sty0$civ,sty0$effectif,main="")
+#cor.test(sty0$effectif,sty0$civ) # p=0.61 cor=0.13
+#datacohorte$Civelles[datacohorte$Civelle==0]<-NA
+#cor.test(datacohorte$Effectif,datacohorte$Civelles)
+##write.table(datacohorte,"clipboard", sep = "\t", col.names = NA)
+#
+#
+#p<-ggplot(datacohorte)
+#p+geom_point(aes(x=Civelles,y=Effectif,colour=Annee))+
+#	geom_smooth(aes(x=Civelles,y=Effectif),method="lm") 
+#
+#
+##ANALYSE STAT POUR TESTER L'EFFET COHORTE.
+#
+#sty00<-sty0[,c("effectif","annee","civ")]
+## cette fonction calcule la variable décallée
+#dec0fn<-function(data,variable,t){
+#  va<-data[,variable]
+#  n<-nrow(data)
+#  data2<-data
+#  # on décalle des lignes
+#  data2[(t+1):n,str_c("civ",t)]<-va[1:(n-t)]
+#  return(data2)
+#}
+#sty00<-dec0fn(sty00,"civ",t=1)
+##sty00<-dec0fn(sty00,"civ",t=2)
+#sty00$le<-log(sty00$effectif)
+#sty00$lc<-log(sty00$civ)
+#sty00$lc1<-log(sty00$civ1)
+#sty00$lc01<-log(sty00$civ1+sty00$civ)
+#sty00<-sty00[complete.cases(sty00),]
+#glm1<-glm(le~lc,data=sty00) 
+#summary(glm1)
+#crPlot(glm1,variable="lc")
+#require (mgcv)
+#gam1<-gam(le~s(lc),data=sty00)
+#plot(gam1)
+#summary(gam1)
+#AIC(glm1,gam1) # le modèle est linéaire
+#
+#glm2<-glm(le~lc1+lc,data=sty00) 
+#summary(glm2)
+#require(car)
+#crPlot(glm2,variable="lc")
+#crPlot(glm2,variable="lc1")
+#AIC(glm2)
+#plot(glm2)
+#glm3<-glm(le~lc1,data=sty00) 
+#require (stargazer)
+#
+#stargazer(glm1,glm3,glm2, title="Regression Results", single.row=TRUE,type="text")
+#stargazer(glm2,glm1, title="Regression Results", single.row=TRUE,type="text",style="all" )
+##stargazer(anova(g7))
+
+
+sum(unlist(lapply(strtail_annee_mois[,as.character(CY)],sum)))
+save(vvv,file=str_c(datawdy,"vvv.Rdata"))
+@
+
+\subsection{Les migrations d'anguilles argentées}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% BILAN ANNUEL ANGUILLES JAUNES %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\small
+% modification de l'espacement des colonnes du tableau
+\setlength{\tabcolsep}{4pt} % defaut 6pt
+\input{\Sexpr{vvv[["AGG"]][["path_agg"]]}}
+\setlength{\tabcolsep}{6pt} % defaut 6pt
+\normalsize
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+<<bilan_migration, echo=FALSE, eval=FALSE,results=hide >>=
+
+bMM_Arzal=new("report_mig_mult")
+bMM_Arzal=choice_c(bMM_Arzal,
+	dc=c(5,6,12),
+	taxa=c("Anguilla anguilla"),
+	stage=c("AGG","AGJ","CIV"),
+	datedebut=str_c(CY,"-01-01"),
+	datefin=str_c(CY,"-12-31"))
+bMM_Arzal<-charge(bMM_Arzal) 
+bMM_Arzal<-connect(bMM_Arzal)
+bMM_Arzal<-calcule(bMM_Arzal,silent=TRUE)
+plot(bMM_Arzal,plot.type="multiple")
+# Je vais chercher l'élément grdata qui me permet de "refaire"
+# le ggplot que je veux
+grdata<-get('grdata',envir_stacomi) 
+# je renomme le facteur DC pour les titres
+levels(grdata$DC) <- c(
+	"Passe bassins",
+	"Piege anguille gabion",
+	"Piege guide eau")
+p<-ggplot(grdata,aes(x=debut_pas,y=effectif_total,fill=DC))+
+	geom_bar(position="stack", stat="identity")+
+	facet_grid(stage~.,scales="free_y")+
+	scale_fill_manual(values=c("Piege guide eau"="#66A1D2","Piege anguille gabion"="#043C6B","Passe bassins"="#D2A25F"))+ # couleurs à la main...
+	ylab("Effectif par stade et DC")+	
+	xlab("Date")+
+	theme_bw()+
+	theme(strip.background = element_rect(fill = "grey60", size = 1),
+		strip.text=element_text(colour="white")) # pour les rectangles des strip
+
+png(filename=str_c(imgwdy,"bmm.png"),width=18,height=18,unit="cm",res=300)
+print(p)
+dev.off()
+
+
+
+
+###########################
+# définition du thème de couleur pour les civelles
+###########################
+color=c(
+	"#052945",#working
+	"#ECDAC0",#stopped
+	"#3071A2",#normal
+	"#462800",#maintenance
+	"#B68B52",#dysfunction
+	"#FFC26E",
+	"#A66F24",
+	"#012746",#eff
+	"#6C3E00",#weight
+	"blue",
+	"blue"
+)
+mycolorramp1<-colorRampPalette(c("#011A2D","#4F7EA2")) # blues
+mycolorramp2<-colorRampPalette(c("#462800","#B68B52"))
+color_ope<-sample(c(mycolorramp1(10),mycolorramp2(10)),20)
+#image(1:length(mycolorramp1(10)), 1, as.matrix(1:length(mycolorramp1(10))), 
+#		col=mycolorramp1(10),
+#		xlab="", ylab = "", xaxt = "n", yaxt = "n", bty = "n")
+#image(1:length(mycolorramp2(10)), 1, as.matrix(1:length(mycolorramp2(10))), 
+#		col=mycolorramp2(10),
+#		xlab="", ylab = "", xaxt = "n", yaxt = "n", bty = "n")
+##################################
+# Civelles gabion
+##################################
+# si je fais tourner un bilanmigration multiple
+# je peux ouvrir une fenetre graphique pour le premier
+# pour les suivants de nouvelles fenêtres vont s'ouvri
+# pour sauver en pdf il faut que j'en passe qu'un !
+bMM_Arzal=choice_c(bMM_Arzal,
+	dc=c(6),
+	taxa=c("Anguilla anguilla"),
+	stage=c("CIV"),
+	datedebut=str_c(CY,"-01-01"),
+	datefin=str_c(CY,"-12-31"))
+bMM_Arzal<-charge(bMM_Arzal)
+bMM_Arzal<-connect(bMM_Arzal)
+bMM_Arzal=calcule(bMM_Arzal)
+
+# par("din") # pour voir la taille de la fenetre graphique
+pdf(file=str_c(imgwdy,"bmm_civelle_6.pdf"),width=7.2,height=7.44)
+plot(bMM_Arzal,plot.type="standard",
+	color=color,
+	color_ope=color_ope,
+	main=str_c("Effectif civelles, piège Gabion (rive gauche) en ",CY),
+	cex.main=1.1,		
+	type="h",
+	silent=TRUE)
+dev.off()
+##################################
+# Civelles mur guide eau
+##################################
+bMM_Arzal=choice_c(bMM_Arzal,
+	dc=c(12),
+	taxa=c("Anguilla anguilla"),
+	stage=c("CIV"),
+	datedebut=str_c(CY,"-01-01"),
+	datefin=str_c(CY,"-12-31"))
+bMM_Arzal<-charge(bMM_Arzal)
+bMM_Arzal<-connect(bMM_Arzal)
+bMM_Arzal=calcule(bMM_Arzal)
+pdf(file=str_c(imgwdy,"bmm_civelle_12.pdf"),width=7.2,height=7.44)
+plot(bMM_Arzal,plot.type="standard",
+	color=color,
+	color_ope=color_ope,
+	main=str_c("Effectif civelles, mur guide eau (rive droite) en ", CY),
+	cex.main=1.1,		
+	type="h",
+	silent=TRUE)
+dev.off()
+##################################
+# Définition du thème de couleur pour les anguilles
+##################################
+
+color=c(
+	"#052945",#working
+	"#ECDAC0",#stopped
+	"#3071A2",#normal
+	"#462800",#maintenance
+	"#B68B52",#dysfunction
+	"#FFC26E",
+	"#A66F24",
+	"#012746",#mesure
+	"#29A570",#calcule
+	"#B67B2D", #expert
+	"#4F7EA2" # ponctuel
+)
+##################################
+# Anguilles jaunes gabion
+##################################
+
+bMM_Arzal=choice_c(bMM_Arzal,
+	dc=c(6),
+	taxa=c("Anguilla anguilla"),
+	stage=c("AGJ"),
+	datedebut=str_c(CY,"-01-01"),
+	datefin=str_c(CY,"-12-31"))
+bMM_Arzal<-charge(bMM_Arzal)
+bMM_Arzal<-connect(bMM_Arzal)
+bMM_Arzal=calcule(bMM_Arzal)
+pdf(file=str_c(imgwdy,"bmm_agj_6.pdf"),width=7.2,height=7.44)
+plot(bMM_Arzal,plot.type="standard",
+	color=color,
+	color_ope=color_ope,
+	main=str_c("Effectif d'anguilles jaunes Gabion (rive gauche) en ",CY),
+	cex.main=1.1,
+	ylab="Effectif journalier d'anguilles jaunes",
+	lty=2,
+	type="b",		
+	silent=TRUE)
+dev.off()
+
+##################################
+# Anguilles jaunes mur guide eau
+##################################
+bMM_Arzal=choice_c(bMM_Arzal,
+	dc=c(12),
+	taxa=c("Anguilla anguilla"),
+	stage=c("AGJ"),
+	datedebut=str_c(CY,"-01-01"),
+	datefin=str_c(CY,"-12-31"))
+bMM_Arzal<-charge(bMM_Arzal)
+bMM_Arzal<-connect(bMM_Arzal)
+bMM_Arzal=calcule(bMM_Arzal)
+pdf(file=str_c(imgwdy,"bmm_agj_12.pdf"),width=7.2,height=7.44)
+plot(bMM_Arzal,plot.type="standard",
+	color=color,
+	color_ope=color_ope,
+	main=str_c("Effectif d'anguilles jaunes du mur guide eau (rive droite) en ", CY),
+	cex.main=1.1,
+	ylab="Effectif journalier d'anguilles jaunes",
+	lty=2,
+	type="b",		
+	silent=TRUE)
+dev.off()
+
+
+##################################
+# Anguilles jaunes passe à bassins
+##################################
+bMM_Arzal=choice_c(bMM_Arzal,
+	dc=c(5),
+	taxa=c("Anguilla anguilla"),
+	stage=c("AGJ"),
+	datedebut=str_c(CY,"-01-01"),
+	datefin=str_c(CY,"-12-31"))
+bMM_Arzal<-charge(bMM_Arzal)
+bMM_Arzal<-connect(bMM_Arzal)
+bMM_Arzal=calcule(bMM_Arzal)
+pdf(file=str_c(imgwdy,"bmm_agj_5.pdf"),width=7.2,height=7.44)
+plot(bMM_Arzal,plot.type="standard",
+	color=color,
+	color_ope=color_ope,
+	main=str_c("Effectif d'anguilles jaunes dans la passe à bassins en ",CY),
+	ylab="Effectif journalier d'anguilles jaunes",
+	cex.main=1.1,
+	lty=2,
+	type="b",		
+	silent=TRUE)
+dev.off()
+@
+
+
+
+
+<<series_chronologiques_vilaine, echo=FALSE, eval=FALSE,results=hide >>=
+
+# export current values and paste them in excel for consistency
+ex(vvv$CIV$data)
+require(XLConnect)
+wb1<-loadWorkbook(str_c("//SRV-01/data/Migrateur/Migration/Arzal/pecherie_civelle/serie_pro_vilaine.xlsx"))
+bg=readWorksheet(wb1, sheet ="bilan_gestion",startRow = 2,endRow = CY-1992,endCol = 29,colTypes=c("character",rep("numeric",28)))
+bg<-bg[-1,]
+bg$recr_flu_n=bg$passe_total_n
+
+
+
+# In the following we assume the same mortality rate of glass eel from the trapping ladder and of those coming form the sluice
+ges$recr_flu_aj_m2=(ges$passem*(1-mortpas)+ges$pecxp*(1-mortxp)+ges$eclm*(1-mortpas))*1e6+ges$aj*1000
+
+mortxp=1
+
+# In the following we assume the same mortality rate of glass eel from the trapping ladder and of those coming form the sluice
+ges$recr_flu_aj_m3=(ges$passem*(1-mortpas)+ges$pecxp*(1-mortxp)+ges$eclm*(1-mortpas))*1e6+ges$aj*1000
+
+mortxp=1
+mortpas=1
+ges$recr_flu_aj_m4=(ges$passem*(1-mortpas)+ges$pecxp*(1-mortxp)+ges$eclm*(1-mortpas))*1e6+ges$aj*1000
+library(ggplot2)
+sumplussd=function(df,var) mean(df$"densCS",na.rm=TRUE)+sd(df$"densCS",na.rm=TRUE) 
+summinussd=function(df) mean(df$"densCS",na.rm=TRUE)-sd(df$"densCS",na.rm=TRUE)
+meanspl=function(df) mean(df$"densCS",na.rm=TRUE)
+meanspl1=function(df) mean(df[,c("1")],na.rm=TRUE)
+sumplussd1=function(df,var) mean(df$"1",na.rm=TRUE)+sd(df$"1",na.rm=TRUE) 
+summinussd1=function(df) mean(df$"1",na.rm=TRUE)-sd(df$"1",na.rm=TRUE)
+spl=ddply(dens,.variables=c("annee","classdist"),.fun=sumplussd)
+smi=ddply(dens,.variables=c("annee","classdist"),.fun=summinussd)
+colnames(spl)[3]<-"sumplussd"
+spl$summinussd=smi[,3]
+spl$denscs=ddply(dens,.variables=c("annee","classdist"),.fun=meanspl)[,3]
+spl$denscs1=ddply(dens,.variables=c("annee","classdist"),.fun=meanspl1)[,3]
+spl$summinussd1=ddply(dens,.variables=c("annee","classdist"),.fun=summinussd1)[,3]
+spl$sumplussd1=ddply(dens,.variables=c("annee","classdist"),.fun=sumplussd1)[,3]
+
+save(spl,file="pechelec/spl.Rdata")
+
+load("spl.Rdata") # spl issued from Traitement densite
+# for downstream sector
+spld<-spl[spl$classdist=="<50rkm",] # downstream
+spld<-spld[order(spld$annee),]
+gesflu=ges[,c("year","passem","pecxp","eclm","recfluciv","aj","recr_flu_aj_m1","recr_flu_aj_m2","recr_flu_aj_m3")] # fluvial data
+# replacing missing values for electrofishing data
+flu<-merge(gesflu,spld,by.x="year",by.y="annee",all.x=TRUE)
+# having missing data I will only assume that the densities were the mean of previous and next year
+for (i in c(9,11,13,15)){
+  flu[i,"denscs"]<-mean(c(flu[i-1,"denscs"],flu[i+1,"denscs"]))
+}
+
+scale=function(vec){
+  vec/max(vec,na.rm=TRUE)
+}
+# CORRIGER POUR LES ANNEES OU IL N'Y A PAS DE DONNEES DE SUIVI
+ccf(flu$denscs[3:16],flu$recr_flu_aj_m1[1:14]) # 2 year lag 
+cor(flu$denscs[3:16],flu$recr_flu_aj_m1[1:14]) # 0.73
+cor(flu$denscs[3:16],flu$recr_flu_aj_m2[1:14]) # 0.77
+cor(flu$denscs[3:16],flu$recr_flu_aj_m3[1:14]) # 0.78
+##########################
+# graphique du rapport
+##########################
+require(grDevices)
+X11()
+par("mar"=c(5.1,5.1,4.1,5.1))
+plot(1996:2011,ges$recr_flu_aj_m3,xlab="annee",xaxt="n",ylab=expression("Civelles x " * 1000),type="b",yaxt="n",frame = FALSE,col="grey60",lwd=2)
+at<-seq(0,2.5,by=0.5)
+at3<-at*10^6
+at2<-at*10^3
+at1<-at3/25
+axis(1, at = 1996:2011)
+axis(2, at = at3, labels = formatC(at2, big.mark = " ", format = "d"), 
+	las = 3)
+axis(side=4,at=at3,labels=at1)
+mtext("Anguilles jaunes",4,line=3)
+abline(h=at3,col="grey70")
+points(1996:2011,ges$recr_flu_aj_m3,lty=2,type="b",col="black",lwd=2)
+symbols(x=2007,y=(ges$eclm*10^6)[12],squares=0.3,add=TRUE,inches=F,bg="grey")
+points(1996:2011,ges$recr_flu_aj_m4*25,lty=2,pch=17,type="b",col="black")
+symbols(x=(1996:2011)[ges$pecxp>0],y=(ges$pecxp*10^6)[ges$pecxp>0],
+	stars=matrix(rep(c(0.5,0.1,0.5,0.1,0.5,0.1,0.5,0.1,0.5,0.1)/2,7),7,10),add=TRUE,inches=F,bg="grey")
+dev.off()
+
+x11()
+y <- sort(10*runif(10))
+z <- runif(10)
+z3 <- cbind(z, 2*runif(10), runif(10))
+symbols(x, y, thermometers = cbind(.5, 1, z), inches = .5, fg = 1:10)
+symbols(x, y, thermometers = z3, inches = FALSE)
+text(x,y, apply(format(round(z3, digits=2)), 1, paste, collapse = ","),
+	adj = c(-.2,0), cex = .75, col = "purple", xpd = NA)
+
+
+
+barplot(ges$recr_flu_aj_m3/1e6,names.arg=1996:2011,col="blue",ylab="recrutement fluvial net (millions), densite anguille.m-2")
+rect(xleft=c(3.8,5,7.4,8.6,9.8,11.01,18.2), ybottom=(ges$recr_flu_aj_m3/1e6)[c(4,5,7,8,9,10,16)], xright=c(4.3,5.5,7.9,9.1,10.3,11.5,18.7), ytop=(ges$recr_flu_aj_m2/1e6)[c(4,5,7,8,9,10,16)],col="slateblue1",lty=2) 
+rect(xleft=c(4.3,5.5,7.9,9.1,10.3,11.5,18.7), ybottom=(ges$recr_flu_aj_m3/1e6)[c(4,5,7,8,9,10,16)], xright=c(4.8,6,8.4,9.6,10.8,12,19.2), ytop=(ges$recr_flu_aj_m1/1e6)[c(4,5,7,8,9,10,16)],col="skyblue",lty=2) 
+
+#barplot(ges$recr_flu_aj_m2/1e6,names.arg=1996:2009,add=T,col="slateblue1")
+#barplot(ges$recr_flu_aj_m3/1e6,names.arg=1996:2009,add=T,col="blue")
+barplot(ges$recr_flu_aj_m4/1e6,names.arg=1996:2011,col="red",add=TRUE)
+points((c(0.5:13.5)+0.2*(c(1:14)))[c(1:8,10,12,14)],(flu$denscs[3:16])[-c(9,11,13)],pch=19,col="green",type="b")
+points((c(0.5:13.5)+0.2*(c(1:14)))[c(1:8,10,12,14)],(flu$denscs[3:16])[-c(9,11,13)],pch=19,col="violetred4",type="p",cex=1.8)
+points((c(0.5:13.5)+0.2*(c(1:14)))[c(1:8,10,12,14)],(flu$denscs[3:16])[-c(9,11,13)],pch=19,col="limegreen",type="p",cex=1.2)
+
+legend("topright",legend=iconv(c("recrutement fluvial passe",
+			"recrutement fluvial transport, survie 50% / passe",
+			"recrutement fluvial transport, survie 100%",
+			"recrutement fluvial anguilles jaunes"),"utf8"),
+	fill=c("blue","slateblue1","skyblue","red"),				
+	bty="n")
+legend(6,2,legend=iconv("densités en pêche électrique Y+2","utf8"),col="limegreen",pch=19,bty="n")
+########################################
+## premier graphique de l'animation
+##########################################
+## les fichiers .png permettent de gérer la transparence
+#png(filename = "C:/Documents and Settings/cedric/Mes documents/Migrateur/programmes/workspace3.5/various/transport1.png", width = 800, height = 600, bg = "transparent")
+#par(fg="white",col.axis="white",col.lab="white",col.main="white",cex=2)
+#barplot(ges$recr_flu_aj_m3/1e6,names.arg=1996:2009,col="blue",ylab="recrutement fluvial net (millions), densite anguille.m-2",ylim=c(0,1.4))
+#rect(xleft=c(4.3,5.5,7.9,9.1,10.3,11.5)-0.3, ybottom=(ges$recr_flu_aj_m3/1e6)[c(4,5,7,8,9,10)], xright=c(4.8,6,8.4,9.6,10.8,12)-0.2, ytop=(ges$recr_flu_aj_m1/1e6)[c(4,5,7,8,9,10)],col="skyblue") 
+##barplot(ges$recr_flu_aj_m2/1e6,names.arg=1996:2009,add=T,col="slateblue1")
+##barplot(ges$recr_flu_aj_m3/1e6,names.arg=1996:2009,add=T,col="blue")
+#barplot(ges$recr_flu_aj_m4/1e6,names.arg=1996:2009,col="red",add=TRUE)
+#points((c(0.5:11.5)+0.2*(c(1:12)))[c(1:8,10,12)],(flu$denscs[3:14]/100)[-c(9,11)],pch=19,col="green",type="b")
+#points((c(0.5:11.5)+0.2*(c(1:12)))[c(1:8,10,12)],(flu$denscs[3:14]/100)[-c(9,11)],pch=19,col="darkgreen",type="p")
+#par(fg="black",col.axis="black",col.lab="black",col.main="black",cex=1)
+#dev.off()
+## returns to default setting
+########################################
+## deuxième graphique de l'animation
+##########################################
+## les fichiers .png permettent de gérer la transparence
+#png(filename = "C:/Documents and Settings/cedric/Mes documents/Migrateur/programmes/workspace3.5/various/transport2.png", width = 800, height = 600, bg = "transparent")
+#par(fg="white",col.axis="white",col.lab="white",col.main="white",cex=2)
+#barplot(ges$recr_flu_aj_m3/1e6,names.arg=1996:2009,col="blue",ylab="recrutement fluvial net (millions), densite anguille.m-2",ylim=c(0,1.4))
+#rect(xleft=c(4.3,5.5,7.9,9.1,10.3,11.5)-0.3, ybottom=(ges$recr_flu_aj_m3/1e6)[c(4,5,7,8,9,10)], xright=c(4.8,6,8.4,9.6,10.8,12)-0.2, ytop=(ges$recr_flu_aj_m2/1e6)[c(4,5,7,8,9,10)],col="skyblue") 
+##barplot(ges$recr_flu_aj_m2/1e6,names.arg=1996:2009,add=T,col="slateblue1")
+##barplot(ges$recr_flu_aj_m3/1e6,names.arg=1996:2009,add=T,col="blue")
+#barplot(ges$recr_flu_aj_m4/1e6,names.arg=1996:2009,col="red",add=TRUE)
+#points((c(0.5:11.5)+0.2*(c(1:12)))[c(1:8,10,12)],(flu$denscs[3:14]/100)[-c(9,11)],pch=19,col="green",type="b")
+#points((c(0.5:11.5)+0.2*(c(1:12)))[c(1:8,10,12)],(flu$denscs[3:14]/100)[-c(9,11)],pch=19,col="darkgreen",type="p")
+#par(fg="black",col.axis="black",col.lab="black",col.main="black",cex=1)
+#dev.off()
+## returns to default setting
+########################################
+## troisième graphique de l'animation
+##########################################
+## les fichiers .png permettent de gérer la transparence
+#png(filename = "C:/Documents and Settings/cedric/Mes documents/Migrateur/programmes/workspace3.5/various/transport3.png", width = 800, height = 600, bg = "transparent")
+#par(fg="white",col.axis="white",col.lab="white",col.main="white",cex=2)
+#barplot(ges$recr_flu_aj_m3/1e6,names.arg=1996:2009,col="blue",ylab="recrutement fluvial net (millions), densite anguille.m-2",ylim=c(0,1.4))
+##rect(xleft=c(4.3,5.5,7.9,9.1,10.3,11.5)-0.3, ybottom=(ges$recr_flu_aj_m3/1e6)[c(4,5,7,8,9,10)], xright=c(4.8,6,8.4,9.6,10.8,12)-0.2, ytop=(ges$recr_flu_aj_m2/1e6)[c(4,5,7,8,9,10)],col="skyblue") 
+##barplot(ges$recr_flu_aj_m2/1e6,names.arg=1996:2009,add=T,col="slateblue1")
+##barplot(ges$recr_flu_aj_m3/1e6,names.arg=1996:2009,add=T,col="blue")
+#barplot(ges$recr_flu_aj_m4/1e6,names.arg=1996:2009,col="red",add=TRUE)
+#points((c(0.5:11.5)+0.2*(c(1:12)))[c(1:8,10,12)],(flu$denscs[3:14]/100)[-c(9,11)],pch=19,col="green",type="b")
+#points((c(0.5:11.5)+0.2*(c(1:12)))[c(1:8,10,12)],(flu$denscs[3:14]/100)[-c(9,11)],pch=19,col="darkgreen",type="p")
+#par(fg="black",col.axis="black",col.lab="black",col.main="black",cex=1)
+#dev.off()
+## returns to default setting
+## analyse des 0 et 1
+## La correlation croisée est maximale avec 1 an de délai pour les zero un an (bonne nouvelle !)
+#ccf(flu$denscs1[3:14][-c(7,9,11)],flu$recr_flu_aj_m1[2:13][c(1:8,10,12,14)]) # 1 year lag 
+#cor(flu$denscs1[3:14][-c(7,9,11)],flu$recr_flu_aj_m1[2:13][-c(7,9,11)]) # 0.6
+#cor(flu$denscs1[3:14][-c(7,9,11)],flu$recr_flu_aj_m2[2:13][-c(7,9,11)]) # 0.53
+#cor(flu$denscs1[3:14][-c(7,9,11)],flu$recr_flu_aj_m3[2:13][-c(7,9,11)]) # 0.44
+#
+#plot(flu$year[1:14],(flu$denscs1[1:14]),pch=19,col="green",type="b")
+#plot(flu$year[2:13][-c(9,11)],(flu$denscs1[3:14]/100)[-c(9,11)],pch=19,col="black",type="b")
+#
+#points((c(0.5:11.5)+0.2*(c(1:12)))[c(1:8,10,12)],(flu$denscs[3:14]/100)[-c(9,11)],pch=19,col="darkgreen",type="p")
+#
+
+
+@
+
+Les migrations d'anguilles argentées au barrage sont principalement comptées à
+l'aide du Didson (voir rapport sur le bilan des migrations d'argentées). Des
+anguilles migrent en dévalaison dans la passe à bassins et une partie peut
+être considérée comme des argentées (Figure \ref{bmm_agj_5}). Il est impossible
+avec notre système de suivi vidéo de différencier de manière certaines les stades
+jaune et argenté, d'où un classement des individus dévalant s'appuyant sur l'expérience
+de l'opérateur. En \Sexpr{CY}, la migration d'argentées par la basse à bassins est quasi nulle.
+Globalement, les migrations d'argentées sont très minoritaires lorsqu'on les compare
+aux autres stades de développement (Figure \ref{bmm}).
+
+\subsection{Perspectives}
+Le package stacomiR fait l'objet d'une maintenance applicative  : \href{R-forge}{
+https://r-forge.r-project.org/R/?group_id=1019}. A partir de la version 4.0 de
+R, le package comportant les composants d'interface graphique n'est plus
+maintenu. Il va falloir rapidement développer une version fonctionnant à l'aide
+de shiny pour remplacer l'interface graphique. Dans l'attente, le package n'est
+plus disponible sur CRAN. Dans le travail qui reste à faire :
+\begin{itemize}
+\item Traitement de l'ensemble des séries chronologiques de recrutement - y
+compris des transports- pour reporter dans ce rapport l'indice de recrutement
+(pour l'instant sur excel).
+\item Développement de l'option "bilans négatifs" du bilan migration dans
+stacomiR.
+\end{itemize}
+\clearpage
+\onecolumn
+\subsection{Graphiques de bilans journaliers des migrations (Anguilles jaunes)}
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=\textwidth]{bmm.png}
+  \caption{Bilan migration multiple, combinant trois stades de développement et
+  les trois dispositifs de comptage d'Arzal. Le Bilan montre qu'en effectif la
+  migration est dominée par les civelles, et que cette année comme les autres
+  années, la passe du gabion en rive gauche du barrage concentre la majeure
+  partie des effectifs.}
+  \label{bmm}
+  \end{center}
+\end{figure}
+%==========================================================================
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=\textwidth]{bmm_agj_6}
+  \caption{Bilan migration pour les anguilles jaunes sur le piège principal en
+  rive gauche, le bilan résume les fonctionnements du dispostif de
+  franchissement (DF), du piège (DC), et les opérations de contrôle (Op).}
+  \label{bmm_agj_6}
+  \end{center}
+\end{figure}
+%==========================================================================
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=\textwidth]{bmm_agj_12}
+  \caption{Bilan migration des anguilles jaunes sur le piège en rive droite sur
+  le mur guide eau, le bilan résume les fonctionnements du dispostif de
+  franchissement (DF), du piège (DC), et les opérations de contrôle (Op).}
+  \label{bmm_agj_12}
+  \end{center}
+\end{figure}
+%==========================================================================
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=\textwidth]{bmm_agj_5}
+  \caption{Bilan migration des anguilles dans la passe à bassins du barrage
+  d'Arzal. Les migrations vont dans les deux sens, avec des bilans journaliers
+  négatifs ou positifs. Le fonctionnement du DF est difficile à rendre sur une
+  échelle annuelle puisque la passe peut se fermer ou rentrer en
+  dysfonctionnement hydraulique plusieurs fois par jour. Le fonctionnement du DC
+  et les opérations de contrôle correspondent aux périodes de dépouillement
+  vidéo et de chaque opération de contrôle (rentrée toutes les dix minutes si des poissons
+  sont observés).}
+  \label{bmm_agj_5}
+  \end{center}
+\end{figure}
+%==========================================================================
+<<bilan_annuels_anguilleargentee, echo=FALSE, eval=FALSE,results=hide >>=
+require(stacomiR)
+# launching stacomi without selecting the scheme or interface
+# the following script will load the Arzal dataset if connected to iav schema
+
+bilA<-new("report_annual")
+bilA<-choice_c(bilA,
+	dc=c(5,6,12),
+	taxa=c("Anguilla anguilla"),
+	stage=c("AGG"),
+	anneedebut="1996",
+	anneefin=CY,
+	silent=FALSE)
+bilA<-connect(bilA)	
+# the following dataset has been generated by the previous code
+# there is a method for class ANY which overides the method for class bilA ?
+# the following works but xtable alone fails if the xtable package is loaded 
+xtbilA<-stacomiR::xtable(bilA,
+	caption="Migration des stades anguilles argentées, dans les
+		deux passes du barrage d'Arzal, Piège RG = passe piège historique
+		sur le gabion, Piège RD = passe du mur guide eau). Les effectifs des opérations à cheval sur deux années sont re-
+		répartis au pro-rata des effectifs de chaque année. (\\textit{Note : le stade des anguilles est difficile à déterminer
+		en suivi vidéo, et la plupart des anguilles migrant dans la passe à bassins sont classées comme jaunes.})",
+	label="table_bilanannuel_ang",
+	dc_name=c("Passe à bassins","Piège RG","Piège RD"),
+	tax_name="Anguille",
+	std_name=c("Argentée"))
+# below not run but one can create a file as following
+
+path_agg=file.path(tabwdy,
+	paste(paste(bilA@dc@dc_selectionne,collapse="_"),"_",
+		paste(bilA@taxa@data$tax_code,collapse="_"),"_",
+		paste(bilA@stage@data$std_code,collapse="_"),"_",
+		bilA@anneedebut@annee_selectionnee,"to",
+		bilA@anneefin@annee_selectionnee,".tex",sep=""),fsep ="")
+# the following uses the "addtorow" argument which creates nice column headings,
+# format.args creates a thousand separator
+# again this will need to be saved in a file using the file argument
+print(xtbilA,
+	file=path_agg,
+	add.to.row=get("addtorow",envir_stacomi),
+	include.rownames = TRUE,
+	include.colnames = FALSE,
+	format.args = list(big.mark = " ", decimal.mark = ",")
+)
+vvv[["AGG"]]<-list()
+vvv[["AGG"]][["path_agg"]]<-gsub("C:/workspace/","../../../",path_agg)
+save(vvv,file=str_c(datawdy,"vvv.Rdata"))
+
+@
+
+
+\twocolumn
+\section{Annexes}
+%==========================================================================
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\small
+\input{\Sexpr{vvv[["CIV"]][["path_civ6m"]]}}
+\normalsize
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%==========================================================================
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\small
+\input{\Sexpr{vvv[["CIV"]][["path_civ12m"]]}}
+\normalsize
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\small
+\input{\Sexpr{vvv[["CIV"]][["path_civ6"]]}}
+\normalsize
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\small
+\input{\Sexpr{vvv[["CIV"]][["path_civ12"]]}}
+\normalsize
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2010.png}
+  \caption{Structure en taille des anguilles jaunes en 2010 (redressée par
+  les effectifs mensuels en migration).}
+  \label{str_taille_mois_redress2010}
+  \end{center}
+\end{figure}
+%==========================================================================
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2011.png}
+  \caption{Structure en taille des anguilles jaunes en 2011 (redressée par
+  les effectifs mensuels en migration).}
+  \label{str_taille_mois_redress2011}
+  \end{center}
+\end{figure}
+%==========================================================================
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2012.png}
+  \caption{Structure en taille des anguilles jaunes en 2012 (redressée par
+  les effectifs mensuels en migration).}
+  \label{str_taille_mois_redress2012}
+  \end{center}
+\end{figure}
+%==========================================================================
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2013.png}
+  \caption{Structure en taille des anguilles jaunes en 2013 (redressée par
+  les effectifs mensuels en migration).}
+  \label{str_taille_mois_redress2013}
+  \end{center}
+\end{figure}
+%==========================================================================
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2014.png}
+  \caption{Structure en taille des anguilles jaunes en 2014 (redressée par
+  les effectifs mensuels en migration).}
+  \label{str_taille_mois_redress2014}
+  \end{center}
+\end{figure}
+%==========================================================================
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2015.png}
+  \caption{Structure en taille des anguilles jaunes en 2015 (redressée par
+  les effectifs mensuels en migration).}
+  \label{str_taille_mois_redress2015}
+  \end{center}
+\end{figure}
+%==========================================================================
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2016.png}
+  \caption{Structure en taille des anguilles jaunes en 2016 (redressée par
+  les effectifs mensuels en migration).}
+  \label{str_taille_mois_redress2016}
+  \end{center}
+\end{figure}
+%==========================================================================
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2017.png}
+  \caption{Structure en taille des anguilles jaunes en 2017 (redressée par
+  les effectifs mensuels en migration).}
+  \label{str_taille_mois_redress2017}
+  \end{center}
+\end{figure}
+%==========================================================================
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2018.png}
+  \caption{Structure en taille des anguilles jaunes en 2018 (redressée par
+  les effectifs mensuels en migration).}
+  \label{str_taille_mois_redress2018}
+  \end{center}
+\end{figure}
+%==========================================================================
+\clearpage
+Versions précédentes des rapports annuels (table \ref{table_references}).
+\begin{table}[htbp]
+\centering
+\caption{Rapports précédents concernant le suivi de l'anguille au barrage
+d'Arzal.}
+\begin{tabular}{lp{7cm}}
+\toprule
+Année & Rapport \\
+\midrule
+2018 & 
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EdJmyXnxtgNJjURh0mYAZy8Bvnc6xNGmffcaAPU5XMSZgA?e=FqPwaq}{Gestion
+de l'anguille sur le bassin versant de la Vilaine, 2018}\\
+2017 &
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EWjDphK4ou1PrwCYFnVWvKcBhSDMpEOm8Fq4P9hXLft47g?e=fwdaTH}{Gestion
+de l'anguille sur le bassin versant de la Vilaine, 2017}\\
+2016 &
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EcGiQiXYob5AhBZwXXY2zk0B-mRcDpfq8uo0_f-1p4pCoA?e=S0ZEQb}{Gestion
+de l'anguille sur le bassin versant de la Vilaine, 2016}\\
+2015 &
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/Ecu1Xc8K07NFjctNNSDy-IkBQzRfaBUrNMciZ_BP3SLz-A?e=H2ISZ5}{Gestion
+de l'anguille sur le bassin versant de la Vilaine, 2015}\\
+2014 &
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EZ6asW7rXXRHjO2mSIJLiAEB4MvEu-1KxhVlcylBPaiddQ?e=ZSt1Gl}{Gestion
+de l'anguille sur le bassin versant de la Vilaine, 2014}\\
+2013 &
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EX1R4L8GsXBCuWVNTzBPzQoB2gRGpZDz4G9NcgdUD0tspw?e=3QnJSf}{Gestion
+de l'anguille sur le bassin versant de la Vilaine, 2013}\\
+2012 &
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EUC0ji-M6EFLjvEQ4Dtz2GgB7qDfP7b42QtUuN7QDxfLNQ?e=znsSSl}{Gestion
+de l'anguille sur le bassin versant de la Vilaine, 2012}\\
+2011 &
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EZ0IH5pAPIZPhIeVRMSPyOQBhZLSSKhMQawnxSSojp9HYg?e=mrJ6QN}{Gestion
+de l'anguille sur le bassin versant de la Vilaine, 2011}\\
+2010 &
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EZ0IH5pAPIZPhIeVRMSPyOQBhZLSSKhMQawnxSSojp9HYg?e=jt6eGl}{Gestion
+de l'anguille sur le bassin versant de la Vilaine, 2010}\\
+2009 &
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EaETHfUUMHxCjaQVHxUG9gkB84o0r67zc3eMOr9amZBzPw?e=arkrQP}{Gestion
+de l'anguille sur le bassin versant de la Vilaine, 2009}\\
+2008 &
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EQ1-zwBAUFJIjPbpsTnOQbQBwrD8Vjlo79HLBBWMb6GU7w?e=LRP0bb}{Gestion
+de l'anguille sur le bassin versant de la Vilaine, 2008}\\
+2007 &
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EUAKCgg1PFRKu-a_Vb3E1fMBsa227C8ibXI7iLOh4HnkFA?e=jCMD8O}{Gestion
+de l'anguille sur le bassin versant de la Vilaine, 2007}\\
+%
+\bottomrule
+\end{tabular}
+\label{table_references}
+\end{table}
+
+%\twocolumn
+% biblio commune aux différentes années
+\clearpage
+\bibliographystyle{cjfasfr}
+\bibliography{rapport_anguille}{}
+
+\normalsize
+\null
+\vspace{5cm}
+\vfill
+Rapport Sweave \LaTeX \\
+------------------------------------\\
+packages R : \vspace{1mm}
+
+StacomiR \citep{briand_stacomir_2017}\\
+\LaTeX \ :Hmisc, xtable, stargazer, tables \\
+graphiques : stacomiR, ggplot2, lattice, ggthemr\\
+traitements : stringr, lubridate, reshape2, dplyr\\
+base : XLConnect, RPostgreSQL, sqldf \\
+------------------------------------\\
+Dernière compilation : le \today \\
+ \Sexpr{sanitizeLatexS(print(version["version.string"]))}\\
+ plateforme \Sexpr{sanitizeLatexS(print(version["platform"]))}
+
+\clearpage
+
+\end{document}
+
