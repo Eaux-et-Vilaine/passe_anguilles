@@ -114,7 +114,7 @@ inst/doc
 
 # Other folders  -------------------------
 image/[0-9]*
-data/
+data/[0-9]*
 # I'm not ignoring image because some of the images are used in the readme.
 
 # This works in eclipse but I need to create the folder after creating the wildcard and pattern
