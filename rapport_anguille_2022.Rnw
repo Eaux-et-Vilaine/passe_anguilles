@@ -21,6 +21,7 @@
 %%
 %%
 %% choose document class = type of the document...
+
 \documentclass[11pt,twocolumn,titlepage,twoside]{article}
 
 \usepackage{float}
