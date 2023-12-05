@@ -1,8 +1,8 @@
 # Rapport passe à anguilles Vilaine
 
-  Code pour créer le rapport passe à nguilles
+  Code pour créer le rapport passe à anguilles
 
-<img src="/image/poissons/eel.jpg" alt="didson" width="150"/>
+<img src="/image/eel.jpg" alt="eel" width="150"/>
 
 Repository pour le code de création du rapport sur la passe à anguille en utilisant stacomi
 
