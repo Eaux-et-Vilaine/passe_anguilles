@@ -113,7 +113,7 @@ inst/doc
 
 
 # Other folders  -------------------------
-
+image/[0-9]*
 data/
 # I'm not ignoring image because some of the images are used in the readme.
 
