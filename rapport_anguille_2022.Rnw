@@ -453,9 +453,9 @@ CY<-2022
 datawdy<-str_c(datawd,CY,"/")
 datawdym1<-str_c(datawd,CY-1,"/")
 # le repertoire contenant mes images (très important pour sweave)
-imgwd<-"C:/workspace/pdata/traitement_stacomi/rapport_anguille/image/"
+imgwd<-"C:/workspace/passe_anguilles/image/"
 # le répertoire contenant les tableaux en latex
-tabwd<-"C:/workspace/pdata/traitement_stacomi/rapport_anguille/table/"
+tabwd<-"C:/workspace/passe_anguilles/table/"
 # en vrai les données annuelles sont dans des sous répertoires par année
 imgwdy<-str_c(imgwd,CY,"/")
 tabwdy<-str_c(tabwd,CY,"/")
