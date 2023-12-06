@@ -980,6 +980,7 @@ dat1$year <- as.Date(as.Date(lubridate::dmy(str_c("01","01",dat1$year))))
 dat1$year1 <- lubridate::year(dat1$year)
 #dat1$p_std_1960_1970
 vil <- wger[wger$site=="VilG",c("value_std","year")]
+
 # ajout des données manquantes au début et à la fin de la série
 vil<-rbind(cbind("value_std"=NA,"year"=1960:1970),
 		vil,
@@ -990,7 +991,8 @@ vil <- vil[order(as.numeric(vil$year)),]
 
 
 # integrating missing values using the ratio 2015  
-co <- vil[vil$year==2015,"value_std"]/4.86
+# we have 4.4 in the series stats but 4.53 in the Vilaine time series in ICES db
+co <- vil[vil$year==2015,"value_std"]/4.53
 vil1 <- tribble(~p_std_1960_1979, ~year,
 		2.99*co,2012,
 		2.1*co, 2013,
@@ -1000,20 +1002,20 @@ vil1 <- tribble(~p_std_1960_1979, ~year,
 		6.53*co, 2018,
 		5.13*co, 2019,
 		3.45*co, 2020,
-		5.43*co, 2021,
-    NA, 2022 # TODO
+		4.53*co, 2021,
+    5.6*co, 2022 
 )
 vil1$year <- as.Date(lubridate::dmy(str_c("01","01",vil1$year)))
 # ajout manuel des valeurs avant le barrage d'Arzal, 1971 était à 44
 # comme on a les valeurs standardisées on multiplie par le rapport valeur std 1971/ valeur reelle 1971
 co0 <- vil$value_std[vil$year==1971]/44
 vil0 <- tribble(~p_std_1960_1979, ~year,
-		5*co1,1965,
-		4*co1, 1966,
-		9*co1,1967,
-		12*co1, 1968,
-		10*co1, 1969,
-		8*co1, 1970
+		5*co0,1965,
+		4*co0, 1966,
+		9*co0,1967,
+		12*co0, 1968,
+		10*co0, 1969,
+		8*co0, 1970
 )
 vil0$year <- as.Date(lubridate::dmy(str_c("01","01",vil0$year)))
 vil2 <- data.frame(year= as.Date(lubridate::dmy(str_c("01","01",c(1971:2011,2015)))), p_std_1960_1979=NA)
@@ -1379,21 +1381,21 @@ png(file=str_c(imgwdy,"smpm_seasonal.png"),width=12,height=10,unit="cm",res=300)
 bilPM <- model(bilPM,model.type="seasonal")
 dev.off()
 
-fndate <- function(data){
-	if (!"date"%in%colnames(data)) stop ("date should be in colnames(data)")
-	if (!class(data$date)[1]=="POSIXct") stop("date should be POSIXct")
-	data$year <- lubridate::year(data$date)
-	# lubridate::yday(lubridate::dmy(01082008))
-	data$yday <- lubridate::yday(data$date)
-	data$doy <- data$yday-212 # year begins in august to be consistent with the class 			
-	data$season <- stringr::str_c(lubridate::year(data$date)-1,"-",lubridate::year(data$date)) # year-1-year
-	data$season[data$doy>0] <- stringr::str_c(lubridate::year(data$date),"-",lubridate::year(data$date)+1)[data$doy>0] # for november and december it's year - year+1
-	data$yearbis <- data$year # same as season but with a numeric
-	data$yearbis[data$doy>0] <- data$yearbis[data$doy>0]+1 # same as season but a numeric
-	data$doy[data$doy<0] <- data$doy[data$doy<0]+365
-	data$time=as.numeric(data$date-origine)
-	return(data)
-}
+#fndate <- function(data){
+#	if (!"date"%in%colnames(data)) stop ("date should be in colnames(data)")
+#	if (!class(data$date)[1]=="POSIXct") stop("date should be POSIXct")
+#	data$year <- lubridate::year(data$date)
+#	# lubridate::yday(lubridate::dmy(01082008))
+#	data$yday <- lubridate::yday(data$date)
+#	data$doy <- data$yday-212 # year begins in august to be consistent with the class 			
+#	data$season <- stringr::str_c(lubridate::year(data$date)-1,"-",lubridate::year(data$date)) # year-1-year
+#	data$season[data$doy>0] <- stringr::str_c(lubridate::year(data$date),"-",lubridate::year(data$date)+1)[data$doy>0] # for november and december it's year - year+1
+#	data$yearbis <- data$year # same as season but with a numeric
+#	data$yearbis[data$doy>0] <- data$yearbis[data$doy>0]+1 # same as season but a numeric
+#	data$doy[data$doy<0] <- data$doy[data$doy<0]+365
+#	data$time=as.numeric(data$date-origine)
+#	return(data)
+#}
 #import_coe=get('import_coe',envir_stacomi)
 #origine <- as.POSIXct(trunc(min(import_coe$coe_date_debut),"day"))		
 #mycols <- colnames(import_coe)
@@ -1404,8 +1406,6 @@ fndate <- function(data){
 ## je remplace le tableau des coefficients à écrire à la bonne place
 #bilPM@calcdata[['import_coe']] <- import_coe2
 
-# DECOMMENTER CI DESSOUS POUR ECRIRE!!!!!!!!!!!
-#write_database(bilPM,dbname="bd_contmig_nat_iav")
 
 #########################
 # Modèle seasonal2 (non retenu)
@@ -1429,9 +1429,9 @@ dev.off()
 #########################
 # Modèle manual (le bon)
 #########################
-bilPM <- calcule(bilPM)
+#bilPM <- calcule(bilPM)
 bilPM <- model(bilPM,model.type="manual")
-newcoe <- get("newcoe",envir=envir_stacomi)
+predata <- get("newcoe",envir=envir_stacomi)
 don <- get("don",envir=envir_stacomi)
 don$effectif[don$effectif>200] <- 200 # pour le graphe
 # Ci dessous, ce n'est qu'au moment de caler le modèle qu'on se rend compte des outliers
@@ -1456,7 +1456,7 @@ don <- don[!(don$time %in% c(17100,17460,91707.05,42372,121629,78285) & don$w<0.
 #plot(g1,page=2)
 #dev.off()
 #
-predata <- newcoe
+
 ## no data for the first year
 predata$season[predata$season=="1995-1996"] <- "1996-1997"
 # TODO CHANGE 2023 test here : uncomment next line
@@ -1561,8 +1561,8 @@ import_coe <- data.frame(
 		"coe_commentaires"=com)
 bilPM@calcdata[["import_coe"]] <- import_coe	
 # DECOMMENTER CI DESSOUS POUR ECRIRE!!!!!!!!!!!!!!!
-
-# write_database(bilPM) #  You have written 9497 rows in the database
+import_coe[import_coe$coe_date_debut=="2023-08-01",]
+# write_database(bilPM) #  You have written 10228 rows in the database
 
 # récupération des composants du "summary"
 # deux composants pour le gam, l'un pour les termes fixes
@@ -1806,13 +1806,15 @@ d2vil<- d2[d2$intraseasonal=="Vilaine",]
 d2vil$pigm[is.na(d2vil$pigm)]<-"0"
 d2vil$pigm<-as.factor(d2vil$pigm)
 gamm_vil<-mgcv::gamm(size_cm~
-        s(yday,bs = "cc",by=pigm)+s(time,bs = "cr")+loc,
+        s(yday,bs = "cc",by=pigm)+s(time,bs = "cr",k=12)+loc,
     random=list(sample=~1), 
     data=d2vil)
+# TODO voir pour interpreter la partie aléatoire du modèle
 gam_vil <- gamm_vil$gam
 gam_vil$data <- d2vil
-
-
+plot(gam_vil, all.terms=TRUE, shade=TRUE, rug=TRUE)
+visreg::visreg(gam_vil,data=d2vil)
+# todo faire un graphique correct de la tendance interannuelle plus des 
 @
 
 Les données de poids moyen proviennent essentiellement de la
