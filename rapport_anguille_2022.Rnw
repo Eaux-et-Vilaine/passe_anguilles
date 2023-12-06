@@ -420,8 +420,8 @@ load_library=function(necessary) {
 	for(i in 1:length(necessary))
 		library(necessary[i], character.only = TRUE)
 }
-setwd("C:/workspace/p/traitement_stacomi/rapport_anguille")
-datawd<-"C:/workspace/pdata/traitement_stacomi/rapport_anguille/data/"
+setwd("C:/workspace/passe_anguilles/")
+datawd<-"C:/workspace/passe_anguilles/data/"
 
 load_library('Hmisc')
 load_library('xtable')
@@ -432,8 +432,8 @@ load_library('lubridate')
 load_library('reshape2')
 load_library('dplyr')
 #load_library('XLConnect')
-require('stacomiR') # pour l'instant install manuelle
-require('ggthemr') # installation manuelle
+load_library('stacomiR')
+require('ggthemr') # installation manuelle #  devtools::install_github('Mikata-Project/ggthemr')
 load_library('tables')
 load_library('getPass')
 
