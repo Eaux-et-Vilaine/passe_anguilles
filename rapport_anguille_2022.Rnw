@@ -415,10 +415,10 @@ rm(list=obj) # nettoyage complet sauf passwords
 graphics.off()
 # petite fonction de Laurent pour charger les packages quand ils ne sont pas installés
 load_library=function(necessary) {
-  if(!all(necessary %in% installed.packages()[, 'Package']))
-    install.packages(necessary[!necessary %in% installed.packages()[, 'Package']], dep = T)
-  for(i in 1:length(necessary))
-    library(necessary[i], character.only = TRUE)
+	if(!all(necessary %in% installed.packages()[, 'Package']))
+		install.packages(necessary[!necessary %in% installed.packages()[, 'Package']], dep = T)
+	for(i in 1:length(necessary))
+		library(necessary[i], character.only = TRUE)
 }
 setwd("C:/workspace/passe_anguilles/")
 datawd<-"C:/workspace/passe_anguilles/data/"
@@ -467,62 +467,62 @@ options("xtable.include.rownames"=FALSE)
 #'==========================================================
 
 sanitizeLatexS <- function(str) {
-  gsub('([#$%&~_\\^\\\\{}])', '\\\\\\\\\\1', str, perl = TRUE);
+	gsub('([#$%&~_\\^\\\\{}])', '\\\\\\\\\\1', str, perl = TRUE);
 }
 #'==========================================================
 #' fonction d'impression des nombres
 #'==========================================================
 sn <- function(x,digits=0,scientific=FALSE)
 {
-  if (class(x)=="character") {                
-    warning("sn appliqué a un character")
-    return(x)
-  }
-  if (is.infinite(x)) {                
-    warning("sn appliqué à Inf")
-    return(x)
-  }
-  if (length(x)==0) {                
-    warning("sn length 0")
-    return("???")
-  }
-  if (x==0) return("0")
-  ord <- floor(log(abs(x),10))
-  if (scientific==FALSE & ord<9){
-    if (digits==0) {
-      digits=max(1,ord) # digits must be >0
-      nsmall=0
-    }else {
-      nsmall=digits
-    }
-    x<-format(x,#big.mark="~",small.mark="~",
+	if (class(x)=="character") {                
+		warning("sn appliqué a un character")
+		return(x)
+	}
+	if (is.infinite(x)) {                
+		warning("sn appliqué à Inf")
+		return(x)
+	}
+	if (length(x)==0) {                
+		warning("sn length 0")
+		return("???")
+	}
+	if (x==0) return("0")
+	ord <- floor(log(abs(x),10))
+	if (scientific==FALSE & ord<9){
+		if (digits==0) {
+			digits=max(1,ord) # digits must be >0
+			nsmall=0
+		}else {
+			nsmall=digits
+		}
+		x<-format(x,#big.mark="~",small.mark="~",
         digits=digits,nsmall=nsmall)
-    return(str_c("\\num{",as.character(x),"}"))                
-  } else {
-    x <- x / 10^ord
-    if (!missing(digits)) x <- format(x,digits=digits)
-    if (ord==0) return(str_c("\\num{",as.character(x),"}"))
-    return(str_c("\\num{",x,"e",ord,"}"))
-  }
+		return(str_c("\\num{",as.character(x),"}"))                
+	} else {
+		x <- x / 10^ord
+		if (!missing(digits)) x <- format(x,digits=digits)
+		if (ord==0) return(str_c("\\num{",as.character(x),"}"))
+		return(str_c("\\num{",x,"e",ord,"}"))
+	}
 }
 #'==========================================================
 #' fonction d'application de la transparence à des couleurs.
 #'==========================================================
 makeTransparent = function(..., alpha=0.5) {
-  
-  if(alpha<0 | alpha>1) stop("alpha must be between 0 and 1")
-  
-  alpha = floor(255*alpha)  
-  newColor = col2rgb(col=unlist(list(...)), alpha=FALSE)
-  
-  .makeTransparent = function(col, alpha) {
-    rgb(red=col[1], green=col[2], blue=col[3], alpha=alpha, maxColorValue=255)
-  }
-  
-  newColor = apply(newColor, 2, .makeTransparent, alpha=alpha)
-  
-  return(newColor)
-  
+	
+	if(alpha<0 | alpha>1) stop("alpha must be between 0 and 1")
+	
+	alpha = floor(255*alpha)  
+	newColor = col2rgb(col=unlist(list(...)), alpha=FALSE)
+	
+	.makeTransparent = function(col, alpha) {
+		rgb(red=col[1], green=col[2], blue=col[3], alpha=alpha, maxColorValue=255)
+	}
+	
+	newColor = apply(newColor, 2, .makeTransparent, alpha=alpha)
+	
+	return(newColor)
+	
 }
 #'==========================================================
 #' Quelques options de couleur
@@ -556,10 +556,10 @@ marron <- rgb(70, 40, 0, 255, maxColorValue = 255)
 #' nouvelle année de traitement.
 #'==========================================================
 if (file.exists(file=str_c(datawdy,"vvv.Rdata"))){
-  load(file=str_c(datawdy,"vvv.Rdata"))
+	load(file=str_c(datawdy,"vvv.Rdata"))
 } else {
-  #crétation de la variable vvv
-  vvv<-list()
+	#crétation de la variable vvv
+	vvv<-list()
 }
 #'==========================================================
 #' Option de base donnée
@@ -568,24 +568,24 @@ if (file.exists(file=str_c(datawdy,"vvv.Rdata"))){
 
 
 if (exists("userdistant") & exists("passworddistant") & exists("hostdistant")) {
-  if( !exists("pois"))  pois <- getPass(msg="main password")
-  host <- decrypt_string(hostdistant,pois)
-  user <- decrypt_string(userdistant,pois)
-  password<- decrypt_string(passworddistant,pois)
+	if( !exists("pois"))  pois <- getPass(msg="main password")
+	host <- decrypt_string(hostdistant,pois)
+	user <- decrypt_string(userdistant,pois)
+	password<- decrypt_string(passworddistant,pois)
 } else {
-  host <- getPass(msg="host")
-  user <- getPass(msg="user")
-  password <- getPass(msg="password")
+	host <- getPass(msg="host")
+	user <- getPass(msg="user")
+	password <- getPass(msg="password")
 }
 
 options(list(
-        stacomiR.dbname = "bd_contmig_nat_iav",
-        stacomiR.host = host,
-        stacomiR.port = "5432",
-        stacomiR.user = user,
-        stacomiR.password = password,
-        stacomiR.printqueries =FALSE
-    ))
+				stacomiR.dbname = "bd_contmig_nat_iav",
+				stacomiR.host = host,
+				stacomiR.port = "5432",
+				stacomiR.user = user,
+				stacomiR.password = password,
+				stacomiR.printqueries =FALSE
+		))
 stacomi(TRUE,sch="iav", datawd=datawd)
 
 
@@ -596,10 +596,10 @@ stacomi(TRUE,sch="iav", datawd=datawd)
 
 load_library("sqldf")
 options(sqldf.RPostgreSQL.user = user, 
-    sqldf.RPostgreSQL.password = password,
-    sqldf.RPostgreSQL.dbname = "bd_contmig_nat_iav", # "bd_contmig_nat_iav"
-    sqldf.RPostgreSQL.host =  host, # "w3.eptb-vilaine.fr" "localhost"
-    sqldf.RPostgreSQL.port = "5432")
+		sqldf.RPostgreSQL.password = password,
+		sqldf.RPostgreSQL.dbname = "bd_contmig_nat_iav", # "bd_contmig_nat_iav"
+		sqldf.RPostgreSQL.host =  host, # "w3.eptb-vilaine.fr" "localhost"
+		sqldf.RPostgreSQL.port = "5432")
 @
 \newpage
 \setcounter{page}{3}
@@ -939,21 +939,21 @@ capt$type<-factor(capt$type,levels(capt$type)[c(2,1)])
 
 
 transparent_theme <- theme(
-    axis.title.x = element_blank(),
-    axis.title.y = element_blank(),
-    #axis.text.x = element_blank(), 
-    axis.text.y = element_blank(),
-    axis.ticks = element_blank(),
-    panel.grid = element_blank(),
-    axis.line = element_blank(),
-    panel.background = element_rect(fill = "transparent",colour = NA),
-    plot.background = element_rect(fill = "transparent",colour = NA))
+		axis.title.x = element_blank(),
+		axis.title.y = element_blank(),
+		#axis.text.x = element_blank(), 
+		axis.text.y = element_blank(),
+		axis.ticks = element_blank(),
+		panel.grid = element_blank(),
+		axis.line = element_blank(),
+		panel.background = element_rect(fill = "transparent",colour = NA),
+		plot.background = element_rect(fill = "transparent",colour = NA))
 
 png(filename=str_c(imgwdy,"captures.png"))
 #ggthemr(fresh2, type="outer", layout="scientific", spacing=0.8)
 g<-ggplot(capt)+geom_col(aes(x=Saison,y=Q,fill=type))+ylab("Civelle (Tonnes)")
 g1<-ggplot(capt[capt$Saison>1995&capt$Saison<=2005,])+geom_col(aes(x=Saison,y=Q,fill=type),show.legend=FALSE)+
-    transparent_theme+ scale_x_continuous(breaks=c(1996,2000,2004))
+		transparent_theme+ scale_x_continuous(breaks=c(1996,2000,2004))
 # Create the external graphical elements
 # called a "grop" in Grid terminology
 g1_grob = ggplotGrob(g1)
@@ -983,8 +983,8 @@ vil <- wger[wger$site=="VilG",c("value_std","year")]
 
 # ajout des données manquantes au début et à la fin de la série
 vil<-rbind(cbind("value_std"=NA,"year"=1960:1970),
-    vil,
-    cbind("value_std"=NA,"year"=c(2012:2014,2016,2017,2018,2019,2020,2021,2022))
+		vil,
+		cbind("value_std"=NA,"year"=c(2012:2014,2016,2017,2018,2019,2020,2021,2022))
 )
 
 vil <- vil[order(as.numeric(vil$year)),]
@@ -994,15 +994,15 @@ vil <- vil[order(as.numeric(vil$year)),]
 # we have 4.4 in the series stats but 4.53 in the Vilaine time series in ICES db
 co <- vil[vil$year==2015,"value_std"]/4.53
 vil1 <- tribble(~p_std_1960_1979, ~year,
-    2.99*co,2012,
-    2.1*co, 2013,
-    2.68*co,2014,
-    4.62*co, 2016,
-    5.87*co, 2017,
-    6.53*co, 2018,
-    5.13*co, 2019,
-    3.45*co, 2020,
-    4.53*co, 2021,
+		2.99*co,2012,
+		2.1*co, 2013,
+		2.68*co,2014,
+		4.62*co, 2016,
+		5.87*co, 2017,
+		6.53*co, 2018,
+		5.13*co, 2019,
+		3.45*co, 2020,
+		4.53*co, 2021,
     5.6*co, 2022 
 )
 vil1$year <- as.Date(lubridate::dmy(str_c("01","01",vil1$year)))
@@ -1010,12 +1010,12 @@ vil1$year <- as.Date(lubridate::dmy(str_c("01","01",vil1$year)))
 # comme on a les valeurs standardisées on multiplie par le rapport valeur std 1971/ valeur reelle 1971
 co0 <- vil$value_std[vil$year==1971]/44
 vil0 <- tribble(~p_std_1960_1979, ~year,
-    5*co0,1965,
-    4*co0, 1966,
-    9*co0,1967,
-    12*co0, 1968,
-    10*co0, 1969,
-    8*co0, 1970
+		5*co0,1965,
+		4*co0, 1966,
+		9*co0,1967,
+		12*co0, 1968,
+		10*co0, 1969,
+		8*co0, 1970
 )
 vil0$year <- as.Date(lubridate::dmy(str_c("01","01",vil0$year)))
 vil2 <- data.frame(year= as.Date(lubridate::dmy(str_c("01","01",c(1971:2011,2015)))), p_std_1960_1979=NA)
@@ -1032,14 +1032,14 @@ colnames(dat1)[1]<-"zone"
 
 png(filename=str_c(imgwdy,"recrutement_vilaine_europeen.png"))
 g1 <- ggplot(dat1,aes(x=year,y=p_std_1960_1979))+xlab("")+
-    geom_line(aes(colour=zone,lty=zone),lwd=1.3,show.legend=FALSE)+
-    geom_point(aes(colour=zone,shape=zone),size=3)+
-    geom_point(shape = 8,size=3, fill=orange_EV, color=orange_EV , data=vil1)+
-    geom_line(lwd=1.3, color=orange_EV , data=vil1)+
-    scale_colour_manual(values=c("Vilaine"=bleu_EV, "Europe"=bleu_clair_EV, "Vilaine (hors serie CIEM)"=orange_EV))+
-    scale_shape_manual(values=c("Vilaine"=19, "Europe"=17, "Vilaine (hors serie CIEM)"=8))+
-    scale_y_continuous(name="")+
-    scale_x_date(date_breaks= "10 years", date_minor_breaks= "5 years",date_labels = "%Y")
+		geom_line(aes(colour=zone,lty=zone),lwd=1.3,show.legend=FALSE)+
+		geom_point(aes(colour=zone,shape=zone),size=3)+
+		geom_point(shape = 8,size=3, fill=orange_EV, color=orange_EV , data=vil1)+
+		geom_line(lwd=1.3, color=orange_EV , data=vil1)+
+		scale_colour_manual(values=c("Vilaine"=bleu_EV, "Europe"=bleu_clair_EV, "Vilaine (hors serie CIEM)"=orange_EV))+
+		scale_shape_manual(values=c("Vilaine"=19, "Europe"=17, "Vilaine (hors serie CIEM)"=8))+
+		scale_y_continuous(name="")+
+		scale_x_date(date_breaks= "10 years", date_minor_breaks= "5 years",date_labels = "%Y")
 print(g1)
 dev.off()		
 
@@ -1163,23 +1163,23 @@ mélange de civelles et de jeunes anguilles jaunes. Ces données sont comparées
 r_df <- new("report_df")
 
 r_df_hist <- choice_c(r_df,
-    2,
-    horodatedebut="1996-01-01",
-    horodatefin="2022-12-31",
-    silent=TRUE)
+		2,
+		horodatedebut="1996-01-01",
+		horodatefin="2022-12-31",
+		silent=TRUE)
 r_df_hist <- connect(r_df_hist)
 # attention très très long
 png(filename=paste0(imgwdy,"report_df_1996_2022.png"),width=8,height=20, units="in",res=300)
 plot(r_df_hist, plot.type=1, 
-    color_type_oper = 	c(
-        "Fonc normal" = bleu_EV,
-        "Arr ponctuel" = turquoise_EV, 
-        "Arr maint" = jaune_EV,
-        "Dysfonc" = orange_EV, 						
-        "Non connu" = "#999999"
-    ),
-    color_etat=c("TRUE"=bleu_EV, 
-        "FALSE"=orange_EV))
+		color_type_oper = 	c(
+				"Fonc normal" = bleu_EV,
+				"Arr ponctuel" = turquoise_EV, 
+				"Arr maint" = jaune_EV,
+				"Dysfonc" = orange_EV, 						
+				"Non connu" = "#999999"
+		),
+		color_etat=c("TRUE"=bleu_EV, 
+				"FALSE"=orange_EV))
 dev.off()
 
 @
@@ -1187,10 +1187,10 @@ dev.off()
 <<report_dc, echo=FALSE, eval=FALSE, include=FALSE>>=
 r_dc=new("report_dc")
 r_dc<-choice_c(r_dc,
-    6,
-    horodatedebut="1996-01-01",
-    horodatefin="2022-12-31",
-    silent=TRUE)
+		6,
+		horodatedebut="1996-01-01",
+		horodatefin="2022-12-31",
+		silent=TRUE)
 r_dc1 <- connect(r_dc)
 png(filename=paste0(imgwdy,"report_dc_1996_2022.png"),width=8,height=20, units="in",res=300)
 plot(r_dc1,plot.type="1",main="")
@@ -1224,9 +1224,9 @@ start_year <- 1995
 end_year <- CY+1 # TEST CEDRIC 2023
 listechoix <- ">1" # ">1" "=1" # "tous"
 type_poids <- switch (listechoix,
-    ">1"="humides",
-    "=1"="secs",
-    "tous"="humides et secs")  
+		">1"="humides",
+		"=1"="secs",
+		"tous"="humides et secs")  
 
 
 bilPM@liste <- charge(object=bilPM@liste,listechoice=c("=1",">1","tous"),label="")
@@ -1234,11 +1234,11 @@ bilPM@liste <- charge(object=bilPM@liste,listechoice=c("=1",">1","tous"),label="
 # here I'm using weights when number are larger than 1 ie wet weight
 
 bilPM <- choice_c(bilPM,
-    dc=c(6),			
-    start_year=start_year,
-    end_year=end_year,
-    selectedvalue=listechoix,
-    silent=FALSE)
+		dc=c(6),			
+		start_year=start_year,
+		end_year=end_year,
+		selectedvalue=listechoix,
+		silent=FALSE)
 bilPM <- connect(bilPM)	
 #coe<-bilPM@coe@data
 #x11();plot(coe$coe_date_debut,1/coe$coe_valeur_coefficient)
@@ -1251,13 +1251,13 @@ bilPM <- connect(bilPM)
 baseODBCmortciv <- c("mortciv",user,password)
 # below to work with class RefPoidsMoyenest in package....
 options(list(
-        stacomiR.dbname = "mortciv",
-        stacomiR.host = host,
-        stacomiR.port = "5432",
-        stacomiR.user = user,
-        stacomiR.password = password,
-        stacomiR.printqueries =FALSE
-    ))
+				stacomiR.dbname = "mortciv",
+				stacomiR.host = host,
+				stacomiR.port = "5432",
+				stacomiR.user = user,
+				stacomiR.password = password,
+				stacomiR.printqueries =FALSE
+		))
 
 # ci dessous pour être cohérent avec le bilan migration
 datedebut <- strptime(paste(start_year-1,"-08-01",sep=""),format="%Y-%m-%d")
@@ -1269,28 +1269,28 @@ requete@colonnedebut <- "datedebutpeche"
 requete@colonnefin <- "datefinpeche"
 
 requete@select <- "SELECT lot_identifiant,
-    datedebutpeche AS ope_date_debut ,
-    datefinpeche AS ope_date_fin,
-    lot_effectif,
-    car_valeur_quantitatif as poids,
-    (car_valeur_quantitatif/lot_effectif) AS w, 
-    (datefinpeche-datedebutpeche)/2 AS duree,
-    datedebutpeche+(datefinpeche-datedebutpeche)/2 AS datemoy,
-    date_part('year', datedebutpeche) AS annee,
-    date_part('month',datedebutpeche) AS mois  
-    FROM vue_ope_lot_poids"
+		datedebutpeche AS ope_date_debut ,
+		datefinpeche AS ope_date_fin,
+		lot_effectif,
+		car_valeur_quantitatif as poids,
+		(car_valeur_quantitatif/lot_effectif) AS w, 
+		(datefinpeche-datedebutpeche)/2 AS duree,
+		datedebutpeche+(datefinpeche-datedebutpeche)/2 AS datemoy,
+		date_part('year', datedebutpeche) AS annee,
+		date_part('month',datedebutpeche) AS mois  
+		FROM vue_ope_lot_poids"
 requete@and <- ifelse(listechoix=="tous", "",paste(" AND  lot_effectif", listechoix))
 requete <- query(requete)  
 peche <- requete@query
 # retour aux options ....
 options(list(
-        stacomiR.dbname = "bd_contmig_nat_iav",
-        stacomiR.host = host,
-        stacomiR.port = "5432",
-        stacomiR.user = user,
-        stacomiR.password = password,
-        stacomiR.printqueries =FALSE
-    ))
+				stacomiR.dbname = "bd_contmig_nat_iav",
+				stacomiR.host = host,
+				stacomiR.port = "5432",
+				stacomiR.user = user,
+				stacomiR.password = password,
+				stacomiR.printqueries =FALSE
+		))
 #####################
 # Ci dessous je combine les données provenante de l'estuaire ("pêche") et 
 # les données provenant de la passe ("passe")
@@ -1342,12 +1342,12 @@ cols <- c("peche"=bleu_EV,"passe"=turquoise_EV)
 png(file=str_c(imgwdy,"pm.png"),width=14,height=10,unit="cm",res=300)
 p <- ggplot(aes(x=date,y=w,colour=source),data=don)
 p + geom_point(aes(size=effectif))+
-    xlab("date")+ylab("poids moyen humide (g)")+theme_bw()+
-    scale_size_continuous("effectif",range=c(1,4))+
-    scale_colour_manual("source",
-        values = cols,
-        labels=c("estuaire","passe")
-    )
+		xlab("date")+ylab("poids moyen humide (g)")+theme_bw()+
+		scale_size_continuous("effectif",range=c(1,4))+
+		scale_colour_manual("source",
+				values = cols,
+				labels=c("estuaire","passe")
+		)
 dev.off()
 
 
@@ -1362,16 +1362,16 @@ tnpm  <- dcast(npm,annee~source,value.var="N")
 colnames(tnpm) <- c("annee","passe","estuaire $^*$")
 
 xtnpm <- xtable(tnpm,
-    caption=str_c("Nombre d'échantillons de poids moyen de civelles depuis ",start_year, " et jusqu'au 01 août ",
-        CY, " $^*$Données collectées en pêches expérimentales et par pêche professionnelle."),
-    label="tnpm",
-    digits=0)
+		caption=str_c("Nombre d'échantillons de poids moyen de civelles depuis ",start_year, " et jusqu'au 01 août ",
+				CY, " $^*$Données collectées en pêches expérimentales et par pêche professionnelle."),
+		label="tnpm",
+		digits=0)
 path_tmpm=file.path(tabwdy,"tnpm.tex",fsep ="")
 print(xtnpm,file=path_tmpm, sanitize.colnames.function = function(x){x})
 vvv[["PM"]] <- list()
 vvv[["PM"]][["CY"]] <- list()
 vvv[["PM"]][["CY"]][["N"]] <- 
-    sum(tnpm[tnpm$annee==CY,c(2,3)],na.rm=TRUE)
+		sum(tnpm[tnpm$annee==CY,c(2,3)],na.rm=TRUE)
 vvv[["PM"]][["path_tnpm"]] <- gsub("C:/workspace/","../../../",path_tmpm)
 #'========================================================
 #' Modélisation de l'évolution des poids moyens
@@ -1499,12 +1499,12 @@ nyears <- length(unique(don$season))
 #		xlab("Date")
 require(mgcv)
 g3 <- gam(w~s(yday,bs="cc",k=14) +
-        s(time, bs = "cr", k = nyears) +				
-        ti(yday,time,
-            k=c(14,nyears),
-            bs = c("cc", "cr")),		
-    data=don,
-    family = gaussian)
+				s(time, bs = "cr", k = nyears) +				
+				ti(yday,time,
+						k=c(14,nyears),
+						bs = c("cc", "cr")),		
+		data=don,
+		family = gaussian)
 summary(g3)
 
 pred <- predict(g3, newdata=predata,se.fit=TRUE)
@@ -1516,27 +1516,27 @@ predata$pred_weight_upr <- pred$fit+1.96*pred$se.fit
 # premier graphique de 1996 à 2006
 png(file=str_c(imgwdy,"smpm_manual1.png"),width=12,height=10,unit="cm",res=300)
 p  <-  ggplot(don)+ geom_point(aes(x=date,y=w,size=effectif),col="#043C6B")+
-    scale_size_continuous(range=c(0.5,4))+
-    geom_line(aes(x=date,y=pred_weight),data=predata)+
-    geom_ribbon(data=predata,aes(x=date,ymin=pred_weight_lwr,ymax=pred_weight_upr),alpha=0.3,fill="#BF8330")+
-    theme_minimal()+
-    theme(panel.border = element_blank(),
-        axis.line = element_line())+
-    scale_x_datetime(limits=as.POSIXct(c(as.Date("1996-01-01"),as.Date("2006-01-01")),date_labels = "%Y",date_breaks="2 years"))+
-    xlab("Date")+
-    ylim(0.1,0.5)
+		scale_size_continuous(range=c(0.5,4))+
+		geom_line(aes(x=date,y=pred_weight),data=predata)+
+		geom_ribbon(data=predata,aes(x=date,ymin=pred_weight_lwr,ymax=pred_weight_upr),alpha=0.3,fill="#BF8330")+
+		theme_minimal()+
+		theme(panel.border = element_blank(),
+				axis.line = element_line())+
+		scale_x_datetime(limits=as.POSIXct(c(as.Date("1996-01-01"),as.Date("2006-01-01")),date_labels = "%Y",date_breaks="2 years"))+
+		xlab("Date")+
+		ylim(0.1,0.5)
 print(p)
 dev.off()
 png(file=str_c(imgwdy,"smpm_manual2.png"),width=12,height=10,unit="cm",res=300)
 p <- ggplot(don)+ geom_point(aes(x=date,y=w,size=effectif),col="#043C6B")+
-    scale_size_continuous(range=c(0.5,4))+
-    geom_line(aes(x=date,y=pred_weight),data=predata)+
-    geom_ribbon(data=predata,aes(x=date,ymin=pred_weight_lwr,ymax=pred_weight_upr),alpha=0.3,fill="#BF8330")+	theme_minimal()+
-    theme(panel.border = element_blank(),
-        axis.line = element_line())+
-    scale_x_datetime(date_labels = "%Y",limits=as.POSIXct(c(as.Date("2006-01-01"),as.Date("2023-02-01"))),date_breaks="2 years")+
-    xlab("Date")+
-    ylim(0.15,0.55)
+		scale_size_continuous(range=c(0.5,4))+
+		geom_line(aes(x=date,y=pred_weight),data=predata)+
+		geom_ribbon(data=predata,aes(x=date,ymin=pred_weight_lwr,ymax=pred_weight_upr),alpha=0.3,fill="#BF8330")+	theme_minimal()+
+		theme(panel.border = element_blank(),
+				axis.line = element_line())+
+		scale_x_datetime(date_labels = "%Y",limits=as.POSIXct(c(as.Date("2006-01-01"),as.Date("2023-02-01"))),date_breaks="2 years")+
+		xlab("Date")+
+		ylim(0.15,0.55)
 print(p)
 dev.off()
 
@@ -1545,20 +1545,20 @@ dev.off()
 
 png(file=str_c(imgwdy,"smpm_t2.png"),width=14,height=14,unit="cm",res=300)
 vis.gam(g3, n.grid = 50, theta = 20, phi = 50, zlab = "",
-    ticktype = "detailed", color = "topo", main = "t2(yday,time)")
+		ticktype = "detailed", color = "topo", main = "t2(yday,time)")
 dev.off()
 com=str_c("manual edited model with gam as :",print(str_c(as.character(g3$formula)[c(2,1,3)],collapse=" "),quote = FALSE))
 # a la main ça va plus vite
 smpm.form <- "w \\sim s(yday,bs=cc,k =12)+s(time,bs=cr,k=20)+ti(yday,time,k=c(12,nyears),bs=c(cc,cr))"
 
 import_coe <- data.frame(
-    "coe_tax_code"='2038',
-    "coe_std_code"='CIV',
-    "coe_qte_code"=1,
-    "coe_date_debut"=Hmisc::roundPOSIXt(predata$date,digits="days"),
-    "coe_date_fin"=Hmisc::roundPOSIXt(predata$date,digits="days")+as.difftime(1,units="days"),
-    "coe_valeur_coefficient"=1/predata$pred_weight,
-    "coe_commentaires"=com)
+		"coe_tax_code"='2038',
+		"coe_std_code"='CIV',
+		"coe_qte_code"=1,
+		"coe_date_debut"=Hmisc::roundPOSIXt(predata$date,digits="days"),
+		"coe_date_fin"=Hmisc::roundPOSIXt(predata$date,digits="days")+as.difftime(1,units="days"),
+		"coe_valeur_coefficient"=1/predata$pred_weight,
+		"coe_commentaires"=com)
 bilPM@calcdata[["import_coe"]] <- import_coe	
 # DECOMMENTER CI DESSOUS POUR ECRIRE!!!!!!!!!!!!!!!
 import_coe[import_coe$coe_date_debut=="2023-08-01",]
@@ -1575,14 +1575,14 @@ smpm <- g3
 smpm.parametric_coefficients <- summary(g3)$p.table
 smpm.smooth_terms <- summary(g3)$s.table 
 xt.smpm.pc <- xtable(smpm.parametric_coefficients,label="smpm.pc",
-    caption ="Intercept pour le modèle GAM de poids moyen.",
-    digits=c(0,2,3,2,4),
-    display=c("s","f","d","f","e")
+		caption ="Intercept pour le modèle GAM de poids moyen.",
+		digits=c(0,2,3,2,4),
+		display=c("s","f","d","f","e")
 )
 xt.smpm.st <- xtable(smpm.smooth_terms,label="smpm.st",
-    caption ="Termes de lissage pour le modèle gam, edf = degrés de liberté estimés.",
-    digits=c(0,2,0,2,3),
-    display=c("s","f","d","f","e"))
+		caption ="Termes de lissage pour le modèle gam, edf = degrés de liberté estimés.",
+		digits=c(0,2,0,2,3),
+		display=c("s","f","d","f","e"))
 # ecriture du tableau de données (xtable) dans un fichier
 # editer pour caractères spéciaux à la main si manual launch
 path.smpm.pc <- file.path(tabwdy,"smpm.pc.tex",fsep ="")
@@ -2198,35 +2198,35 @@ an, à la fois en poids et en effectif.
 # il faut relancer ça chaque année.
 bM=new("report_mig")
 for (Y in 1996:CY){  
-  cat(str_c("Y=",Y))
-  bM <- choice_c(bM,
-      dc=c(6),
-      taxa=c("Anguilla anguilla"),
-      stage=c("CIV"),
-      datedebut=str_c(Y,"-01-01"),
-      datefin=str_c(Y,"-12-31"))
-  bM <- charge(bM,silent=TRUE)
-  bM <- connect(bM,silent=FALSE)
-  bM <- calcule(bM,silent=FALSE)
-  if (nrow(bM@data)>0 ){
-    write_database(bM,silent=TRUE)
-  }
+	cat(str_c("Y=",Y))
+	bM <- choice_c(bM,
+			dc=c(6),
+			taxa=c("Anguilla anguilla"),
+			stage=c("CIV"),
+			datedebut=str_c(Y,"-01-01"),
+			datefin=str_c(Y,"-12-31"))
+	bM <- charge(bM,silent=TRUE)
+	bM <- connect(bM,silent=FALSE)
+	bM <- calcule(bM,silent=FALSE)
+	if (nrow(bM@data)>0 ){
+		write_database(bM,silent=TRUE)
+	}
 }
 # changer si il est nécessaire de recalculer des données
 for (Y in 2022:CY){
-  cat(str_c("Y=",Y))
-  bM <- choice_c(bM,
-      dc=c(12),
-      taxa=c("Anguilla anguilla"),
-      stage=c("CIV"),
-      datedebut=str_c(Y,"-01-01"),
-      datefin=str_c(Y,"-12-31"))
-  bM <- charge(bM,silent=TRUE)
-  bM <- connect(bM,silent=TRUE)
-  bM <- calcule(bM,silent=FALSE)
-  if (nrow(bM@data)>0 ){
-    write_database(bM,silent=TRUE)
-  }
+	cat(str_c("Y=",Y))
+	bM <- choice_c(bM,
+			dc=c(12),
+			taxa=c("Anguilla anguilla"),
+			stage=c("CIV"),
+			datedebut=str_c(Y,"-01-01"),
+			datefin=str_c(Y,"-12-31"))
+	bM <- charge(bM,silent=TRUE)
+	bM <- connect(bM,silent=TRUE)
+	bM <- calcule(bM,silent=FALSE)
+	if (nrow(bM@data)>0 ){
+		write_database(bM,silent=TRUE)
+	}
 }
 @
 
@@ -2245,12 +2245,12 @@ for (Y in 2022:CY){
 
 bili <- new("report_mig_interannual")
 bili <- choice_c(bili,
-    dc=c(6,12),
-    taxa=c("Anguilla anguilla"),
-    stage=c("CIV"),
-    start_year=1996,
-    end_year=CY,
-    silent=TRUE)
+		dc=c(6,12),
+		taxa=c("Anguilla anguilla"),
+		stage=c("CIV"),
+		start_year=1996,
+		end_year=CY,
+		silent=TRUE)
 bili <- charge(bili)
 bili <- connect(bili,check=TRUE,silent=FALSE)	
 bilidat <- bili@data
@@ -2259,56 +2259,56 @@ bili <- calcule(bili)
 # and getting the sum of both weights and numbers, as entered in
 # report_mig_interannual.
 tab <- inner_join(
-    bilidat%>%filter(bjo_labelquantite%in%c("Effectif_total"))%>%
-        group_by(bjo_annee)%>%
-        summarize("N"=sum(bjo_valeur)),
-    bilidat%>%filter(bjo_labelquantite%in%c("Poids_total","poids_depuis_effectifs"))%>%
-        group_by(bjo_annee)%>%
-        summarize("P"=sum(bjo_valeur))%>%
-        mutate("P"=P/1000)
+		bilidat%>%filter(bjo_labelquantite%in%c("Effectif_total"))%>%
+				group_by(bjo_annee)%>%
+				summarize("N"=sum(bjo_valeur)),
+		bilidat%>%filter(bjo_labelquantite%in%c("Poids_total","poids_depuis_effectifs"))%>%
+				group_by(bjo_annee)%>%
+				summarize("P"=sum(bjo_valeur))%>%
+				mutate("P"=P/1000)
 )
 colnames(tab) <- c("Année","N","P")
 tab[,2] <- round(tab[,2])
 tab[,3] <- round(tab[,3],1)
 xtbili <- xtable(tab,caption="Montées de civelles dans les passes du barrage d'Arzal, $N$ nombre,
-        $P$ poids (en kg).",
-    label="table_civelle",
-    digits=c(0,0,0,2),
-    display = c("s","s","f","f"))
+				$P$ poids (en kg).",
+		label="table_civelle",
+		digits=c(0,0,0,2),
+		display = c("s","s","f","f"))
 path_civ <- file.path(tabwdy,
-    paste(paste(bili@dc@dc_selected,collapse="_"),"_",
-        paste(bili@taxa@taxa_selected,collapse="_"),"_",
-        paste(bili@stage@stage_selected,collapse="_"),"_",
-        bili@start_year@year_selected,"to",
-        CY,".tex",sep=""),fsep ="")
+		paste(paste(bili@dc@dc_selected,collapse="_"),"_",
+				paste(bili@taxa@taxa_selected,collapse="_"),"_",
+				paste(bili@stage@stage_selected,collapse="_"),"_",
+				bili@start_year@year_selected,"to",
+				CY,".tex",sep=""),fsep ="")
 print(xtbili,
-    file=path_civ,
-    format.args = list(big.mark = " ", decimal.mark = ","),
-    table.placement=c("htbp")
+		file=path_civ,
+		format.args = list(big.mark = " ", decimal.mark = ","),
+		table.placement=c("htbp")
 )
 tab <- as.data.frame(tab)
 colnames(tab) <- c("year","Ngl","Pgl")
 
 tabdetail <- inner_join(
-    bilidat%>%filter(bjo_labelquantite%in%c("Effectif_total"))%>%
-        group_by(bjo_annee,bjo_dis_identifiant)%>%
-        summarize("N"=sum(bjo_valeur)),
-    bilidat%>%filter(bjo_labelquantite%in%c("Poids_total","poids_depuis_effectifs"))%>%
-        group_by(bjo_annee,bjo_dis_identifiant)%>%
-        summarize("P"=sum(bjo_valeur))%>%
-        mutate("P"=P/1000)
+		bilidat%>%filter(bjo_labelquantite%in%c("Effectif_total"))%>%
+				group_by(bjo_annee,bjo_dis_identifiant)%>%
+				summarize("N"=sum(bjo_valeur)),
+		bilidat%>%filter(bjo_labelquantite%in%c("Poids_total","poids_depuis_effectifs"))%>%
+				group_by(bjo_annee,bjo_dis_identifiant)%>%
+				summarize("P"=sum(bjo_valeur))%>%
+				mutate("P"=P/1000)
 )
 tabdetail$bjo_dis_identifiant <- 
-    factor(tabdetail$bjo_dis_identifiant,
-        levels=c(12,6),
-        label=c("Guide eau RD","Gabion RG"))
+		factor(tabdetail$bjo_dis_identifiant,
+				levels=c(12,6),
+				label=c("Guide eau RD","Gabion RG"))
 tabdetail$N=tabdetail$N/10^6
 png(filename=str_c(imgwdy,"barplot_civelles_an.png"),14,10,units="cm",res=300)
 #ggthemr(fresh2, type="outer", layout="scientific", spacing=0.8)
 ggplot(tabdetail)+geom_col(aes(x=bjo_annee,y=N,fill=bjo_dis_identifiant)) +
     xlab("Année") +
     ggplot2::scale_fill_manual("Passe",values= c(bleu_EV, orange_EVf)) +
-    ylab("Effectif (millions)") +
+		ylab("Effectif (millions)") +
     theme_minimal()
 dev.off()
 vvv[["CIV"]] <- list()
@@ -2323,32 +2323,32 @@ vvv[["CIV"]][["rank"]] <- nrow(tab)+1-rank(tab[,"Pgl"])[tab$year==CY]
 ######################
 
 tab <- inner_join(
-    bilidat%>%filter(bjo_dis_identifiant==6)%>%filter(bjo_labelquantite%in%c("Effectif_total"))%>%
-        group_by(bjo_annee)%>%
-        summarize("N"=sum(bjo_valeur)),
-    bilidat%>%filter(bjo_dis_identifiant==6)%>%filter(bjo_labelquantite%in%c("Poids_total","poids_depuis_effectifs"))%>%
-        group_by(bjo_annee)%>%
-        summarize("P"=sum(bjo_valeur))%>%
-        mutate("P"=P/1000)
+		bilidat%>%filter(bjo_dis_identifiant==6)%>%filter(bjo_labelquantite%in%c("Effectif_total"))%>%
+				group_by(bjo_annee)%>%
+				summarize("N"=sum(bjo_valeur)),
+		bilidat%>%filter(bjo_dis_identifiant==6)%>%filter(bjo_labelquantite%in%c("Poids_total","poids_depuis_effectifs"))%>%
+				group_by(bjo_annee)%>%
+				summarize("P"=sum(bjo_valeur))%>%
+				mutate("P"=P/1000)
 )
 colnames(tab) <- c("Année","N","P")
 tab[,2] <- round(tab[,2])
 tab[,3] <- round(tab[,3],1)
 xtbili6 <- xtable(tab,caption="Montées de civelles dans la passe principale du barrage d'Arzal (gabion en rive gauche), $N$ nombre,
-        $P$ poids (en kg).",
-    label="table_civelle_6",
-    digits=c(0,0,0,2),
-    display = c("s","s","f","f"))
+				$P$ poids (en kg).",
+		label="table_civelle_6",
+		digits=c(0,0,0,2),
+		display = c("s","s","f","f"))
 path_civ6=file.path(tabwdy,
-    paste(6,"_",
-        paste(bili@taxa@taxa_selected,collapse="_"),"_",
-        paste(bili@stage@stage_selected,collapse="_"),"_",
-        bili@start_year@year_selected,"to",
-        bili@end_year@year_selected,".tex",sep=""),fsep ="")
+		paste(6,"_",
+				paste(bili@taxa@taxa_selected,collapse="_"),"_",
+				paste(bili@stage@stage_selected,collapse="_"),"_",
+				bili@start_year@year_selected,"to",
+				bili@end_year@year_selected,".tex",sep=""),fsep ="")
 print(xtbili6,
-    file=path_civ6,
-    format.args = list(big.mark = " ", decimal.mark = ","),
-    table.placement=c("htbp")
+		file=path_civ6,
+		format.args = list(big.mark = " ", decimal.mark = ","),
+		table.placement=c("htbp")
 )
 vvv[["CIV"]][["path_civ6"]] <- gsub("C:/workspace/","../../../",path_civ6)
 vvv[["CIV"]][["6"]] <- list()
@@ -2359,13 +2359,13 @@ vvv[["CIV"]][["6"]][["P"]] <- as.numeric(tab[tab[,1]==CY,"P"])
 ######################
 
 tab <- inner_join(
-    bilidat%>%filter(bjo_dis_identifiant==12)%>%filter(bjo_labelquantite%in%c("Effectif_total"))%>%
-        group_by(bjo_annee)%>%
-        summarize("N"=sum(bjo_valeur)),
-    bilidat%>%filter(bjo_dis_identifiant==12)%>%filter(bjo_labelquantite%in%c("Poids_total","poids_depuis_effectifs"))%>%
-        group_by(bjo_annee)%>%
-        summarize("P"=sum(bjo_valeur))%>%
-        mutate("P"=P/1000)
+		bilidat%>%filter(bjo_dis_identifiant==12)%>%filter(bjo_labelquantite%in%c("Effectif_total"))%>%
+				group_by(bjo_annee)%>%
+				summarize("N"=sum(bjo_valeur)),
+		bilidat%>%filter(bjo_dis_identifiant==12)%>%filter(bjo_labelquantite%in%c("Poids_total","poids_depuis_effectifs"))%>%
+				group_by(bjo_annee)%>%
+				summarize("P"=sum(bjo_valeur))%>%
+				mutate("P"=P/1000)
 )
 colnames(tab) <- c("Année","N","P")
 tab[,2] <- round(tab[,2])
@@ -2374,20 +2374,20 @@ vvv[["CIV"]][["12"]] <- list()
 vvv[["CIV"]][["12"]][["N"]] <- as.numeric(tab[tab[,1]==CY,"N"])
 vvv[["CIV"]][["12"]][["P"]] <- as.numeric(tab[tab[,1]==CY,"P"])
 xtbili12 <- xtable(tab,caption="Montées de civelles sur la passe secondaire du barrage d'Arzal (mur guide eau en rive droite), $N$ nombre,
-        $P$ poids (en kg).",
-    label="table_civelle_12",
-    digits=c(0,0,0,2),
-    display = c("s","s","f","f"))
+				$P$ poids (en kg).",
+		label="table_civelle_12",
+		digits=c(0,0,0,2),
+		display = c("s","s","f","f"))
 path_civ12=file.path(tabwdy,
-    paste(12,"_",
-        paste(bili@taxa@taxa_selected,collapse="_"),"_",
-        paste(bili@stage@stage_selected,collapse="_"),"_",
-        bili@start_year@year_selected,"to",
-        bili@end_year@year_selected,".tex",sep=""),fsep ="")
+		paste(12,"_",
+				paste(bili@taxa@taxa_selected,collapse="_"),"_",
+				paste(bili@stage@stage_selected,collapse="_"),"_",
+				bili@start_year@year_selected,"to",
+				bili@end_year@year_selected,".tex",sep=""),fsep ="")
 print(xtbili12,
-    file=path_civ12,
-    format.args = list(big.mark = " ", decimal.mark = ","),
-    table.placement=c("htbp")
+		file=path_civ12,
+		format.args = list(big.mark = " ", decimal.mark = ","),
+		table.placement=c("htbp")
 )
 vvv[["CIV"]][["path_civ12"]] <- gsub("C:/workspace/","../../../",path_civ12)
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
@@ -2402,13 +2402,13 @@ mycolorramp2 <- colorRampPalette(c("#462800","#B68B52"))
 color_ope <- c(rev(mycolorramp1(10)),mycolorramp2(nb_annee-11),"#85A3BA")
 png(filename=str_c(imgwdy,"Saisonnalite_civelles.png"))
 g+ggplot2::scale_fill_manual(values=color_ope)+
-    ggplot2::ggtitle("")+
-    theme(
-        panel.border = element_blank(),
-        panel.background = element_blank(),
-        panel.grid.minor = element_line(colour = "white"),
-        panel.grid.major = element_line(colour = "white"),
-        panel.grid.major.x = element_line(colour = "white"))
+		ggplot2::ggtitle("")+
+		theme(
+				panel.border = element_blank(),
+				panel.background = element_blank(),
+				panel.grid.minor = element_line(colour = "white"),
+				panel.grid.major = element_line(colour = "white"),
+				panel.grid.major.x = element_line(colour = "white"))
 dev.off()
 plot(bili,plot.type="barchart",timesplit="month",silent=TRUE)
 
@@ -2440,41 +2440,41 @@ colnames(lsm[['12']])  <-  c("Mois","Min*","Moyenne*","Max*","N (2022)")
 colnames(lsm[['6']])   <-  c("Mois","Min*","Moyenne*","Max*","N (2022)")
 #==================== xtable6 ===================================
 xtsm6  <-  xtable(lsm[['6']],caption=str_c("Montées de civelles \\textsf{(en milliers)} dans la passe principale du barrage
-            d'Arzal (gabion en rive gauche), données par mois, \\textsf{N (",CY,")} effectifs par mois pour ",CY," , les trois statistiques * correspondent à la période
-            1996-",CY,".	\\textsf{min}* minimum mensuel, \\textsf{max}* maximum mensuel, 
-            \\textsf{moyenne}* moyenne des effectifs mensuels."),
-    label="table_civelle_mois_6",
-    display = c("s","s","f","f","f","f"))
+						d'Arzal (gabion en rive gauche), données par mois, \\textsf{N (",CY,")} effectifs par mois pour ",CY," , les trois statistiques * correspondent à la période
+						1996-",CY,".	\\textsf{min}* minimum mensuel, \\textsf{max}* maximum mensuel, 
+						\\textsf{moyenne}* moyenne des effectifs mensuels."),
+		label="table_civelle_mois_6",
+		display = c("s","s","f","f","f","f"))
 path_civ6m  <-  file.path(tabwdy,
-    paste(6,"_",
-        paste(bili@taxa@taxa_selected,collapse="_"),"_",
-        paste(bili@stage@stage_selected,collapse="_"),"_",
-        bili@end_year@year_selected,
-        "mois",".tex",sep=""),fsep ="")
+		paste(6,"_",
+				paste(bili@taxa@taxa_selected,collapse="_"),"_",
+				paste(bili@stage@stage_selected,collapse="_"),"_",
+				bili@end_year@year_selected,
+				"mois",".tex",sep=""),fsep ="")
 print(xtsm6,
-    file=path_civ6m,
-    format.args = list(big.mark = " ", decimal.mark = ","),
-    table.placement=c("htbp"))
+		file=path_civ6m,
+		format.args = list(big.mark = " ", decimal.mark = ","),
+		table.placement=c("htbp"))
 vvv[["CIV"]][["path_civ6m"]] <- gsub("C:/workspace/","../../../",path_civ6m)
 #==================== xtable12 ===================================
 xtsm12  <-  xtable(lsm[['12']],caption=str_c("Montées de civelles \\textsf{(en milliers)} sur la passe secondaire du barrage d'Arzal (mur guide eau en rive droite), données
-            par mois, les trois statistiques * correspondent à la période
-            2008-",CY,". \\textsf{N (",CY,")} effectif par mois pour ",CY,
-        "\\textsf{min}* minimum mensuel, 
-            \\textsf{max}* maximum mensuel, 
-            \\textsf{moyenne}* moyenne des effectifs mensuels."),
-    label="table_civelle_mois_12",
-    display = c("s","s","f","f","f","f"))
+						par mois, les trois statistiques * correspondent à la période
+						2008-",CY,". \\textsf{N (",CY,")} effectif par mois pour ",CY,
+				"\\textsf{min}* minimum mensuel, 
+						\\textsf{max}* maximum mensuel, 
+						\\textsf{moyenne}* moyenne des effectifs mensuels."),
+		label="table_civelle_mois_12",
+		display = c("s","s","f","f","f","f"))
 path_civ12m  <-  file.path(tabwdy,
-    paste(12,"_",
-        paste(bili@taxa@taxa_selected,collapse="_"),"_",
-        paste(bili@stage@stage_selected,collapse="_"),"_",
-        bili@end_year@year_selected,
-        "mois",".tex",sep=""),fsep ="")
+		paste(12,"_",
+				paste(bili@taxa@taxa_selected,collapse="_"),"_",
+				paste(bili@stage@stage_selected,collapse="_"),"_",
+				bili@end_year@year_selected,
+				"mois",".tex",sep=""),fsep ="")
 print(xtsm12,
-    file=path_civ12m,
-    format.args = list(big.mark = " ", decimal.mark = ","),
-    table.placement=c("htbp"))
+		file=path_civ12m,
+		format.args = list(big.mark = " ", decimal.mark = ","),
+		table.placement=c("htbp"))
 vvv[["CIV"]][["path_civ12m"]] <- gsub("C:/workspace/","../../../",path_civ12m)
 
 ################################################################
@@ -2586,58 +2586,58 @@ require(stacomiR)
 # launching stacomi without selecting the scheme or interface
 bilA <- new("report_annual")
 bilA <- choice_c(bilA,
-    dc=c(5,6,12),
-    taxa=c("Anguilla anguilla"),
-    stage=c("AGJ"),
-    start_year="1996",
-    end_year=CY,
-    silent=FALSE)
+		dc=c(5,6,12),
+		taxa=c("Anguilla anguilla"),
+		stage=c("AGJ"),
+		start_year="1996",
+		end_year=CY,
+		silent=FALSE)
 bilA <- connect(bilA)	# il peut y avoir un tout petit peu de CY
 bilA@data <- bilA@data[bilA@data$annee %in% c(1996:CY),]
 xtbilA <- stacomiR::xtable(bilA,
-    caption="Migration des stades anguilles jaunes, dans les
-        trois passes du barrage d'Arzal (P. bassin = passe à fentes verticales *, Piège RG = passe piège historique
-        sur le gabion, Piège RD = passe du mur guide eau. Les effectifs des opérations à cheval sur deux années sont re-
-        répartis au pro-rata des effectifs de chaque année. * \\textit{ Les anguilles jaunes migrent principalement dans les rampes à anguilles, mais
-        peuvent emprunter la passe à bassins. Elles sont comptées lorsqu'elles sont observées
-        devant la vitre de comptage mais elles peuvent passer au travers des grilles qui
-        orientent les poissons vers les vitres, elles sont difficilement détectables par
-        la caméra surtout quand elles passent au fond. Les effectifs d'anguilles
-        fréquentant la passe à bassins sont juste présentés pour information.}",
-    label="table_bilanannuel_ang",
-    dc_name=c("P. bassins","Piège RG","Piège RD"),
-    tax_name="Anguille",
-    std_name=c("Jaune"))
+		caption="Migration des stades anguilles jaunes, dans les
+				trois passes du barrage d'Arzal (P. bassin = passe à fentes verticales *, Piège RG = passe piège historique
+				sur le gabion, Piège RD = passe du mur guide eau. Les effectifs des opérations à cheval sur deux années sont re-
+				répartis au pro-rata des effectifs de chaque année. * \\textit{ Les anguilles jaunes migrent principalement dans les rampes à anguilles, mais
+				peuvent emprunter la passe à bassins. Elles sont comptées lorsqu'elles sont observées
+				devant la vitre de comptage mais elles peuvent passer au travers des grilles qui
+				orientent les poissons vers les vitres, elles sont difficilement détectables par
+				la caméra surtout quand elles passent au fond. Les effectifs d'anguilles
+				fréquentant la passe à bassins sont juste présentés pour information.}",
+		label="table_bilanannuel_ang",
+		dc_name=c("P. bassins","Piège RG","Piège RD"),
+		tax_name="Anguille",
+		std_name=c("Jaune"))
 # below not run but one can create a file as following
 
 path_agj=file.path(tabwdy,
-    paste(paste(bilA@dc@dc_selected,collapse="_"),"_",
-        paste(bilA@taxa@taxa_selected,collapse="_"),"_",
-        paste(bilA@stage@stage_selected,collapse="_"),"_",
-        bilA@start_year@year_selected,"to",
-        bilA@end_year@year_selected,".tex",sep=""),fsep ="")
+		paste(paste(bilA@dc@dc_selected,collapse="_"),"_",
+				paste(bilA@taxa@taxa_selected,collapse="_"),"_",
+				paste(bilA@stage@stage_selected,collapse="_"),"_",
+				bilA@start_year@year_selected,"to",
+				bilA@end_year@year_selected,".tex",sep=""),fsep ="")
 # the following uses the "addtorow" argument which creates nice column headings,
 # format.args creates a thousand separator
 # again this will need to be saved in a file using the file argument
 print(xtbilA,
-    file=path_agj,
-    add.to.row=get("addtorow",envir_stacomi),
-    include.rownames = TRUE,
-    include.colnames = FALSE,
-    format.args = list(big.mark = " ", decimal.mark = ",")
+		file=path_agj,
+		add.to.row=get("addtorow",envir_stacomi),
+		include.rownames = TRUE,
+		include.colnames = FALSE,
+		format.args = list(big.mark = " ", decimal.mark = ",")
 )
 #===================================================
 png(filename=str_c(imgwdy,"bilan_annuel_agj.png"))
 barplot(bilA,args.legend=list(x="topleft",bty = "n"),
-    col=c("#FF9400","#043C6B","#66A1D2"),
-    ylab="Effectif (anguilles jaunes)")
+		col=c("#FF9400","#043C6B","#66A1D2"),
+		ylab="Effectif (anguilles jaunes)")
 dev.off()
 #===================================================
 # total ne correspond qu'aux effectifs sur les passes à anguilles
 total <- filter(bilA@data,ope_dic_identifiant!=5)%>%
-    group_by(annee)%>%
-    summarize(effectif=sum(effectif))%>%
-    mutate(effectif=round(effectif))
+		group_by(annee)%>%
+		summarize(effectif=sum(effectif))%>%
+		mutate(effectif=round(effectif))
 #vvv[["AGJ"]] <- list() normalement ça vient du rapport de l'années précédente
 vvv[["AGJ"]][["path_agj"]]  <-  gsub("C:/workspace/","../../../",path_agj)
 # somme_agj correspond aux effectifs sur les trois passes
@@ -2653,12 +2653,12 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 <<bilan_interannuels_agj, echo=FALSE, eval=FALSE, include=FALSE >>=
 bilj <- new("report_mig_interannual")
 bilj <- choice_c(bilj,
-    dc=c(6,12),
-    taxa=c("Anguilla anguilla"),
-    stage=c("AGJ"),
-    start_year="1996",
-    end_year=CY,
-    silent=TRUE)
+		dc=c(6,12),
+		taxa=c("Anguilla anguilla"),
+		stage=c("AGJ"),
+		start_year="1996",
+		end_year=CY,
+		silent=TRUE)
 bilj <- charge(bilj)
 bilj <- connect(bilj,check=TRUE,silent=FALSE)	
 bilj <- calcule(bilj)
@@ -2677,13 +2677,13 @@ color_ope <- c(rev(mycolorramp1(10)),mycolorramp2(nb_annee-11),"#85A3BA")
 #============================================
 png(filename=str_c(imgwdy,"saisonnalite_agj.png"))
 g+ggplot2::scale_fill_manual(values=color_ope)+
-    ggplot2::ggtitle("")+
-    theme(
-        panel.border = element_blank(),
-        panel.background = element_blank(),
-        panel.grid.minor = element_line(colour = "white"),
-        panel.grid.major = element_line(colour = "white"),
-        panel.grid.major.x = element_line(colour = "white"))
+		ggplot2::ggtitle("")+
+		theme(
+				panel.border = element_blank(),
+				panel.background = element_blank(),
+				panel.grid.minor = element_line(colour = "white"),
+				panel.grid.major = element_line(colour = "white"),
+				panel.grid.major.x = element_line(colour = "white"))
 dev.off()
 #============================================
 plot(bilj,plot.type="barchart",timesplit="mois",silent=TRUE)
@@ -2872,16 +2872,16 @@ vecteur_coupures=seq(from=65,to=600,by=5)
 tail=hist(vecteur_coupures,vecteur_coupures)$mids
 ar=array(dim=c(12,length(tail),5))
 for (i in 1:5){             # ages
-  for(j in 1:length(tail)) {      # tailles
-    for (k in 1:12) {   # mois
-      #  ar=drnorm(N,mean,sd) loi normale
-      moyenne=clem[clem$age==i-1 & clem$mois==k,"val"]
-      ecart_type=clesd[clesd$age==i-1 & clesd$mois==k,"val"]
-      taille=tail[j] 
-      if (i==1 & taille<moyenne) taille <- moyenne # pour le premier age doit commencer par le max
-      ar[k,j,i]=dnorm(taille,moyenne,ecart_type) 
-    }
-  }
+	for(j in 1:length(tail)) {      # tailles
+		for (k in 1:12) {   # mois
+			#  ar=drnorm(N,mean,sd) loi normale
+			moyenne=clem[clem$age==i-1 & clem$mois==k,"val"]
+			ecart_type=clesd[clesd$age==i-1 & clesd$mois==k,"val"]
+			taille=tail[j] 
+			if (i==1 & taille<moyenne) taille <- moyenne # pour le premier age doit commencer par le max
+			ar[k,j,i]=dnorm(taille,moyenne,ecart_type) 
+		}
+	}
 }
 # ar est un array de dimension(mois,classe taille 5cm, age(0-4))
 # Pour chaque mois et chaque age je veux que la somme d'une ligne fasse 1
@@ -2891,15 +2891,15 @@ abondance=exp(-0.3*age) # coefficient de reduction d'abondance dans les cohortes
 #colSums(aperm(ar,perm=c(2,3,1)) )       # les deux sont equi rowsum fait somme sur dim+1 et au desus
 sommeclasstail=rowSums(aperm(ar,perm=c(1,3,2)),dims=2)  # colsums sur 1:dim
 for (i in 1:5){ 
-  for (k in 1:12) {
-    ar[k,,i]=abondance[i]*ar[k,,i]/sommeclasstail[k,i]  # on divise chaque vecteur classe de taille par sa somme (pour avoir une proportion par classe de taille ramenee entre O et 1 et multipliee par l'abondance relative de chaque cohorte
-  }
+	for (k in 1:12) {
+		ar[k,,i]=abondance[i]*ar[k,,i]/sommeclasstail[k,i]  # on divise chaque vecteur classe de taille par sa somme (pour avoir une proportion par classe de taille ramenee entre O et 1 et multipliee par l'abondance relative de chaque cohorte
+	}
 }
 sommeage=colSums(aperm(ar,perm=c(3,1,2)),dims=1)
 for(j in 1:length(tail)) { 
-  for (k in 1:12) {
-    ar[k,j,]=ar[k,j,]/sommeage[k,j]  # on divise chaque vecteur classe de taille par sa somme (pour avoir une proportion par classe de taille ramenee entre O et 1 et multipliee par l'abondance relative de chaque cohorte
-  }
+	for (k in 1:12) {
+		ar[k,j,]=ar[k,j,]/sommeage[k,j]  # on divise chaque vecteur classe de taille par sa somme (pour avoir une proportion par classe de taille ramenee entre O et 1 et multipliee par l'abondance relative de chaque cohorte
+	}
 }
 
 ar[1,,] # tableau des ages du premier mois
@@ -2923,11 +2923,11 @@ png(file=str_c(imgwdy,"cletailleage.png"),width=18,height=12,unit="cm",res=300)
 layout(matrix(c(1,2,2),1,3))
 plot(agem,clem$val,xlab="mois de croissance",ylab="taille mm",main="A",ylim=c(0,600))
 for (i in 1:nrow(tabseg)){
-  segments(tabseg[i,1],tabseg[i,2],tabseg[i,3],tabseg[i,4],col=rev(grey(i/(1.5*nrow(tabseg)))))
+	segments(tabseg[i,1],tabseg[i,2],tabseg[i,3],tabseg[i,4],col=rev(grey(i/(1.5*nrow(tabseg)))))
 }
 for (i in 1:12) {
-  cumar=apply(ar[i,,],1,function(X) cumsum(X)) #
-  if (i==1) matplot(tail,t(cumar),lwd=2,col=couleurs[i,],type="l",xlab="taille (mm)",ylab="% cumules", main="B") else matplot(tail,t(cumar),type="l",lwd=2,col=couleurs[i,],add=TRUE)
+	cumar=apply(ar[i,,],1,function(X) cumsum(X)) #
+	if (i==1) matplot(tail,t(cumar),lwd=2,col=couleurs[i,],type="l",xlab="taille (mm)",ylab="% cumules", main="B") else matplot(tail,t(cumar),type="l",lwd=2,col=couleurs[i,],add=TRUE)
 }
 legend(x=400,y=1,col=couleurs[1,],lty=1,legend=as.character(0:4),title="ages",bty="n")
 legend(x=500,y=1,age0,lty=1,legend=1:12,title="mois",bty="n")
@@ -2947,15 +2947,15 @@ stopifnot(rowSums(ar,dims=1)==rep(length(tail),12))
 
 r_mig_char <- new("report_mig_char")
 r_mig_char <- choice_c(r_mig_char,
-    dc=c(6),
-    taxa=c("Anguilla anguilla"),
-    stage=c('AGJ','AGG'),
-    parquan=c('1786'), # taille (longueur totale)
-    parqual='B002', # classe de taille 
-    horodatedebut=str_c(CY,"-01-01"),
-    horodatefin=str_c(CY,"-12-31"),
-    echantillon="with",
-    silent=FALSE)
+		dc=c(6),
+		taxa=c("Anguilla anguilla"),
+		stage=c('AGJ','AGG'),
+		parquan=c('1786'), # taille (longueur totale)
+		parqual='B002', # classe de taille 
+		horodatedebut=str_c(CY,"-01-01"),
+		horodatefin=str_c(CY,"-12-31"),
+		echantillon="with",
+		silent=FALSE)
 # r_mig_char <- charge(r_mig_char) not necessary there
 r_mig_char <- connect(r_mig_char)
 # certains paramètres (1786) ressortent dans les sous_lots
@@ -2973,8 +2973,8 @@ plot(r_mig_char,plot.type="crossed")
 
 
 r_mig_char2 <- setasqualitative(r_mig_char,par='1786',
-    breaks=c(0,98,145,300,1000),
-    label=c("pa","ma","ga","ang"))
+		breaks=c(0,98,145,300,1000),
+		label=c("pa","ma","ga","ang"))
 r_mig_char2 <- calcule(r_mig_char2)
 #==============================================================
 png(file=str_c(imgwdy,"classes_taille.png"),width=12,height=12,unit="cm",res=300)
@@ -2998,8 +2998,8 @@ donnees_taille <- fun_date_extraction(donnees_taille,nom_coldt="ope_date_debut")
 
 # ci dessous pour les graphes, renommage des variables (fonction chnames de cedric)
 ndt <- chnames(object=donnees_taille[donnees_taille$annee==CY,],
-    old_variable_name=c("ope_date_debut","car_valeur_quantitatif"),
-    new_variable_name=c("date","taille"))
+		old_variable_name=c("ope_date_debut","car_valeur_quantitatif"),
+		new_variable_name=c("date","taille"))
 # vérif si anguillettes avec taille >300 (problème lot père)
 sum(ndt$lot_effectif>1) # 65 données de taille avec eff>1 en 2016 # 85 en 2017
 ndt <- ndt[!is.na(ndt$taille),]
@@ -3018,7 +3018,7 @@ ndt1 <- ndt
 nrow(ndt)
 #nrow(ndt1)
 sumeffmois <- tapply(ndt1$taille,ndt1$mois,function(X)length(X))
-sum(sumeffmois) #5577 # 5901 (2017)
+sum(sumeffmois) #5577 # 5901 (2017) #5894 (2022)
 sumeffmois <- data.frame("mois"=names(sumeffmois),effectifmois=sumeffmois)
 ndt1 <- merge(ndt1,sumeffmois, by="mois")
 sum(sumeffmois[,2]) #4710 # 5577 # 5901
@@ -3037,17 +3037,16 @@ tt <- tabular( (Factor(mois, "Mois") + 1) ~ (n=1) + Format(digits=2)*(Heading("$
 dimnames(tt)[["rowLabels"]]
 rowLabels(tt)[length(rowLabels(tt))] <- 'Tous'
 colLabels(tt)[2,] <- c("n","moy","sd")
-path_taille_yellow <- file.path(tabwdy,	
-    "summary_taille_yellow.tex",fsep ="")
-vvv[["ANG"]][["path_angtaille"]] <- gsub("C:/workspace/","../../../",path_taille_yellow)
+vvv[["ANG"]][["path_angtaille"]] <- file.path(tabwdy,	
+		"summary_taille_yellow.tex",fsep ="")
+
 cat("\\begin{table}[htbp]",file=vvv[["ANG"]][["path_angtaille"]],sep="\n")
 cat("\\begin{center}",file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
 sink(file =vvv[["ANG"]][["path_angtaille"]] , append = TRUE)
 print(latex.tabular(tt))
 sink()
 cat("\\label{summary_taille_yellow}",file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
-cat(iconv("\\caption{Moyenne et écart types des tailles d'anguilles $\tau$ par mois, et nombre
-            d'échantillons collectés en \\Sexpr{CY}.}", "UTF-8"),file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
+cat(sprintf("\\caption{Moyenne et écart types des tailles d'anguilles $\\tau$ par mois, et nombre d'échantillons collectés en %s}", CY),file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
 cat("\\end{center}", file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
 cat("\\end{table}", file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
 
@@ -3059,9 +3058,9 @@ cat("\\end{table}", file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
 png(str_c(imgwdy,"boxplot_taille_agj.png"),width=12,height=8,units="cm",res=300)
 p=ggplot(ndt)
 p+stat_boxplot(aes(x=mois,y=taille,fill=factor(mois))) +
-    #ggtitle(iconv(paste("Taille des anguillettes mesurées à Arzal en",CY," N=",nrow(ndt1)),"UTF8")) +
-    scale_fill_manual("mois",values=couleur_mois_tr)+
-    ylab("Taille (mm)")
+		#ggtitle(iconv(paste("Taille des anguillettes mesurées à Arzal en",CY," N=",nrow(ndt1)),"UTF8")) +
+		scale_fill_manual("mois",values=couleur_mois_tr)+
+		ylab("Taille (mm)")
 dev.off()
 #===============================================================================
 # boxplot tailles anguillettes
@@ -3073,7 +3072,7 @@ dev.off()
 #		scale_fill_brewer("mois",palette="Paired")
 
 # tailles mensuelles anguillettes
-ex(round(tapply(ndt$taille,ndt$mois,mean),2))
+#ex(round(tapply(ndt$taille,ndt$mois,mean),2))
 
 # histogramme migration totale par classes de 5mm
 i=CY
@@ -3082,11 +3081,11 @@ ndt=killfactor(ndt)
 x11(width=600,height=400)
 p <- ggplot(ndt1)
 p+aes(x=taille,y=..count..,fill=mois)+stat_bin(position='stack',binwidth=5,)+
-    facet_grid(annee ~ .)+
-    #ggtitle(paste("Taille des anguilles jaunes à Arzal en 2015,  N=",nrow(ndt1))) +
-    ggtitle(paste(iconv("Taille des anguilles jaunes à Arzal en","UTF8"), i,",  N=",nrow(ndt1))) +
-    scale_fill_brewer(palette="Paired")+
-    ylab("effectif")
+		facet_grid(annee ~ .)+
+		#ggtitle(paste("Taille des anguilles jaunes à Arzal en 2015,  N=",nrow(ndt1))) +
+		ggtitle(paste(iconv("Taille des anguilles jaunes à Arzal en","UTF8"), i,",  N=",nrow(ndt1))) +
+		scale_fill_brewer(palette="Paired")+
+		ylab("effectif")
 
 
 # les lots ont ils une caractéristique ? vérification de l'unicité du lot
@@ -3095,74 +3094,73 @@ p+aes(x=taille,y=..count..,fill=mois)+stat_bin(position='stack',binwidth=5,)+
 # Je vais chercher le tableau de données 
 # ce tableau va chercher par année, par mois et par type de val_identifiant
 # la somme des effectifs d'anguilles transitant par la passe d'Arzal
-req <- new("RequeteODBC")
-req@baseODBC <- c("bd_contmig_nat",user,password)
+req <- new("RequeteDB")
 req@sql="
-    SELECT 	ope_identifiant,
-    ope_date_debut,
-    effectif,
-    val_identifiant,
-    val_libelle
-    FROM (
-    SELECT  ope_identifiant,
-    ope_date_debut,
-    SUM (lot_effectif) AS effectif,
-    val_identifiant
-    FROM(
-    SELECT ope_identifiant,
-    ope_dic_identifiant,
-    ope_date_debut,
-    ope_date_fin,
-    lot.lot_identifiant , 
-    lot.lot_methode_obtention,
-    lot.lot_effectif, 
-    lot.lot_quantite,
-    lot.lot_tax_code,
-    lot.lot_std_code, 
-    tax_nom_latin,
-    std_libelle,
-    dev.dev_code,
-    dev.dev_libelle
-    FROM 
-    iav.t_operation_ope 
-    INNER JOIN 	iav.t_lot_lot lot			ON 		lot.lot_ope_identifiant = ope_identifiant
-    LEFT JOIN 	ref.tr_typequantitelot_qte	qte	ON 		qte.qte_code = lot.lot_qte_code 
-    LEFT JOIN 	ref.tr_devenirlot_dev dev		ON 		dev.dev_code = lot.lot_dev_code
-    INNER JOIN 	ref.tr_taxon_tax 			ON 		tax_code = lot_tax_code 
-    INNER JOIN 	ref.tr_stadedeveloppement_std 	ON 		std_code = lot_std_code
-    WHERE lot.lot_lot_identifiant IS NULL
-    AND ope_dic_identifiant=6
-    AND  lot_std_code='AGJ'
-    ORDER BY ope_date_debut
-    ) AS effectifs
-    LEFT JOIN (
-    SELECT lot.lot_identifiant AS lot,
-    val.val_identifiant 
-    FROM 
-    iav.t_operation_ope 
-    INNER JOIN 	iav.t_lot_lot lot			ON 		lot.lot_ope_identifiant = ope_identifiant
-    LEFT JOIN 	ref.tr_typequantitelot_qte	qte	ON 		qte.qte_code = lot.lot_qte_code 
-    LEFT JOIN 	ref.tr_devenirlot_dev dev		ON 		dev.dev_code = lot.lot_dev_code
-    INNER JOIN 	ref.tr_taxon_tax 			ON 		tax_code = lot_tax_code 
-    INNER JOIN 	ref.tr_stadedeveloppement_std 	ON 		std_code = lot_std_code
-    LEFT JOIN   	iav.tj_caracteristiquelot_car car   ON 		car.car_lot_identifiant=lot.lot_identifiant
-    LEFT JOIN       ref.tg_parametre_par par		ON		car.car_par_code=par.par_code
-    LEFT JOIN       ref.tr_parametrequalitatif_qal qal	ON		qal.qal_par_code=par.par_code
-    LEFT JOIN 	ref.tr_valeurparametrequalitatif_val val ON		car.car_val_identifiant=val.val_identifiant
-    WHERE  lot.lot_lot_identifiant IS NULL
-    AND ope_dic_identifiant=6
-    AND lot_std_code='AGJ'
-    AND car.car_par_code ='B002'
-    ORDER BY lot.lot_identifiant
-    
-    ) AS sous_selection
-    ON sous_selection.lot=effectifs.lot_identifiant
-    GROUP BY ope_identifiant,val_identifiant,ope_date_debut
-    ORDER BY ope_identifiant,val_identifiant) as belle_requete
-    LEFT JOIN (SELECT val_libelle, val_identifiant as id FROM ref.tr_valeurparametrequalitatif_val) as tableval
-    ON belle_requete.val_identifiant=tableval.id
-    "
-eff <- connect(req)@query
+		SELECT 	ope_identifiant,
+		ope_date_debut,
+		effectif,
+		val_identifiant,
+		val_libelle
+		FROM (
+		SELECT  ope_identifiant,
+		ope_date_debut,
+		SUM (lot_effectif) AS effectif,
+		val_identifiant
+		FROM(
+		SELECT ope_identifiant,
+		ope_dic_identifiant,
+		ope_date_debut,
+		ope_date_fin,
+		lot.lot_identifiant , 
+		lot.lot_methode_obtention,
+		lot.lot_effectif, 
+		lot.lot_quantite,
+		lot.lot_tax_code,
+		lot.lot_std_code, 
+		tax_nom_latin,
+		std_libelle,
+		dev.dev_code,
+		dev.dev_libelle
+		FROM 
+		iav.t_operation_ope 
+		INNER JOIN 	iav.t_lot_lot lot			ON 		lot.lot_ope_identifiant = ope_identifiant
+		LEFT JOIN 	ref.tr_typequantitelot_qte	qte	ON 		qte.qte_code = lot.lot_qte_code 
+		LEFT JOIN 	ref.tr_devenirlot_dev dev		ON 		dev.dev_code = lot.lot_dev_code
+		INNER JOIN 	ref.tr_taxon_tax 			ON 		tax_code = lot_tax_code 
+		INNER JOIN 	ref.tr_stadedeveloppement_std 	ON 		std_code = lot_std_code
+		WHERE lot.lot_lot_identifiant IS NULL
+		AND ope_dic_identifiant=6
+		AND  lot_std_code='AGJ'
+		ORDER BY ope_date_debut
+		) AS effectifs
+		LEFT JOIN (
+		SELECT lot.lot_identifiant AS lot,
+		val.val_identifiant 
+		FROM 
+		iav.t_operation_ope 
+		INNER JOIN 	iav.t_lot_lot lot			ON 		lot.lot_ope_identifiant = ope_identifiant
+		LEFT JOIN 	ref.tr_typequantitelot_qte	qte	ON 		qte.qte_code = lot.lot_qte_code 
+		LEFT JOIN 	ref.tr_devenirlot_dev dev		ON 		dev.dev_code = lot.lot_dev_code
+		INNER JOIN 	ref.tr_taxon_tax 			ON 		tax_code = lot_tax_code 
+		INNER JOIN 	ref.tr_stadedeveloppement_std 	ON 		std_code = lot_std_code
+		LEFT JOIN   	iav.tj_caracteristiquelot_car car   ON 		car.car_lot_identifiant=lot.lot_identifiant
+		LEFT JOIN       ref.tg_parametre_par par		ON		car.car_par_code=par.par_code
+		LEFT JOIN       ref.tr_parametrequalitatif_qal qal	ON		qal.qal_par_code=par.par_code
+		LEFT JOIN 	ref.tr_valeurparametrequalitatif_val val ON		car.car_val_identifiant=val.val_identifiant
+		WHERE  lot.lot_lot_identifiant IS NULL
+		AND ope_dic_identifiant=6
+		AND lot_std_code='AGJ'
+		AND car.car_par_code ='B002'
+		ORDER BY lot.lot_identifiant
+		
+		) AS sous_selection
+		ON sous_selection.lot=effectifs.lot_identifiant
+		GROUP BY ope_identifiant,val_identifiant,ope_date_debut
+		ORDER BY ope_identifiant,val_identifiant) as belle_requete
+		LEFT JOIN (SELECT val_libelle, val_identifiant as id FROM ref.tr_valeurparametrequalitatif_val) as tableval
+		ON belle_requete.val_identifiant=tableval.id
+		"
+eff <- query(req)@query
 eff <-  eff[eff$ope_date_debut>ISOdate(CY,01,01,0,tz = "CET")&eff$ope_date_debut<ISOdate(CY+1,01,01,0,tz = "CET"),]
 eff$val_identifiant[is.na(eff$val_identifiant)] <- "angll" 
 eff$val_libelle[is.na(eff$val_libelle)] <- "angll" 
@@ -3180,7 +3178,7 @@ eff$mois=eff$mois$mon +1 # récupère le mois de puis le format liste de posixlt
 #sumeff <-  tapply(eff$effectif,INDEX=list(eff$mois,eff$val_libelle),sum)
 # TODO 2023 
 sumeff <-  tapply(eff$effectif,INDEX=list(eff$mois),sum, na.rm=TRUE)
-sum(sumeff) # 21245 (2017)
+sum(sumeff) # 21245 (2017) 19368 (2022)
 #sumeff <- sumeff[,1]
 
 # sumeff <- chnames(objet=sumeff,
@@ -3205,28 +3203,28 @@ vecteur_coupures=seq(from=65,to=600,by=5)
 table_taille=as.data.frame(matrix(nrow=((length(vecteur_coupures))-1),ncol=1))  
 
 if (max(ndt$taille) > vecteur_coupures[length(vecteur_coupures)]) {
-  cat(paste("attention vous avez des donnees de taille au delà de ",vecteur_coupures[length(vecteur_coupures)]))
+	cat(paste("attention vous avez des donnees de taille au delà de ",vecteur_coupures[length(vecteur_coupures)]))
 }
 
 if (min(ndt$taille) < vecteur_coupures[1] ){
-  cat(paste("attention vous avez des donnees de taille en deça de ",vecteur_coupures[1]))
+	cat(paste("attention vous avez des donnees de taille en deça de ",vecteur_coupures[1]))
 }
 
 # correction !!!    des grandes
 cat (paste("attention ",
-        sum(ndt$taille > vecteur_coupures[length(vecteur_coupures)]) ,
-        "tailles",
-        paste(ndt$taille[ndt$taille > vecteur_coupures[length(vecteur_coupures)]],collapse=" "),
-        "ramenees à",
-        vecteur_coupures[length(vecteur_coupures)]))
+				sum(ndt$taille > vecteur_coupures[length(vecteur_coupures)]) ,
+				"tailles",
+				paste(ndt$taille[ndt$taille > vecteur_coupures[length(vecteur_coupures)]],collapse=" "),
+				"ramenees à",
+				vecteur_coupures[length(vecteur_coupures)]))
 ndt$taille[ndt$taille > vecteur_coupures[length(vecteur_coupures)]] <-  vecteur_coupures[length(vecteur_coupures)]
 # correction !!!    des petites
 cat (paste("attention ",
-        sum(ndt$taille < vecteur_coupures[1]) ,
-        "tailles",
-        paste(sort(ndt$taille[ndt$taille < vecteur_coupures[1]]),collapse=" "),
-        "ramenees à",
-        vecteur_coupures[1]))
+				sum(ndt$taille < vecteur_coupures[1]) ,
+				"tailles",
+				paste(sort(ndt$taille[ndt$taille < vecteur_coupures[1]]),collapse=" "),
+				"ramenees à",
+				vecteur_coupures[1]))
 ndt$taille[ndt$taille < vecteur_coupures[1]] <- vecteur_coupures[1]
 
 #tailap extrait les anguilles d'un mois donné dans un élément de la liste.
@@ -3236,20 +3234,21 @@ tailap=tapply(ndt$taille,INDEX=list(ndt$mois),function(X) X)
 # Si il manque des effectifs certains mois, voir en 2013.
 #############################################################
 
+#TODO 2024 
 strtail=array(list(),dim=dim(tailap),dimnames=dimnames(tailap))
-for (i in 1:12){
-  strtail[i][[1]] <- hist(tailap[i][[1]],breaks = vecteur_coupures,right = FALSE,  plot=FALSE)
+for (i in c(1:11)){
+	strtail[i][[1]] <- hist(tailap[i][[1]],breaks = vecteur_coupures,right = FALSE,  plot=FALSE)
 }
 
 # On retrouve le nombre dans XX
 apply(strtail,1,function(X)sum(X[[1]]$"counts"))
 
 # TODO CHANGE 2023
-for (i in 1:10){              # mois
-  count=strtail[i][[1]]$counts
-  if (!is.null(count)){
-    strtail[i][[1]]$"effectifs_redresses" <-  count*YY[i]/sum(count)#  t(count)*coeff_correct[i,j,k])#%*%ar[i,,]
-  }
+for (i in 1:11){              # mois
+	count=strtail[i][[1]]$counts
+	if (!is.null(count)){
+		strtail[i][[1]]$"effectifs_redresses" <-  count*YY[i]/sum(count)#  t(count)*coeff_correct[i,j,k])#%*%ar[i,,]
+	}
 }
 
 # on retrouve les effectifs de YY
@@ -3262,7 +3261,7 @@ strtail_annee_mois <- cbind(strtail_annee_mois,CY=0)
 colnames(strtail_annee_mois)[length(colnames(strtail_annee_mois))] <- CY
 # A modifier par script 2013 si il manque des mois
 for (i in 1:dim(strtail)[1]){          
-  strtail_annee_mois[,as.character(CY)][[i]]=strtail[i][[1]]$"effectifs_redresses"
+	strtail_annee_mois[,as.character(CY)][[i]]=strtail[i][[1]]$"effectifs_redresses"
 }
 strtail_annee_mois[,as.character(CY)]
 unlist(lapply(strtail_annee_mois[,as.character(CY)],sum))
@@ -3302,11 +3301,11 @@ write.table(mat,file=str_c(datawdy,"mat.csv"),sep=";",row.names=TRUE)
 # jusqu'en 2009 les données sauvegardées sont en pourcentage !
 # on repasse en pourcentage
 for (i in 1:dim(strtail_annee_mois)[1]){
-  for (j in 1:dim(strtail_annee_mois)[2]){
-    if (length(strtail_annee_mois[i,j][[1]])!=1){
-      strtail_annee_mois[i,j][[1]]= strtail_annee_mois[i,j][[1]]/sum(strtail_annee_mois[i,j][[1]])
-    }
-  }
+	for (j in 1:dim(strtail_annee_mois)[2]){
+		if (length(strtail_annee_mois[i,j][[1]])!=1){
+			strtail_annee_mois[i,j][[1]]= strtail_annee_mois[i,j][[1]]/sum(strtail_annee_mois[i,j][[1]])
+		}
+	}
 }
 lapply(strtail_annee_mois[,as.character(CY)],sum) # vérifier que ça fait 1 chaque mois
 save(strtail_annee_mois,file=str_c(datawdy,"strtail_annee_moisenpourcentage.Rdata"))
@@ -3342,30 +3341,30 @@ load(file=str_c(datawdy,"strtail_annee_mois.Rdata"))
 # Generation de plusieurs figures
 ###################
 for (theCY in 2010:CY){
-  year <- as.character(theCY)
-  choix <- match(year,dimnames(strtail_annee_mois)[[2]])
-  stro <- strtail_annee_mois[,choix]
-  stro1 <- matrix(NA,nrow=107,ncol=12)
-  for (j in 1:12){
-    stro1[,j] <- stro[[j]]
-  }
-  don=as.data.frame(stro1)
-  for( j in 1: nrow(don)){
-    don[j,]=cumsum(as.numeric(don[j,]))
-  }
-  rownames(don)= 1:107
-  colnames(don)=c("01","02","03","04","05","06","07","08","09","10","11","12")
-  don <- don[,12:1]
+	year <- as.character(theCY)
+	choix <- match(year,dimnames(strtail_annee_mois)[[2]])
+	stro <- strtail_annee_mois[,choix]
+	stro1 <- matrix(NA,nrow=107,ncol=12)
+	for (j in 1:12){
+		stro1[,j] <- stro[[j]]
+	}
+	don=as.data.frame(stro1)
+	for( j in 1: nrow(don)){
+		don[j,]=cumsum(as.numeric(don[j,]))
+	}
+	rownames(don)= 1:107
+	colnames(don)=c("01","02","03","04","05","06","07","08","09","10","11","12")
+	don <- don[,12:1]
 #==============================================================
-  png(str_c(imgwdy,"str_taille_mois_redress",CY,".png"))
-  matplot(don,xaxt="n",type="n",ylab="effectif par classe",xlab="classe de taille",main=iconv(paste("Structures en tailles mensuelles redressées",year),"UTF8"))
-  lesgros <- match(c(seq(from=100, to =500,by=50)),vecteur_coupures)
-  abline(v=lesgros,col="grey60",lty=2)
-  matplot(don,lty=1,lwd=4,type="h",xaxt="n",col=couleur_mois,add=TRUE)
-  text(x=lesgros,y=10*(round(max(don/10))),labels=seq(from=100, to =500,by=50),pos=4,col="grey60")
-  legend("topright",legend=c(1:12), title="mois",col=couleur_mois,fill=rev(couleur_mois),horiz=FALSE)
-  axis(1,1:107,paste("[",vecteur_coupures[1:107],"-",vecteur_coupures[2:108],"]",sep=''))  
-  dev.off()
+	png(str_c(imgwdy,"str_taille_mois_redress",CY,".png"))
+	matplot(don,xaxt="n",type="n",ylab="effectif par classe",xlab="classe de taille",main=iconv(paste("Structures en tailles mensuelles redressées",year),"UTF8"))
+	lesgros <- match(c(seq(from=100, to =500,by=50)),vecteur_coupures)
+	abline(v=lesgros,col="grey60",lty=2)
+	matplot(don,lty=1,lwd=4,type="h",xaxt="n",col=couleur_mois,add=TRUE)
+	text(x=lesgros,y=10*(round(max(don/10))),labels=seq(from=100, to =500,by=50),pos=4,col="grey60")
+	legend("topright",legend=c(1:12), title="mois",col=couleur_mois,fill=rev(couleur_mois),horiz=FALSE)
+	axis(1,1:107,paste("[",vecteur_coupures[1:107],"-",vecteur_coupures[2:108],"]",sep=''))  
+	dev.off()
 #==============================================================
 }
 ###########################
@@ -3385,13 +3384,13 @@ load(file=str_c(datawdy,"YY.Rdata"))
 
 strage_annee_mois=array(0,c(12,dim(strtail_annee_mois)[2],5))
 for (i in 1:dim(strtail_annee_mois)[1]){#mois
-  for (j in 1:dim(strtail_annee_mois)[2]){# annee
-    if (length(strtail_annee_mois[i,j][[1]])!=1){
-      
-      strage_annee_mois[i,j,]= (t(strtail_annee_mois[i,j][[1]])*rowSums(YY,dims=2,na.rm=TRUE)[i,j])%*%ar[i,,] # effectif par mois
-      # produit matriciel pour obtenir la structure en age
-    }
-  }
+	for (j in 1:dim(strtail_annee_mois)[2]){# annee
+		if (length(strtail_annee_mois[i,j][[1]])!=1){
+			
+			strage_annee_mois[i,j,]= (t(strtail_annee_mois[i,j][[1]])*rowSums(YY,dims=2,na.rm=TRUE)[i,j])%*%ar[i,,] # effectif par mois
+			# produit matriciel pour obtenir la structure en age
+		}
+	}
 }
 dimnames(strage_annee_mois) <- c(dimnames(strtail_annee_mois),list(1:5))
 #
@@ -3431,7 +3430,7 @@ load(file=str_c(datawdy,"strage_annee.Rdata"))
 
 rowSums(strage_annee)
 strage <- cbind("civ"= vvv[["CIV"]][["data"]]$Ngl,
-    strage_annee)
+		strage_annee)
 
 strage <- as.data.frame(strage)
 mat <- matrix(0,4,6)
@@ -3460,42 +3459,42 @@ x11()
 
 #######ANGUILLES JAUNES
 theme_black  <-  function (base_size = 12,base_family=""){
-  theme_grey(base_size=base_size,base_family=base_family) %+replace%
-      theme(
-          axis.line = element_blank(), 
-          axis.text.x = element_text(size = base_size * 0.8, colour = 'white', lineheight = 0.9, vjust = 1), 
-          axis.text.y = element_text(size = base_size * 0.8, colour = 'white', lineheight = 0.9, hjust = 1), 
-          axis.ticks = element_line(colour = "white", size = 0.2), 
-          axis.title.x = element_text(size = base_size, colour = 'white', vjust = 1), 
-          axis.title.y = element_text(size = base_size, colour = 'white', angle = 90, vjust = 0.5), 
-          axis.ticks.length = unit(0.3, "lines"), 	  
-          legend.background = element_rect(colour = NA, fill = 'black'), 
-          legend.key = element_rect(colour = NA, fill = 'black'), 
-          legend.key.size = unit(1.2, "lines"), 
-          legend.key.height = NULL, 
-          legend.key.width = NULL,     
-          legend.text = element_text(size = base_size * 0.8, colour = 'white'), 
-          legend.title = element_text(size = base_size * 0.8, face = "bold", hjust = 0, colour = 'white'), 
-          legend.position = "right", 
-          legend.text.align = NULL, 
-          legend.title.align = NULL, 
-          legend.direction = "vertical", 
-          legend.box = NULL,    
-          
-          panel.background = element_rect(fill = "black", colour = NA), 
-          panel.border = element_rect(fill = NA, colour = "white"), 
-          panel.grid.major = element_line(colour = "white", size = 0.2), 
-          panel.grid.minor = element_line(colour = "grey30", size = 0.1), 
-          panel.spacing = unit(0.25, "lines"), 
-          
-          strip.background = element_rect(fill = "grey30", colour = "grey10"), 
-          strip.text.x = element_text(size = base_size * 0.8, colour = 'white'), 
-          strip.text.y = element_text(size = base_size * 0.8, colour = 'white', angle = -90), 
-          
-          plot.background = element_rect(colour = 'black', fill = 'black'), 
-          plot.title = element_text(size = base_size * 1.2, colour = "white"), 
-          plot.margin = unit(c(1, 1, 0.5, 0.5), "lines")
-      )
+	theme_grey(base_size=base_size,base_family=base_family) %+replace%
+			theme(
+					axis.line = element_blank(), 
+					axis.text.x = element_text(size = base_size * 0.8, colour = 'white', lineheight = 0.9, vjust = 1), 
+					axis.text.y = element_text(size = base_size * 0.8, colour = 'white', lineheight = 0.9, hjust = 1), 
+					axis.ticks = element_line(colour = "white", size = 0.2), 
+					axis.title.x = element_text(size = base_size, colour = 'white', vjust = 1), 
+					axis.title.y = element_text(size = base_size, colour = 'white', angle = 90, vjust = 0.5), 
+					axis.ticks.length = unit(0.3, "lines"), 	  
+					legend.background = element_rect(colour = NA, fill = 'black'), 
+					legend.key = element_rect(colour = NA, fill = 'black'), 
+					legend.key.size = unit(1.2, "lines"), 
+					legend.key.height = NULL, 
+					legend.key.width = NULL,     
+					legend.text = element_text(size = base_size * 0.8, colour = 'white'), 
+					legend.title = element_text(size = base_size * 0.8, face = "bold", hjust = 0, colour = 'white'), 
+					legend.position = "right", 
+					legend.text.align = NULL, 
+					legend.title.align = NULL, 
+					legend.direction = "vertical", 
+					legend.box = NULL,    
+					
+					panel.background = element_rect(fill = "black", colour = NA), 
+					panel.border = element_rect(fill = NA, colour = "white"), 
+					panel.grid.major = element_line(colour = "white", size = 0.2), 
+					panel.grid.minor = element_line(colour = "grey30", size = 0.1), 
+					panel.spacing = unit(0.25, "lines"), 
+					
+					strip.background = element_rect(fill = "grey30", colour = "grey10"), 
+					strip.text.x = element_text(size = base_size * 0.8, colour = 'white'), 
+					strip.text.y = element_text(size = base_size * 0.8, colour = 'white', angle = -90), 
+					
+					plot.background = element_rect(colour = 'black', fill = 'black'), 
+					plot.title = element_text(size = base_size * 1.2, colour = "white"), 
+					plot.margin = unit(c(1, 1, 0.5, 0.5), "lines")
+			)
 }
 nbcol <- dim(strtail_annee_mois)[2] #21
 sty <- st[nbcol+1:nrow(st),] # j'enleve les civelles
@@ -3526,26 +3525,26 @@ require(colorRamps)
 #lab=c("[0,100)","[100,500)","[500,1e+03)","[1e+03,5e+03)","[5e+03,1e+04)",
 #		"[1e+04,1e+05)","[1e+05,5e+05)","[5e+05,1e+06)","[1e+06,2e+06)","[2e+06,3e+06)")
 cols=
-    c(
-        "[0,100)"= col[1],
-        "[100,1e+03)"= col[2] ,
-        #"[500,)"= col[3],
-        "[1e+03,1e+04)"=col[4],
-        #"[5e+03,1e+04)"=col[5],
-        "[1e+04,1e+05)"=col[6],
-        #"[1e+05,5e+05)"= col[7],
-        "[1e+05,1e+06)"= col[8],
-        "[1e+06,2e+06)"=col[9],				
-        "[2e+06,3e+06)"=col[10],
-        "[3e+06,5e+06)"=col[11]
-    )
+		c(
+				"[0,100)"= col[1],
+				"[100,1e+03)"= col[2] ,
+				#"[500,)"= col[3],
+				"[1e+03,1e+04)"=col[4],
+				#"[5e+03,1e+04)"=col[5],
+				"[1e+04,1e+05)"=col[6],
+				#"[1e+05,5e+05)"= col[7],
+				"[1e+05,1e+06)"= col[8],
+				"[1e+06,2e+06)"=col[9],				
+				"[2e+06,3e+06)"=col[10],
+				"[3e+06,5e+06)"=col[11]
+		)
 
 p  <-  ggplot(sty, aes(x=annee,y=cohorte))
 (p <-  p + geom_tile(aes(fill=classe)) + 			
-      xlab("")+ylab("Cohorte")+
-      scale_y_continuous(breaks=c(1990,1995,2000,2005,2010,2015),minor_breaks=c(1991:2015))+
-      scale_x_continuous(breaks=c(1995,2000,2005,2010,2015),minor_breaks=c(1992:2015))+
-      theme_black())
+			xlab("")+ylab("Cohorte")+
+			scale_y_continuous(breaks=c(1990,1995,2000,2005,2010,2015),minor_breaks=c(1991:2015))+
+			scale_x_continuous(breaks=c(1995,2000,2005,2010,2015),minor_breaks=c(1992:2015))+
+			theme_black())
 #### CIVELLES
 stc=st[1:nbcol,]
 stc[,"Cum_per_age"]=log(stc$effectif+1)
@@ -3557,39 +3556,39 @@ stc$classe=cut(stc$effectif,c(0,100,1e+03,1e+04,1e+05,1e+06,2e+06,3e+06,5e+06),r
 # remplacement du jeu de donnees dans le ggplot
 #p <-  p%+%stc  # pas besoin il suffit de changer dans le layer
 (p <- p+  geom_rect(aes(xmin = xstart, xmax = xend,ymin=ystart,ymax=yend,fill=classe),data=stc) +
-      scale_fill_manual(name="Effectif",values =cols))
+			scale_fill_manual(name="Effectif",values =cols))
 
 civelles=data.frame("annee"=stc$annee,"N.e3"=strage$civ/1000)
 civelles$annee=as.numeric(civelles$annee)
 civelles$classe=cut(strage$civ,c(1e+04,1e+05,1e+06,2e+06,3e+06,5e+06),right=FALSE)
 
 cols=
-    c(
-        "[1e+04,1e+05)"=col[6],
-        "[1e+05,1e+06)"= col[8],
-        "[1e+06,2e+06)"=col[9],
-        "[2e+06,3e+06)"=col[10],
-        "[3e+06,5e+06)"=col[11])
+		c(
+				"[1e+04,1e+05)"=col[6],
+				"[1e+05,1e+06)"= col[8],
+				"[1e+06,2e+06)"=col[9],
+				"[2e+06,3e+06)"=col[10],
+				"[3e+06,5e+06)"=col[11])
 # 2015 pour graph a virer en 2015
 civelles <- rbind(civelles,c(2015,NA,NA))
 
 p2 <- ggplot(civelles,aes(x=annee,y=N.e3))
 (p2 <- p2+geom_point(aes(size=N.e3,colour=classe),show.legend=FALSE)+
-      xlab("Annee")+ylab("Effectif civelles x1000")+
-      scale_colour_manual(name="Effectif",values =cols)+
-      scale_x_continuous(breaks=c(1995,2000,2005,2010,2015),minor_breaks=c(1992:2015))+
-      theme_black())
+			xlab("Annee")+ylab("Effectif civelles x1000")+
+			scale_colour_manual(name="Effectif",values =cols)+
+			scale_x_continuous(breaks=c(1995,2000,2005,2010,2015),minor_breaks=c(1992:2015))+
+			theme_black())
 
 
 require(grid)
 svg(str_c(imgwdy,"CIV_ANG_COHORTE.svg"))
 vplayout  <-  function(x, y) {
-  viewport(layout.pos.row = x, layout.pos.col = y)  }
+	viewport(layout.pos.row = x, layout.pos.col = y)  }
 grid::grid.newpage()
 grid::pushViewport(grid::viewport(layout = grid.layout(3,40,just="center")))
 print(p, vp=vplayout(1:2,1:40))
 for (i in (40:35)){
-  print(p2,vp=vplayout(3,1:i))
+	print(p2,vp=vplayout(3,1:i))
 }
 dev.off()
 
@@ -3602,15 +3601,15 @@ dev.off()
 require(ggthemr)
 png(str_c(imgwdy,"migration_par_cohorte.png"),width=16,height=12,units="cm",res=300)
 fresh4 <- define_palette(
-    swatch = c("#111111","#E84646","#65ADC2","#233B43","#C29365","#362C21","#316675",
-        "#168E7F","#109B37","#003B10","#52002F"),
-    gradient = c(lower = "#111111", upper = "#109B37"))
+		swatch = c("#111111","#E84646","#65ADC2","#233B43","#C29365","#362C21","#316675",
+				"#168E7F","#109B37","#003B10","#52002F"),
+		gradient = c(lower = "#111111", upper = "#109B37"))
 ggthemr(fresh4, type="outer", layout="scientific", spacing=0.8)
 
 p3 <- ggplot(sty, aes(x=cohorte,y=effectif))
 p3 <- p3 + geom_bar(aes(fill=age),stat="identity")+
-    xlab("Cohorte")+ylab("Effectif")+
-    scale_fill_manual(values=swatch()[3:7])
+		xlab("Cohorte")+ylab("Effectif")+
+		scale_fill_manual(values=swatch()[3:7])
 
 
 # migration par cohorte, le même avec les civelles
@@ -3751,11 +3750,11 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 
 bMM_Arzal <- new("report_mig_mult")
 bMM_Arzal <- choice_c(bMM_Arzal,
-    dc=c(5,6,12),
-    taxa=c("Anguilla anguilla"),
-    stage=c("AGG","AGJ","CIV"),
-    datedebut=str_c(CY,"-01-01"),
-    datefin =str_c(CY,"-12-31"))
+		dc=c(5,6,12),
+		taxa=c("Anguilla anguilla"),
+		stage=c("AGG","AGJ","CIV"),
+		datedebut=str_c(CY,"-01-01"),
+		datefin =str_c(CY,"-12-31"))
 bMM_Arzal <- charge(bMM_Arzal) 
 bMM_Arzal <- connect(bMM_Arzal)
 bMM_Arzal <- calcule(bMM_Arzal,silent=TRUE)
@@ -3765,18 +3764,18 @@ plot(bMM_Arzal,plot.type="multiple")
 grdata <- get('grdata',envir_stacomi) 
 # je renomme le facteur DC pour les titres
 levels(grdata$DC) <- c(
-    "Passe bassins",
-    "Piege anguille gabion",
-    "Piege guide eau")
+		"Passe bassins",
+		"Piege anguille gabion",
+		"Piege guide eau")
 p <- ggplot(grdata,aes(x=debut_pas,y=effectif_total,fill=DC))+
-    geom_bar(position="stack", stat="identity")+
-    facet_grid(stage~.,scales="free_y")+
-    scale_fill_manual(values=c("Piege guide eau"="#66A1D2","Piege anguille gabion"="#043C6B","Passe bassins"="#D2A25F"))+ # couleurs à la main...
-    ylab("Effectif par stade et DC")+	
-    xlab("Date")+
-    theme_bw()+
-    theme(strip.background = element_rect(fill = "grey60", size = 1),
-        strip.text=element_text(colour="white")) # pour les rectangles des strip
+		geom_bar(position="stack", stat="identity")+
+		facet_grid(stage~.,scales="free_y")+
+		scale_fill_manual(values=c("Piege guide eau"="#66A1D2","Piege anguille gabion"="#043C6B","Passe bassins"="#D2A25F"))+ # couleurs à la main...
+		ylab("Effectif par stade et DC")+	
+		xlab("Date")+
+		theme_bw()+
+		theme(strip.background = element_rect(fill = "grey60", size = 1),
+				strip.text=element_text(colour="white")) # pour les rectangles des strip
 
 png(filename=str_c(imgwdy,"bmm.png"),width=18,height=18,unit="cm",res=300)
 print(p)
@@ -3789,17 +3788,17 @@ dev.off()
 # définition du thème de couleur pour les civelles
 ###########################
 color=c(
-    "#052945",#working
-    "#ECDAC0",#stopped
-    "#3071A2",#normal
-    "#462800",#maintenance
-    "#B68B52",#dysfunction
-    "#FFC26E",
-    "#A66F24",
-    "#012746",#eff
-    "#6C3E00",#weight
-    "blue",
-    "blue"
+		"#052945",#working
+		"#ECDAC0",#stopped
+		"#3071A2",#normal
+		"#462800",#maintenance
+		"#B68B52",#dysfunction
+		"#FFC26E",
+		"#A66F24",
+		"#012746",#eff
+		"#6C3E00",#weight
+		"blue",
+		"blue"
 )
 mycolorramp1<-colorRampPalette(c("#011A2D","#4F7EA2")) # blues
 mycolorramp2<-colorRampPalette(c("#462800","#B68B52"))
@@ -3818,11 +3817,11 @@ color_ope<-sample(c(mycolorramp1(10),mycolorramp2(10)),20)
 # pour les suivants de nouvelles fenêtres vont s'ouvri
 # pour sauver en pdf il faut que j'en passe qu'un !
 bMM_Arzal <- choice_c(bMM_Arzal,
-    dc=c(6),
-    taxa=c("Anguilla anguilla"),
-    stage=c("CIV"),
-    datedebut=str_c(CY,"-01-01"),
-    datefin=str_c(CY,"-12-31"))
+		dc=c(6),
+		taxa=c("Anguilla anguilla"),
+		stage=c("CIV"),
+		datedebut=str_c(CY,"-01-01"),
+		datefin=str_c(CY,"-12-31"))
 bMM_Arzal <- charge(bMM_Arzal)
 bMM_Arzal <- connect(bMM_Arzal)
 bMM_Arzal <- calcule(bMM_Arzal)
@@ -3830,98 +3829,98 @@ bMM_Arzal <- calcule(bMM_Arzal)
 # par("din") # pour voir la taille de la fenetre graphique
 pdf(file=str_c(imgwdy,"bmm_civelle_6.pdf"),width=7.2,height=7.44)
 plot(bMM_Arzal,plot.type="standard",
-    color=color,
-    color_ope=color_ope,
-    main=str_c("Effectif civelles, piège gabion (rive gauche) en ",CY),
-    cex.main=1.1,		
-    type="h",
-    silent=TRUE)
+		color=color,
+		color_ope=color_ope,
+		main=str_c("Effectif civelles, piège gabion (rive gauche) en ",CY),
+		cex.main=1.1,		
+		type="h",
+		silent=TRUE)
 dev.off()
 ##################################
 # Civelles mur guide eau
 ##################################
 bMM_Arzal=choice_c(bMM_Arzal,
-    dc=c(12),
-    taxa=c("Anguilla anguilla"),
-    stage=c("CIV"),
-    datedebut=str_c(CY,"-01-01"),
-    datefin=str_c(CY,"-12-31"))
+		dc=c(12),
+		taxa=c("Anguilla anguilla"),
+		stage=c("CIV"),
+		datedebut=str_c(CY,"-01-01"),
+		datefin=str_c(CY,"-12-31"))
 bMM_Arzal <- charge(bMM_Arzal)
 bMM_Arzal <- connect(bMM_Arzal)
 bMM_Arzal <- calcule(bMM_Arzal)
 pdf(file=str_c(imgwdy,"bmm_civelle_12.pdf"),width=7.2,height=7.44)
 plot(bMM_Arzal,plot.type="standard",
-    color=color,
-    color_ope=color_ope,
-    main=str_c("Effectif civelles, mur guide eau (rive droite) en ", CY),
-    cex.main=1.1,		
-    type="h",
-    silent=TRUE)
+		color=color,
+		color_ope=color_ope,
+		main=str_c("Effectif civelles, mur guide eau (rive droite) en ", CY),
+		cex.main=1.1,		
+		type="h",
+		silent=TRUE)
 dev.off()
 ##################################
 # Définition du thème de couleur pour les anguilles
 ##################################
 
 color=c(
-    "#052945",#working
-    "#ECDAC0",#stopped
-    "#3071A2",#normal
-    "#462800",#maintenance
-    "#B68B52",#dysfunction
-    "#FFC26E",
-    "#A66F24",
-    "#012746",#mesure
-    "#29A570",#calcule
-    "#B67B2D", #expert
-    "#4F7EA2" # ponctuel
+		"#052945",#working
+		"#ECDAC0",#stopped
+		"#3071A2",#normal
+		"#462800",#maintenance
+		"#B68B52",#dysfunction
+		"#FFC26E",
+		"#A66F24",
+		"#012746",#mesure
+		"#29A570",#calcule
+		"#B67B2D", #expert
+		"#4F7EA2" # ponctuel
 )
 ##################################
 # Anguilles jaunes gabion
 ##################################
 
 bMM_Arzal <- choice_c(bMM_Arzal,
-    dc=c(6),
-    taxa=c("Anguilla anguilla"),
-    stage=c("AGJ"),
-    datedebut=str_c(CY,"-01-01"),
-    datefin=str_c(CY,"-12-31"))
+		dc=c(6),
+		taxa=c("Anguilla anguilla"),
+		stage=c("AGJ"),
+		datedebut=str_c(CY,"-01-01"),
+		datefin=str_c(CY,"-12-31"))
 bMM_Arzal <- charge(bMM_Arzal)
 bMM_Arzal <- connect(bMM_Arzal)
 bMM_Arzal <- calcule(bMM_Arzal)
 pdf(file=str_c(imgwdy,"bmm_agj_6.pdf"),width=7.2,height=7.44)
 plot(bMM_Arzal,plot.type="standard",
-    color=color,
-    color_ope=color_ope,
-    main=str_c("Effectif d'anguilles jaunes gabion (rive gauche) en ",CY),
-    cex.main=1.1,
-    ylab="Effectif journalier d'anguilles jaunes",
-    lty=2,
-    type="b",		
-    silent=TRUE)
+		color=color,
+		color_ope=color_ope,
+		main=str_c("Effectif d'anguilles jaunes gabion (rive gauche) en ",CY),
+		cex.main=1.1,
+		ylab="Effectif journalier d'anguilles jaunes",
+		lty=2,
+		type="b",		
+		silent=TRUE)
 dev.off()
 
 ##################################
 # Anguilles jaunes mur guide eau
 ##################################
 bMM_Arzal <- choice_c(bMM_Arzal,
-    dc=c(12),
-    taxa=c("Anguilla anguilla"),
-    stage=c("AGJ"),
-    datedebut=str_c(CY,"-01-01"),
-    datefin=str_c(CY,"-12-31"))
+		dc=c(12),
+		taxa=c("Anguilla anguilla"),
+		stage=c("AGJ"),
+		datedebut=str_c(CY,"-01-01"),
+		datefin=str_c(CY,"-12-31"))
 bMM_Arzal <- charge(bMM_Arzal)
 bMM_Arzal <- connect(bMM_Arzal)
 bMM_Arzal <- calcule(bMM_Arzal)
 pdf(file=str_c(imgwdy,"bmm_agj_12.pdf"),width=7.2,height=7.44)
 plot(bMM_Arzal,plot.type="standard",
-    color=color,
-    color_ope=color_ope,
-    main=str_c("Effectif d'anguilles jaunes du mur guide eau (rive droite) en ", CY),
-    cex.main=1.1,
-    ylab="Effectif journalier d'anguilles jaunes",
-    lty=2,
-    type="b",		
-    silent=TRUE)
+		color=color,
+		color_ope=color_ope,
+		main=str_c("Effectif d'anguilles jaunes du mur guide eau (rive droite) en ", CY),
+		cex.main=1.1,
+		ylab="Effectif journalier d'anguilles jaunes",
+		lty=2,
+		type="b",		
+		silent=TRUE)
 dev.off()
 
 
@@ -3929,27 +3928,27 @@ dev.off()
 # Anguilles jaunes passe à bassins
 ##################################
 bMM_Arzal <- choice_c(bMM_Arzal,
-    dc=c(5),
-    taxa=c("Anguilla anguilla"),
-    stage=c("AGJ"),
-    datedebut=str_c(CY,"-01-01"),
-    datefin=str_c(CY,"-12-31"))
+		dc=c(5),
+		taxa=c("Anguilla anguilla"),
+		stage=c("AGJ"),
+		datedebut=str_c(CY,"-01-01"),
+		datefin=str_c(CY,"-12-31"))
 bMM_Arzal <- charge(bMM_Arzal)
 bMM_Arzal <- connect(bMM_Arzal)
 bMM_Arzal <- calcule(bMM_Arzal)
 # pas forcément sur la passe
 if (nrow(bMM_Arzal@data)>0) {
-  pdf(file=str_c(imgwdy,"bmm_agj_5.pdf"),width=7.2,height=7.44)
-  plot(bMM_Arzal,plot.type="standard",
-      color=color,
-      color_ope=color_ope,
-      main=str_c("Effectif d'anguilles jaunes dans la passe à bassins en ",CY),
-      ylab="Effectif journalier d'anguilles jaunes",
-      cex.main=1.1,
-      lty=2,
-      type="b",		
-      silent=TRUE)
-  dev.off()
+	pdf(file=str_c(imgwdy,"bmm_agj_5.pdf"),width=7.2,height=7.44)
+	plot(bMM_Arzal,plot.type="standard",
+			color=color,
+			color_ope=color_ope,
+			main=str_c("Effectif d'anguilles jaunes dans la passe à bassins en ",CY),
+			ylab="Effectif journalier d'anguilles jaunes",
+			cex.main=1.1,
+			lty=2,
+			type="b",		
+			silent=TRUE)
+	dev.off()
 }
 @
 
@@ -4006,11 +4005,11 @@ gesflu <- ges[,c("year","passem","pecxp","eclm","recfluciv","aj","recr_flu_aj_m1
 flu <- merge(gesflu,spld,by.x="year",by.y="annee",all.x=TRUE)
 # having missing data I will only assume that the densities were the mean of previous and next year
 for (i in c(9,11,13,15)){
-  flu[i,"denscs"] <- mean(c(flu[i-1,"denscs"],flu[i+1,"denscs"]))
+	flu[i,"denscs"] <- mean(c(flu[i-1,"denscs"],flu[i+1,"denscs"]))
 }
 
 scale <- function(vec){
-  vec/max(vec,na.rm=TRUE)
+	vec/max(vec,na.rm=TRUE)
 }
 # CORRIGER POUR LES ANNEES OU IL N'Y A PAS DE DONNEES DE SUIVI
 ccf(flu$denscs[3:16],flu$recr_flu_aj_m1[1:14]) # 2 year lag 
@@ -4030,7 +4029,7 @@ at2<-at*10^3
 at1<-at3/25
 axis(1, at = 1996:2011)
 axis(2, at = at3, labels = formatC(at2, big.mark = " ", format = "d"), 
-    las = 3)
+		las = 3)
 axis(side=4,at=at3,labels=at1)
 mtext("Anguilles jaunes",4,line=3)
 abline(h=at3,col="grey70")
@@ -4038,7 +4037,7 @@ points(1996:2011,ges$recr_flu_aj_m3,lty=2,type="b",col="black",lwd=2)
 symbols(x=2007,y=(ges$eclm*10^6)[12],squares=0.3,add=TRUE,inches=F,bg="grey")
 points(1996:2011,ges$recr_flu_aj_m4*25,lty=2,pch=17,type="b",col="black")
 symbols(x=(1996:2011)[ges$pecxp>0],y=(ges$pecxp*10^6)[ges$pecxp>0],
-    stars=matrix(rep(c(0.5,0.1,0.5,0.1,0.5,0.1,0.5,0.1,0.5,0.1)/2,7),7,10),add=TRUE,inches=F,bg="grey")
+		stars=matrix(rep(c(0.5,0.1,0.5,0.1,0.5,0.1,0.5,0.1,0.5,0.1)/2,7),7,10),add=TRUE,inches=F,bg="grey")
 dev.off()
 
 x11()
@@ -4048,7 +4047,7 @@ z3 <- cbind(z, 2*runif(10), runif(10))
 symbols(x, y, thermometers = cbind(.5, 1, z), inches = .5, fg = 1:10)
 symbols(x, y, thermometers = z3, inches = FALSE)
 text(x,y, apply(format(round(z3, digits=2)), 1, paste, collapse = ","),
-    adj = c(-.2,0), cex = .75, col = "purple", xpd = NA)
+		adj = c(-.2,0), cex = .75, col = "purple", xpd = NA)
 
 
 
@@ -4064,11 +4063,11 @@ points((c(0.5:13.5)+0.2*(c(1:14)))[c(1:8,10,12,14)],(flu$denscs[3:16])[-c(9,11,1
 points((c(0.5:13.5)+0.2*(c(1:14)))[c(1:8,10,12,14)],(flu$denscs[3:16])[-c(9,11,13)],pch=19,col="limegreen",type="p",cex=1.2)
 
 legend("topright",legend=iconv(c("recrutement fluvial passe",
-            "recrutement fluvial transport, survie 50% / passe",
-            "recrutement fluvial transport, survie 100%",
-            "recrutement fluvial anguilles jaunes"),"utf8"),
-    fill=c("blue","slateblue1","skyblue","red"),				
-    bty="n")
+						"recrutement fluvial transport, survie 50% / passe",
+						"recrutement fluvial transport, survie 100%",
+						"recrutement fluvial anguilles jaunes"),"utf8"),
+		fill=c("blue","slateblue1","skyblue","red"),				
+		bty="n")
 legend(6,2,legend=iconv("densités en pêche électrique Y+2","utf8"),col="limegreen",pch=19,bty="n")
 ########################################
 ## premier graphique de l'animation
@@ -4211,43 +4210,43 @@ require(stacomiR)
 
 bilA <- new("report_annual")
 bilA <- choice_c(bilA,
-    dc=c(5,6,12),
-    taxa=c("Anguilla anguilla"),
-    stage=c("AGG"),
-    start_year="1996",
-    end_year=CY,
-    silent=FALSE)
+		dc=c(5,6,12),
+		taxa=c("Anguilla anguilla"),
+		stage=c("AGG"),
+		start_year="1996",
+		end_year=CY,
+		silent=FALSE)
 bilA <- connect(bilA)	
 # the following dataset has been generated by the previous code
 # there is a method for class ANY which overides the method for class bilA ?
 # the following works but xtable alone fails if the xtable package is loaded 
 xtbilA <- stacomiR::xtable(bilA,
-    caption="Migration des stades anguilles argentées, dans les
-        deux passes du barrage d'Arzal, Piège RG = passe piège historique
-        sur le gabion, Piège RD = passe du mur guide eau). Les effectifs des opérations à cheval sur deux années sont re-
-        répartis au pro-rata des effectifs de chaque année. (\\textit{Note : le stade des anguilles est difficile à déterminer
-        en suivi vidéo, et la plupart des anguilles migrant dans la passe à bassins sont classées comme jaunes}.)",
-    label="table_bilanannuel_ang",
-    dc_name=c("Passe à bassins","Piège RG","Piège RD"),
-    tax_name="Anguille",
-    std_name=c("Argentée"))
+		caption="Migration des stades anguilles argentées, dans les
+				deux passes du barrage d'Arzal, Piège RG = passe piège historique
+				sur le gabion, Piège RD = passe du mur guide eau). Les effectifs des opérations à cheval sur deux années sont re-
+				répartis au pro-rata des effectifs de chaque année. (\\textit{Note : le stade des anguilles est difficile à déterminer
+				en suivi vidéo, et la plupart des anguilles migrant dans la passe à bassins sont classées comme jaunes}.)",
+		label="table_bilanannuel_ang",
+		dc_name=c("Passe à bassins","Piège RG","Piège RD"),
+		tax_name="Anguille",
+		std_name=c("Argentée"))
 # below not run but one can create a file as following
 
 path_agg <- file.path(tabwdy,
-    paste(paste(bilA@dc@dc_selected,collapse="_"),"_",
-        paste(bilA@taxa@taxa_selected,collapse="_"),"_",
-        paste(bilA@stage@stage_selected,collapse="_"),"_",
-        bilA@start_year@year_selected,"to",
-        bilA@end_year@year_selected,".tex",sep=""),fsep ="")
+		paste(paste(bilA@dc@dc_selected,collapse="_"),"_",
+				paste(bilA@taxa@taxa_selected,collapse="_"),"_",
+				paste(bilA@stage@stage_selected,collapse="_"),"_",
+				bilA@start_year@year_selected,"to",
+				bilA@end_year@year_selected,".tex",sep=""),fsep ="")
 # the following uses the "addtorow" argument which creates nice column headings,
 # format.args creates a thousand separator
 # again this will need to be saved in a file using the file argument
 print(xtbilA,
-    file=path_agg,
-    add.to.row=get("addtorow",envir_stacomi),
-    include.rownames = TRUE,
-    include.colnames = FALSE,
-    format.args = list(big.mark = " ", decimal.mark = ",")
+		file=path_agg,
+		add.to.row=get("addtorow",envir_stacomi),
+		include.rownames = TRUE,
+		include.colnames = FALSE,
+		format.args = list(big.mark = " ", decimal.mark = ",")
 )
 vvv[["AGG"]]<-list()
 vvv[["AGG"]][["path_agg"]]<-gsub("C:/workspace/","../../../",path_agg)
