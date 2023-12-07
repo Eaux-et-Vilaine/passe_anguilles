@@ -2409,7 +2409,7 @@ g+ggplot2::scale_fill_manual(values=color_ope)+
 dev.off()
 plot(bili,plot.type="barchart",timesplit="month",silent=TRUE)
 
-g <- get("g_barchart1",envir=envir_stacomi)
+g <- get("g_barchart",envir=envir_stacomi)
 cols  <-  c("max" = "#012746","min" = "#6C3E00",">=moy" = "#327AB5", "<moy" = "#D29035","hist_mean"="black","hist_range"="grey","?"="#D26435")
 fills  <-  c("max" = "#043C6B","min" = "#6C3E00",">=moy" = "#558AB5", "<moy" = "#D2A25F","hist_mean"="black","hist_range"="grey","?"="#D26435")
 g  <-  g+scale_colour_manual(name=CY,values=cols,limits=c("min","max","<moy",">=moy","hist_mean","hist_range","?"))
@@ -2420,7 +2420,7 @@ print(g)
 dev.off()
 
 plot(bili,plot.type="barchart",timesplit="week",silent=TRUE)
-g <- get("g_barchart1",envir=envir_stacomi)
+g <- get("g_barchart",envir=envir_stacomi)
 cols  <-  c("max" = "#012746","min" = "#6C3E00",">=moy" = "#327AB5", "<moy" = "#D29035","hist_mean"="black","hist_range"="grey","?"="#D26435")
 fills  <-  c("max" = "#043C6B","min" = "#6C3E00",">=moy" = "#558AB5", "<moy" = "#D2A25F","hist_mean"="black","hist_range"="grey","?"="#D26435")
 g  <-  g+scale_colour_manual(name=CY,values=cols,limits=c("min","max","<moy",">=moy","hist_mean","hist_range","?"))
@@ -2431,10 +2431,10 @@ g + scale_x_continuous(limits=c(00,27))
 lsm  <-  summary(bili,silent=TRUE) # list summary month
 lsm[['12']][,3:6] <- round(lsm[['12']][,3:6]/1000,3)
 lsm[['6']][,3:6] <- round(lsm[['6']][,3:6]/1000,3)
-lsm[['12']]  <-  lsm[['12']][,c("mois","min","mean","max","valeur")]
-lsm[['6']]   <-  lsm[['6']][,c("mois","min","mean","max","valeur")]
-colnames(lsm[['12']])  <-  c("Mois","Min*","Moyenne*","Max*","N (2016)")
-colnames(lsm[['6']])   <-  c("Mois","Min*","Moyenne*","Max*","N (2016)")
+lsm[['12']]  <-  lsm[['12']][,c("mois","min","moyenne","max","valeur")]
+lsm[['6']]   <-  lsm[['6']][,c("mois","min","moyenne","max","valeur")]
+colnames(lsm[['12']])  <-  c("Mois","Min*","Moyenne*","Max*","N (2022)")
+colnames(lsm[['6']])   <-  c("Mois","Min*","Moyenne*","Max*","N (2022)")
 #==================== xtable6 ===================================
 xtsm6  <-  xtable(lsm[['6']],caption=str_c("Montées de civelles \\textsf{(en milliers)} dans la passe principale du barrage
 						d'Arzal (gabion en rive gauche), données par mois, \\textsf{N (",CY,")} effectifs par mois pour ",CY," , les trois statistiques * correspondent à la période
