@@ -1804,17 +1804,57 @@ dev.off()
 
 d2vil<- d2[d2$intraseasonal=="Vilaine",]
 d2vil$pigm[is.na(d2vil$pigm)]<-"0"
+
+d2vil <- d2vil[complete.cases(d2vil[,c("sample","pigm","time","loc","yday","size_cm")]),]
+table(d2vil$pigm)
+d2vil$pigm[d2vil$pigm=="VA"]<-"VB"
+d2vil<- d2vil[d2vil$pigm!="VIB",]
 d2vil$pigm<-as.factor(d2vil$pigm)
+# modèle non mixte pour récupérer la leverage matrix ci dessous
+gam_vil0<-mgcv::gam(size_cm~
+        s(yday,bs = "cc",by=pigm)+s(time,bs = "cr",k=12)+loc,
+    data=d2vil)
+# modèle mixte en passant par gam et re
+gam_vil1<-mgcv::gam(size_cm~
+        s(yday,bs = "cc",by=pigm)+s(time,bs = "cr",k=12)+loc + s(sample,bs="re"),
+    data=d2vil)
+# même modèle en forçant la spline à avoir le même degré d'ondulation bs="fs"
+gam_vil1<-mgcv::gam(size_cm~
+        s(yday,pigm,bs = "fs")+s(time,bs = "cr",k=12)+loc + s(sample,bs="re"),
+    data=d2vil)
+# modèle mixte incluant une variable aléatoire échantillon
 gamm_vil<-mgcv::gamm(size_cm~
         s(yday,bs = "cc",by=pigm)+s(time,bs = "cr",k=12)+loc,
     random=list(sample=~1), 
     data=d2vil)
-# TODO voir pour interpreter la partie aléatoire du modèle
+
 gam_vil <- gamm_vil$gam
 gam_vil$data <- d2vil
-plot(gam_vil, all.terms=TRUE, shade=TRUE, rug=TRUE)
+plot(gam_vil1, all.terms=TRUE, shade=TRUE, rug=TRUE)
 visreg::visreg(gam_vil,data=d2vil)
-# todo faire un graphique correct de la tendance interannuelle plus des 
+visreg::visreg2d(gam_vil1,xvar="time",yvar="yday",plot.type="persp",cond=list(loc="Vilaine_ladder", pigm="VB"), phi=30,theta=270)
+#La diagonale de la hat matrix (influcence matrix, leverage matrix) est la mesure de l'effet de levier (leverage)
+# exercé par les elements de chaque point vers la yeme valeur.
+d2vil$gam_shat <- mgcv::influence.gam(gam_vil1) # note, le modele gamm n'a pas de hat, donc 
+ggplot(d2vil)+geom_point(aes(x=time,y=size_cm,col=gam_shat), position="jitter")
+# todo faire un graphique correct de la tendance interannuelle plus des
+
+######################
+# Response for time 
+#####################
+# yday back to real date to show on the graph
+visreg2d(gamm_s,xvar="time",yvar="yday",plot.type="gg")
+v2<-visreg(gamm_s,xvar="time")
+v2$fit$time=as.Date(v2$fit$time, origin=as.Date(ymd(19970101)))
+v2$res$time=as.Date(v2$res$time, origin=as.Date(ymd(19970101)))
+tiff(file=str_c(imgwd,"FIGURE4.tiff"), width = 8, height = 6, units = 'in', res = 300)
+plot(v2,gg=TRUE,
+        points=list(cex=1.5, pch=1),
+        line=list(col="darkblue"),
+        fill=list(col="darkblue",fill="deepskyblue",alpha=0.3))+ 
+    scale_x_date()+ theme_bw()+xlab("Date") + ylab("Size (cm)")
+dev.off()
+
 @
 
 Les données de poids moyen proviennent essentiellement de la
