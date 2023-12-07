@@ -1832,9 +1832,10 @@ gam_vil <- gamm_vil$gam
 gam_vil$data <- d2vil
 plot(gam_vil1, all.terms=TRUE, shade=TRUE, rug=TRUE)
 visreg::visreg(gam_vil,data=d2vil)
-png(file=str_c(imgwdy,"time_yday_civelles.png"), width = 8, height = 6, units = 'in', res = 300)
+png(file=str_c(imgwdy,"time_yday_civelles_VB.png"), width = 8, height = 6, units = 'in', res = 300)
 visreg::visreg2d(gam_vil1,xvar="time",yvar="yday",plot.type="persp",
     cond=list(loc="Vilaine_ladder", pigm="VB"), phi=30,theta=-50)
+dev.off()
 #La diagonale de la hat matrix (influcence matrix, leverage matrix) est la mesure de l'effet de levier (leverage)
 # exercé par les elements de chaque point vers la yeme valeur.
 d2vil$gam_shat <- mgcv::influence.gam(gam_vil1) # note, le modele gamm n'a pas de hat, donc 
