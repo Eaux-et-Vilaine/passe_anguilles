@@ -586,8 +586,8 @@ options(list(
 				stacomiR.password = password,
 				stacomiR.printqueries =FALSE
 		))
-stacomi(TRUE,sch="iav", datawd=datawd)
 
+stacomi(TRUE,sch="iav", datawd=datawd)
 
 
 
@@ -2975,7 +2975,7 @@ ndt1 <- ndt
 nrow(ndt)
 #nrow(ndt1)
 sumeffmois <- tapply(ndt1$taille,ndt1$mois,function(X)length(X))
-sum(sumeffmois) #5577 # 5901 (2017)
+sum(sumeffmois) #5577 # 5901 (2017) #5894 (2022)
 sumeffmois <- data.frame("mois"=names(sumeffmois),effectifmois=sumeffmois)
 ndt1 <- merge(ndt1,sumeffmois, by="mois")
 sum(sumeffmois[,2]) #4710 # 5577 # 5901
@@ -2994,17 +2994,15 @@ tt <- tabular( (Factor(mois, "Mois") + 1) ~ (n=1) + Format(digits=2)*(Heading("$
 dimnames(tt)[["rowLabels"]]
 rowLabels(tt)[length(rowLabels(tt))] <- 'Tous'
 colLabels(tt)[2,] <- c("n","moy","sd")
-path_taille_yellow <- file.path(tabwdy,	
+vvv[["ANG"]][["path_angtaille"]] <- file.path(tabwdy,	
 		"summary_taille_yellow.tex",fsep ="")
-vvv[["ANG"]][["path_angtaille"]] <- gsub("C:/workspace/","../../../",path_taille_yellow)
 cat("\\begin{table}[htbp]",file=vvv[["ANG"]][["path_angtaille"]],sep="\n")
 cat("\\begin{center}",file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
 sink(file =vvv[["ANG"]][["path_angtaille"]] , append = TRUE)
 print(latex.tabular(tt))
 sink()
 cat("\\label{summary_taille_yellow}",file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
-cat(iconv("\\caption{Moyenne et écart types des tailles d'anguilles $\tau$ par mois, et nombre
-						d'échantillons collectés en \\Sexpr{CY}.}", "UTF-8"),file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
+cat(sprintf("\\caption{Moyenne et écart types des tailles d'anguilles $\\tau$ par mois, et nombre d'échantillons collectés en %s}", CY),file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
 cat("\\end{center}", file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
 cat("\\end{table}", file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
 
@@ -3030,7 +3028,7 @@ dev.off()
 #		scale_fill_brewer("mois",palette="Paired")
 
 # tailles mensuelles anguillettes
-ex(round(tapply(ndt$taille,ndt$mois,mean),2))
+#ex(round(tapply(ndt$taille,ndt$mois,mean),2))
 
 # histogramme migration totale par classes de 5mm
 i=CY
@@ -3052,8 +3050,7 @@ p+aes(x=taille,y=..count..,fill=mois)+stat_bin(position='stack',binwidth=5,)+
 # Je vais chercher le tableau de données 
 # ce tableau va chercher par année, par mois et par type de val_identifiant
 # la somme des effectifs d'anguilles transitant par la passe d'Arzal
-req <- new("RequeteODBC")
-req@baseODBC <- c("bd_contmig_nat",user,password)
+req <- new("RequeteDB")
 req@sql="
 		SELECT 	ope_identifiant,
 		ope_date_debut,
@@ -3119,11 +3116,11 @@ req@sql="
 		LEFT JOIN (SELECT val_libelle, val_identifiant as id FROM ref.tr_valeurparametrequalitatif_val) as tableval
 		ON belle_requete.val_identifiant=tableval.id
 		"
-eff <- connect(req)@query
+eff <- query(req)@query
 eff <-  eff[eff$ope_date_debut>ISOdate(CY,01,01,0,tz = "CET")&eff$ope_date_debut<ISOdate(CY+1,01,01,0,tz = "CET"),]
 eff$val_identifiant[is.na(eff$val_identifiant)] <- "angll" 
 eff$val_libelle[is.na(eff$val_libelle)] <- "angll" 
-# ici on sélectionne les anguilles de la fin
+summary()# ici on sélectionne les anguilles de la fin
 save(eff, file=str_c(datawdy,"eff.Rdata"))
 # load(file=str_c(datawdy,"eff.Rdata"))
 
@@ -3137,7 +3134,7 @@ eff$mois=eff$mois$mon +1 # récupère le mois de puis le format liste de posixlt
 #sumeff <-  tapply(eff$effectif,INDEX=list(eff$mois,eff$val_libelle),sum)
 # TODO 2023 
 sumeff <-  tapply(eff$effectif,INDEX=list(eff$mois),sum, na.rm=TRUE)
-sum(sumeff) # 21245 (2017)
+sum(sumeff) # 21245 (2017) 19368 (2022)
 #sumeff <- sumeff[,1]
 
 # sumeff <- chnames(objet=sumeff,
@@ -3193,8 +3190,9 @@ tailap=tapply(ndt$taille,INDEX=list(ndt$mois),function(X) X)
 # Si il manque des effectifs certains mois, voir en 2013.
 #############################################################
 
+#TODO 2024 
 strtail=array(list(),dim=dim(tailap),dimnames=dimnames(tailap))
-for (i in 1:12){
+for (i in c(1:11)){
 	strtail[i][[1]] <- hist(tailap[i][[1]],breaks = vecteur_coupures,right = FALSE,  plot=FALSE)
 }
 
@@ -3202,7 +3200,7 @@ for (i in 1:12){
 apply(strtail,1,function(X)sum(X[[1]]$"counts"))
 
 # TODO CHANGE 2023
-for (i in 1:10){              # mois
+for (i in 1:11){              # mois
 	count=strtail[i][[1]]$counts
 	if (!is.null(count)){
 		strtail[i][[1]]$"effectifs_redresses" <-  count*YY[i]/sum(count)#  t(count)*coeff_correct[i,j,k])#%*%ar[i,,]
@@ -3217,11 +3215,12 @@ load(str_c(datawdym1,"strtail_annee_mois.Rdata"))
 # On rajoute une colonne vide
 strtail_annee_mois <- cbind(strtail_annee_mois,CY=0)
 colnames(strtail_annee_mois)[length(colnames(strtail_annee_mois))] <- CY
-# A modifier par script 2013 si il manque des mois
 for (i in 1:dim(strtail)[1]){          
 	strtail_annee_mois[,as.character(CY)][[i]]=strtail[i][[1]]$"effectifs_redresses"
 }
 strtail_annee_mois[,as.character(CY)]
+
+
 unlist(lapply(strtail_annee_mois[,as.character(CY)],sum))
 vvv[["AGJ"]][["str_tail"]] <- list()
 vvv[["AGJ"]][["str_tail"]][["effectif_mesure"]] <- sum(apply(strtail,1,function(X)sum(X[[1]]$"counts"))) # 44007
