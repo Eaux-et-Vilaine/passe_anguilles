@@ -586,8 +586,8 @@ options(list(
 				stacomiR.password = password,
 				stacomiR.printqueries =FALSE
 		))
-
 stacomi(TRUE,sch="iav", datawd=datawd)
+
 
 
 
@@ -1804,17 +1804,59 @@ dev.off()
 
 d2vil<- d2[d2$intraseasonal=="Vilaine",]
 d2vil$pigm[is.na(d2vil$pigm)]<-"0"
+
+d2vil <- d2vil[complete.cases(d2vil[,c("sample","pigm","time","loc","yday","size_cm")]),]
+table(d2vil$pigm)
+d2vil$pigm[d2vil$pigm=="VA"]<-"VB"
+d2vil<- d2vil[d2vil$pigm!="VIB",]
 d2vil$pigm<-as.factor(d2vil$pigm)
+# modèle non mixte pour récupérer la leverage matrix ci dessous
+gam_vil0<-mgcv::gam(size_cm~
+        s(yday,bs = "cc",by=pigm)+s(time,bs = "cr",k=12)+loc,
+    data=d2vil)
+# modèle mixte en passant par gam et re
+gam_vil1<-mgcv::gam(size_cm~
+        s(yday,bs = "cc",by=pigm)+s(time,bs = "cr",k=12)+loc + s(sample,bs="re"),
+    data=d2vil)
+# même modèle en forçant la spline à avoir le même degré d'ondulation bs="fs"
+gam_vil1<-mgcv::gam(size_cm~
+        s(yday,pigm,bs = "fs")+s(time,bs = "cr",k=12)+loc + s(sample,bs="re"),
+    data=d2vil)
+# modèle mixte incluant une variable aléatoire échantillon
 gamm_vil<-mgcv::gamm(size_cm~
         s(yday,bs = "cc",by=pigm)+s(time,bs = "cr",k=12)+loc,
     random=list(sample=~1), 
     data=d2vil)
-# TODO voir pour interpreter la partie aléatoire du modèle
+
 gam_vil <- gamm_vil$gam
 gam_vil$data <- d2vil
-plot(gam_vil, all.terms=TRUE, shade=TRUE, rug=TRUE)
+plot(gam_vil1, all.terms=TRUE, shade=TRUE, rug=TRUE)
 visreg::visreg(gam_vil,data=d2vil)
-# todo faire un graphique correct de la tendance interannuelle plus des 
+png(file=str_c(imgwdy,"time_yday_civelles.png"), width = 8, height = 6, units = 'in', res = 300)
+visreg::visreg2d(gam_vil1,xvar="time",yvar="yday",plot.type="persp",
+    cond=list(loc="Vilaine_ladder", pigm="VB"), phi=30,theta=-50)
+#La diagonale de la hat matrix (influcence matrix, leverage matrix) est la mesure de l'effet de levier (leverage)
+# exercé par les elements de chaque point vers la yeme valeur.
+d2vil$gam_shat <- mgcv::influence.gam(gam_vil1) # note, le modele gamm n'a pas de hat, donc 
+ggplot(d2vil)+geom_point(aes(x=time,y=size_cm,col=gam_shat), position="jitter")
+# todo faire un graphique correct de la tendance interannuelle plus des
+
+######################
+# Response for time 
+#####################
+# yday back to real date to show on the graph
+visreg::visreg2d(gam_vil1,xvar="time",yvar="yday",plot.type="gg")
+v2 <- visreg::visreg(gam_vil1,xvar="time")
+v2$fit$time=as.Date(v2$fit$time, origin=as.Date(ymd(19970101)))
+v2$res$time=as.Date(v2$res$time, origin=as.Date(ymd(19970101)))
+png(file=str_c(imgwdy,"time_civelles.png"), width = 8, height = 6, units = 'in', res = 300)
+plot(v2,gg=TRUE,
+        points=list(cex=1.5, pch=1),
+        line=list(col=bleu_EV),
+        fill=list(col=bleu_EV,fill=orange_EV,alpha=0.3))+ 
+    scale_x_date(date_minor_breaks = "1 year")+ theme_bw()+xlab("Date") + ylab("Size (cm)")
+dev.off()
+
 @
 
 Les données de poids moyen proviennent essentiellement de la
@@ -2996,6 +3038,7 @@ rowLabels(tt)[length(rowLabels(tt))] <- 'Tous'
 colLabels(tt)[2,] <- c("n","moy","sd")
 vvv[["ANG"]][["path_angtaille"]] <- file.path(tabwdy,	
 		"summary_taille_yellow.tex",fsep ="")
+
 cat("\\begin{table}[htbp]",file=vvv[["ANG"]][["path_angtaille"]],sep="\n")
 cat("\\begin{center}",file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
 sink(file =vvv[["ANG"]][["path_angtaille"]] , append = TRUE)
@@ -3120,7 +3163,7 @@ eff <- query(req)@query
 eff <-  eff[eff$ope_date_debut>ISOdate(CY,01,01,0,tz = "CET")&eff$ope_date_debut<ISOdate(CY+1,01,01,0,tz = "CET"),]
 eff$val_identifiant[is.na(eff$val_identifiant)] <- "angll" 
 eff$val_libelle[is.na(eff$val_libelle)] <- "angll" 
-summary()# ici on sélectionne les anguilles de la fin
+# ici on sélectionne les anguilles de la fin
 save(eff, file=str_c(datawdy,"eff.Rdata"))
 # load(file=str_c(datawdy,"eff.Rdata"))
 
@@ -3215,12 +3258,11 @@ load(str_c(datawdym1,"strtail_annee_mois.Rdata"))
 # On rajoute une colonne vide
 strtail_annee_mois <- cbind(strtail_annee_mois,CY=0)
 colnames(strtail_annee_mois)[length(colnames(strtail_annee_mois))] <- CY
+# A modifier par script 2013 si il manque des mois
 for (i in 1:dim(strtail)[1]){          
 	strtail_annee_mois[,as.character(CY)][[i]]=strtail[i][[1]]$"effectifs_redresses"
 }
 strtail_annee_mois[,as.character(CY)]
-
-
 unlist(lapply(strtail_annee_mois[,as.character(CY)],sum))
 vvv[["AGJ"]][["str_tail"]] <- list()
 vvv[["AGJ"]][["str_tail"]][["effectif_mesure"]] <- sum(apply(strtail,1,function(X)sum(X[[1]]$"counts"))) # 44007
