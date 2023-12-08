@@ -304,7 +304,7 @@ Date d'édition :\\}
 \color{orange_EV}
 \begin{center}
 \Large
-Septembre 2022
+Décembre 2023
 \end{center}
 \vspace{1cm}\\
 \end{minipage}
@@ -374,7 +374,7 @@ Sauvaget, Gérard Eriau}}}
 
 
 \vspace{2cm}
-\includegraphics[width=\paperwidth]{../civelles_bac2.JPG}
+\includegraphics[width=\paperwidth]{../civelles_bac2.2.JPG}
 
 \vspace{2cm}
 \begin{minipage}{0.8\textwidth}
@@ -2134,7 +2134,7 @@ En \textcolor{orange_EV}{2020}, la saison de pêche s'est arrête le 22 mars.  M
 en grande quantité que à partir du 10 avril. Les montées de
 civelles restent bien en deça des années précédentes (Figure
 15). 
-
+% TODO rajouter 2021
 En \textcolor{orange_EV}{2022}, la saison de pêche s'est arrêté le 17 mars. On
 a observé quelques montées sur la  passe en février et début mars
 avant l'arrêt de la pêcherie. Mais les montées n'ont débuté en grande quantité que à partir
@@ -2749,8 +2749,10 @@ en taille des années précédentes (Figures \ref{str_taille_mois_redress2010},
 \ref{str_taille_mois_redress2016}, 
 \ref{str_taille_mois_redress2017},
 \ref{str_taille_mois_redress2018}, 
-\ref{str_taille_mois_redress2019} et \ref{str_taille_mois_redress2020}) on
-observe clairement la prédominance des anguilles de l'année en 2013 et 2014, et des arrivées plus diffuses en 2010, 2011, 2012, 2016 et 2018. En 2017
+\ref{str_taille_mois_redress2019},
+\ref{str_taille_mois_redress2020} et \ref{str_taille_mois_redress2021}) on observe 
+clairement la prédominance des anguilles de l'année en 2013 et 2014, et des arrivées 
+plus diffuses en 2010, 2011, 2012, 2016 et 2018. En 2017
 et 2019 le mode correspondant aux civelles de petite taille est absent. Ce
 constat est surprenant pour 2019 car la migration de civelles était importante.
 Peut être est-ce la conséquence de deux années de recrutement relativement
@@ -3359,7 +3361,7 @@ for (theCY in 2010:CY){
 	colnames(don)=c("01","02","03","04","05","06","07","08","09","10","11","12")
 	don <- don[,12:1]
 #==============================================================
-	png(str_c(imgwdy,"str_taille_mois_redress",CY,".png"))
+	png(str_c(imgwdy,"str_taille_mois_redress",theCY,".png"))
 	matplot(don,xaxt="n",type="n",ylab="effectif par classe",xlab="classe de taille",main=iconv(paste("Structures en tailles mensuelles redressées",year),"UTF8"))
 	lesgros <- match(c(seq(from=100, to =500,by=50)),vecteur_coupures)
 	abline(v=lesgros,col="grey60",lty=2)
@@ -4390,6 +4392,16 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
   \caption{Structure en taille des anguilles jaunes en 2020 (redressée par
   les effectifs mensuels en migration).}
   \label{str_taille_mois_redress2020}
+  \end{center}
+\end{figure}
+%==========================================================================
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2021.png}
+  \caption{Structure en taille des anguilles jaunes en 2021 (redressée par
+  les effectifs mensuels en migration).}
+  \label{str_taille_mois_redress2021}
   \end{center}
 \end{figure}
 %==========================================================================
