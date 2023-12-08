@@ -1587,11 +1587,11 @@ xt.smpm.st <- xtable(smpm.smooth_terms,label="smpm.st",
 # editer pour caractères spéciaux à la main si manual launch
 path.smpm.pc <- file.path(tabwdy,"smpm.pc.tex",fsep ="")
 print(xt.smpm.pc,file=path.smpm.pc,table.placement="!ht")
-path.smpm.st=file.path(tabwdy,"smpm.st.tex",fsep ="")
+path.smpm.st <- file.path(tabwdy,"smpm.st.tex",fsep ="")
 print(xt.smpm.st,file=path.smpm.st,table.placement="!ht")
 options("xtable.include.rownames"=FALSE)
 vvv[["PM"]][["path_spm_pc"]] <-path.smpm.pc
-vvv[["PM"]][["path_spm_st"]] <- path_smpm_st
+vvv[["PM"]][["path_spm_st"]] <- path.smpm.st
 vvv[["PM"]][["formula"]] <- smpm.form
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
@@ -2812,7 +2812,7 @@ effectifs (Figure \ref{migration_par_cohorte}).
 %==========================================================================
 \begin{figure}[!ht]
   \begin{center}
-  \includegraphics[width=0.5\textwidth]{civ_ang_cohorte.png}
+  \includegraphics[width=0.5\textwidth]{../civ_ang_cohorte.png}
   \caption{Migration des anguilles jaunes et des civelles sur les passes du
   barrage d'Arzal entre 1996 et \Sexpr{CY}. En haut, chaque tuile repésente une
   année et une cohorte à l'exception de la cohorte d'âge zéro (en haut) qui est
@@ -2853,7 +2853,7 @@ effectifs (Figure \ref{migration_par_cohorte}).
 
 vvv[["AGJ"]][["str_tail"]] <- list()
 
-cle=read.csv("C:/workspace/data/cletailleage.csv",sep=";")
+cle=read.csv("C:/workspace/passe_anguilles/data/cletailleage.csv",sep=";")
 #########################################"
 # ci dessous une verification graphique
 ##########################################
