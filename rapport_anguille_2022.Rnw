@@ -9,7 +9,7 @@
 %%   Ce fichier est encodé en UTF-8
 %%   Liste des choses à faire pour mettre à jour le rapport en nouvelle version
 %%   1- copier sous un nouveau nom le Rnw
-%%   2- dans pdata/traitement_stacomi/rapport_anguille créer des sous répertoires
+%%   2- dans data créer des sous répertoires
 %%   avec l'année en cours dans data, image, et table. Y coller les valeurs de l'année 
 %%   précédente pour data (pour pouvoir lancer)
 %%   3 - changer la valeur de CY dans le chunk init
@@ -146,7 +146,7 @@ pdfsubject={anguille},
 %% your report.
 
 %% Makes a path to your graphics' folder.
-\graphicspath{{../../../pdata/traitement_stacomi/rapport_anguille/image/2022/}}
+\graphicspath{{C:/workspace/passe_anguilles/image/2022/}}
 
 %-----------------------------
 % package pour les unités
@@ -374,7 +374,7 @@ Sauvaget, Gérard Eriau}}}
 
 
 \vspace{2cm}
-\includegraphics[width=\paperwidth]{../eel.jpg}
+\includegraphics[width=\paperwidth]{../civelles_bac2.JPG}
 
 \vspace{2cm}
 \begin{minipage}{0.8\textwidth}
@@ -717,7 +717,7 @@ déterminer l'efficacité respective de chacune des rampes.
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{plan_localisation.png}
+\includegraphics[width=0.45\textwidth]{../plan_localisation.png}
 \caption{Situation géographique des deux passes à anguilles du barrage d'Arzal. 
 Le point au sud représente la passe en rive gauche, située sur le gabion, le
 point au nord représente la passe en rive droite, située sur le mur guideau à l'entrée de l'écluse. 
@@ -764,7 +764,7 @@ puis débouche en amont derrière les gabions (Figure
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{passe_gabion_vue_aerienne.png}
+\includegraphics[width=0.45\textwidth]{../passe_gabion_vue_aerienne.png}
 \caption{Implantation de la passe du gabion, B pompe, C rampe
 aérienne du bajoyer, D local de stockage, E rampe dans le gabion. L'évacuation
 des civelles se fait par une conduite vers l'amont du barrage (trait pointillé jaune).}
@@ -772,7 +772,7 @@ des civelles se fait par une conduite vers l'amont du barrage (trait pointillé 
 \end{figure}
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{passe_gabion.png}
+\includegraphics[width=0.45\textwidth]{../passe_gabion.png}
 \caption{La passe à anguilles du gabion, passe principale 1996-2022.}
 \label{figure_passe_gabion}
 \end{figure}
@@ -802,7 +802,7 @@ passe du gabion.
 
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.45\textwidth]{passe_guide_eau.png}
+\includegraphics[width=0.45\textwidth]{../passe_guide_eau.png}
 \caption{La passe à anguilles du mur guide eau, passe secondaire, 2007-2022.}
 \label{figure_passe_guide_eau}
 \end{figure}
@@ -1372,7 +1372,7 @@ vvv[["PM"]] <- list()
 vvv[["PM"]][["CY"]] <- list()
 vvv[["PM"]][["CY"]][["N"]] <- 
 		sum(tnpm[tnpm$annee==CY,c(2,3)],na.rm=TRUE)
-vvv[["PM"]][["path_tnpm"]] <- gsub("C:/workspace/","../../../",path_tmpm)
+vvv[["PM"]][["path_tnpm"]] <- path_tmpm
 #'========================================================
 #' Modélisation de l'évolution des poids moyens
 #'========================================================
@@ -1590,8 +1590,8 @@ print(xt.smpm.pc,file=path.smpm.pc,table.placement="!ht")
 path.smpm.st=file.path(tabwdy,"smpm.st.tex",fsep ="")
 print(xt.smpm.st,file=path.smpm.st,table.placement="!ht")
 options("xtable.include.rownames"=FALSE)
-vvv[["PM"]][["path_spm_pc"]] <- gsub("C:/workspace/","../../../",path.smpm.pc)
-vvv[["PM"]][["path_spm_st"]] <- path_smpm_st <- gsub("C:/workspace/","../../../",path.smpm.st)
+vvv[["PM"]][["path_spm_pc"]] <-path.smpm.pc
+vvv[["PM"]][["path_spm_st"]] <- path_smpm_st
 vvv[["PM"]][["formula"]] <- smpm.form
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
@@ -1663,7 +1663,7 @@ dbDisconnect(con)
 save(vil2, file = str_c(datawdy,"vil2.Rdata"))
 @
 
-<<data_treatment_size_weight, echo=FALSE, eval=FALSE, results=hide>>=
+<<data_treatment_size_weight, echo=FALSE, eval=FALSE, results='hide'>>=
 ##############
 # Work on dataset variables
 ##############
@@ -1710,7 +1710,7 @@ save(d2, file = str_c(datawdy,"d2.Rdata"))
 
 
 
-<<data_selection_size_weight, echo=FALSE, eval=FALSE, results=hide>>=
+<<data_selection_size_weight, echo=FALSE, eval=FALSE, results='hide'>>=
 # this chunk is launched after data_treatment, it removes some data, so the
 # final coding is done depending on the number of dataset selected
 
@@ -1776,7 +1776,7 @@ fulldata$loc <- as.factor(fulldata$loc)
 @
 
 
-<<gam_size_models, echo=FALSE, eval=FALSE, results=hide>>=
+<<gam_size_models, echo=FALSE, eval=FALSE, results='hide'>>=
 library(mgcv)
 # Model from briand et al. 2019 -----------------------------
 gamm_s3<-mgcv::gamm(size_cm~
@@ -2312,7 +2312,7 @@ ggplot(tabdetail)+geom_col(aes(x=bjo_annee,y=N,fill=bjo_dis_identifiant)) +
     theme_minimal()
 dev.off()
 vvv[["CIV"]] <- list()
-vvv[["CIV"]][["path_civ"]] <- gsub("C:/workspace/","../../../",path_civ)
+vvv[["CIV"]][["path_civ"]] <- path_civ
 vvv[["CIV"]][["data"]] <- tab
 vvv[["CIV"]][["N"]] <- tab[tab$year==CY,"Ngl"]
 vvv[["CIV"]][["P"]] <- tab[tab$year==CY,"Pgl"]
@@ -2350,7 +2350,7 @@ print(xtbili6,
 		format.args = list(big.mark = " ", decimal.mark = ","),
 		table.placement=c("htbp")
 )
-vvv[["CIV"]][["path_civ6"]] <- gsub("C:/workspace/","../../../",path_civ6)
+vvv[["CIV"]][["path_civ6"]] <- path_civ6
 vvv[["CIV"]][["6"]] <- list()
 vvv[["CIV"]][["6"]][["N"]] <- as.numeric(tab[tab[,1]==CY,"N"])
 vvv[["CIV"]][["6"]][["P"]] <- as.numeric(tab[tab[,1]==CY,"P"])
@@ -2389,7 +2389,7 @@ print(xtbili12,
 		format.args = list(big.mark = " ", decimal.mark = ","),
 		table.placement=c("htbp")
 )
-vvv[["CIV"]][["path_civ12"]] <- gsub("C:/workspace/","../../../",path_civ12)
+vvv[["CIV"]][["path_civ12"]] <- path_civ12
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 
 # utilisation de la méthode plot pour générer un graphique des densités
@@ -2455,7 +2455,7 @@ print(xtsm6,
 		file=path_civ6m,
 		format.args = list(big.mark = " ", decimal.mark = ","),
 		table.placement=c("htbp"))
-vvv[["CIV"]][["path_civ6m"]] <- gsub("C:/workspace/","../../../",path_civ6m)
+vvv[["CIV"]][["path_civ6m"]] <- path_civ6m
 #==================== xtable12 ===================================
 xtsm12  <-  xtable(lsm[['12']],caption=str_c("Montées de civelles \\textsf{(en milliers)} sur la passe secondaire du barrage d'Arzal (mur guide eau en rive droite), données
 						par mois, les trois statistiques * correspondent à la période
@@ -2475,7 +2475,7 @@ print(xtsm12,
 		file=path_civ12m,
 		format.args = list(big.mark = " ", decimal.mark = ","),
 		table.placement=c("htbp"))
-vvv[["CIV"]][["path_civ12m"]] <- gsub("C:/workspace/","../../../",path_civ12m)
+vvv[["CIV"]][["path_civ12m"]] <- path_civ12m
 
 ################################################################
 # graphique montrant qu'il n'y a pas eu de migration historique
@@ -2639,7 +2639,7 @@ total <- filter(bilA@data,ope_dic_identifiant!=5)%>%
 		summarize(effectif=sum(effectif))%>%
 		mutate(effectif=round(effectif))
 #vvv[["AGJ"]] <- list() normalement ça vient du rapport de l'années précédente
-vvv[["AGJ"]][["path_agj"]]  <-  gsub("C:/workspace/","../../../",path_agj)
+vvv[["AGJ"]][["path_agj"]]  <-  path_agj
 # somme_agj correspond aux effectifs sur les trois passes
 somme_agj <- round(tapply(bilA@data$effectif,bilA@data$annee,sum))
 indiceCY <- match(as.character(CY),names(somme_agj))
@@ -2853,7 +2853,7 @@ effectifs (Figure \ref{migration_par_cohorte}).
 
 vvv[["AGJ"]][["str_tail"]] <- list()
 
-cle=read.csv("C:/workspace/pdata/traitement_stacomi/cletailleage.csv",sep=";")
+cle=read.csv("C:/workspace/data/cletailleage.csv",sep=";")
 #########################################"
 # ci dessous une verification graphique
 ##########################################
@@ -4252,7 +4252,7 @@ print(xtbilA,
 		format.args = list(big.mark = " ", decimal.mark = ",")
 )
 vvv[["AGG"]]<-list()
-vvv[["AGG"]][["path_agg"]]<-gsub("C:/workspace/","../../../",path_agg)
+vvv[["AGG"]][["path_agg"]]<-path_agg
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 
 @
