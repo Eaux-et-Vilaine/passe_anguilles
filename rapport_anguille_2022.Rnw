@@ -2976,6 +2976,8 @@ r_mig_char2 <- setasqualitative(r_mig_char,par='1786',
 		breaks=c(0,98,145,300,1000),
 		label=c("pa","ma","ga","ang"))
 r_mig_char2 <- calcule(r_mig_char2)
+mycolorramp1<-colorRampPalette(c("#011A2D","#4F7EA2")) # blues
+mycolorramp2<-colorRampPalette(c("#462800","#B68B52"))
 #==============================================================
 png(file=str_c(imgwdy,"classes_taille.png"),width=12,height=12,unit="cm",res=300)
 plot(r_mig_char2, plot.type="qual", color_parm =c("pa" = mycolorramp1(4)[1],
@@ -3083,7 +3085,7 @@ p <- ggplot(ndt1)
 p+aes(x=taille,y=..count..,fill=mois)+stat_bin(position='stack',binwidth=5,)+
 		facet_grid(annee ~ .)+
 		#ggtitle(paste("Taille des anguilles jaunes à Arzal en 2015,  N=",nrow(ndt1))) +
-		ggtitle(paste(iconv("Taille des anguilles jaunes à Arzal en","UTF8"), i,",  N=",nrow(ndt1))) +
+		ggtitle(paste("Taille des anguilles jaunes à Arzal en", i,",  N=",nrow(ndt1))) +
 		scale_fill_brewer(palette="Paired")+
 		ylab("effectif")
 
@@ -3186,7 +3188,7 @@ sum(sumeff) # 21245 (2017) 19368 (2022)
 # 		new_variable_name=c("total_angll","total_ang"))
 
 # Effectif des angll/ang mesurées par mois en CY
-unique(ndt$lot_effectif)
+unique(ndt$lot_effectif) # que des 1
 #ndt$lot_pere_val_identifiant <- as.character(ndt$lot_pere_val_identifiant)
 #ndt$lot_pere_val_identifiant[is.na(ndt$lot_pere_val_identifiant)] <- "angll" 
 
@@ -3234,20 +3236,21 @@ tailap=tapply(ndt$taille,INDEX=list(ndt$mois),function(X) X)
 # Si il manque des effectifs certains mois, voir en 2013.
 #############################################################
 
-#TODO 2024 
+
 strtail=array(list(),dim=dim(tailap),dimnames=dimnames(tailap))
-for (i in c(1:11)){
-	strtail[i][[1]] <- hist(tailap[i][[1]],breaks = vecteur_coupures,right = FALSE,  plot=FALSE)
+mois <- dimnames(tailap)[[1]]
+for (mo in mois){ 
+	strtail[[mo]] <- hist(tailap[[mo]],breaks = vecteur_coupures,right = FALSE,  plot=FALSE)
 }
 
 # On retrouve le nombre dans XX
 apply(strtail,1,function(X)sum(X[[1]]$"counts"))
 
-# TODO CHANGE 2023
-for (i in 1:11){              # mois
-	count=strtail[i][[1]]$counts
+dimnames(YY)[[1]] <- mois
+for (mo in mois){              # mois
+	count=strtail[[mo]]$counts
 	if (!is.null(count)){
-		strtail[i][[1]]$"effectifs_redresses" <-  count*YY[i]/sum(count)#  t(count)*coeff_correct[i,j,k])#%*%ar[i,,]
+		strtail[[mo]]$"effectifs_redresses" <-  count*YY[mo,1]/sum(count) #  t(count)*coeff_correct[i,j,k])#%*%ar[i,,]
 	}
 }
 
@@ -3259,9 +3262,9 @@ load(str_c(datawdym1,"strtail_annee_mois.Rdata"))
 # On rajoute une colonne vide
 strtail_annee_mois <- cbind(strtail_annee_mois,CY=0)
 colnames(strtail_annee_mois)[length(colnames(strtail_annee_mois))] <- CY
-# A modifier par script 2013 si il manque des mois
-for (i in 1:dim(strtail)[1]){          
-	strtail_annee_mois[,as.character(CY)][[i]]=strtail[i][[1]]$"effectifs_redresses"
+
+for (mo in mois){          
+	strtail_annee_mois[,as.character(CY)][[mo]] <- strtail[[mo]]$"effectifs_redresses"
 }
 strtail_annee_mois[,as.character(CY)]
 unlist(lapply(strtail_annee_mois[,as.character(CY)],sum))
@@ -3308,6 +3311,7 @@ for (i in 1:dim(strtail_annee_mois)[1]){
 	}
 }
 lapply(strtail_annee_mois[,as.character(CY)],sum) # vérifier que ça fait 1 chaque mois
+
 save(strtail_annee_mois,file=str_c(datawdy,"strtail_annee_moisenpourcentage.Rdata"))
 
 ################################################
@@ -3328,8 +3332,7 @@ dataCY <- YY[,ncol(YY),]
 dataCY[,] <- NA
 YYNEW <- abind::abind(YY,dataCY,along=2)
 dimnames(YYNEW)[[2]][dim(YYNEW)[2]] <- as.character(CY)
-# TODO CHANGE 2023 remove[1:10]
-YYNEW[,as.character(CY),"00"][1:10] <- YYCY[,"angll"][1:10]
+YYNEW[,as.character(CY),"00"][1:12] <- YYCY[,"angll"][1:12]
 #YYNEW[,as.character(CY),"00"] <- c(YYCY[,"angll"],0)
 YYNEW[,as.character(CY),"51"] <- NA # YY2015[,"Anguilles >300"] # on en a pas besoin
 YY <- YYNEW
@@ -3956,11 +3959,11 @@ if (nrow(bMM_Arzal@data)>0) {
 
 
 <<series_chronologiques_vilaine, echo=FALSE, eval=FALSE, include=FALSE >>=
-
+# IGNORER CE CHUNK
 # export current values and paste them in excel for consistency
 ex(vvv$CIV$data)
 require(XLConnect)
-wb1 <- loadWorkbook(str_c("//SRV-01/data/Migrateur/Migration/Arzal/pecherie_civelle/serie_pro_vilaine.xlsx"))
+wb1 <- loadWorkbook(str_c("//srv-01/EPTB/12-PoleMAB/Socle/Migrateurs/anguille/pecherie/serie_pro_vilaine.xlsx"))
 bg <- readWorksheet(wb1, sheet ="bilan_gestion",startRow = 2,endRow = CY-1992,endCol = 29,colTypes=c("character",rep("numeric",28)))
 bg <- bg[-1,]
 bg$recr_flu_n <- bg$passe_total_n
