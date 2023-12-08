@@ -2812,7 +2812,7 @@ effectifs (Figure \ref{migration_par_cohorte}).
 %==========================================================================
 \begin{figure}[!ht]
   \begin{center}
-  \includegraphics[width=0.5\textwidth]{civ_ang_cohorte.png}
+  \includegraphics[width=0.5\textwidth]{../civ_ang_cohorte.png}
   \caption{Migration des anguilles jaunes et des civelles sur les passes du
   barrage d'Arzal entre 1996 et \Sexpr{CY}. En haut, chaque tuile repésente une
   année et une cohorte à l'exception de la cohorte d'âge zéro (en haut) qui est
