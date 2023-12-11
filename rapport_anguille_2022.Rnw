@@ -1087,7 +1087,8 @@ comportement les conduisant à utiliser les passes.
 \small
 \begin{table}[htpb]
 \centering
-\caption{Captures de la pêcherie de civelles d'Arzal de 1995 à 2020, sources : 
+\caption{Captures de la pêcherie de civelles d'Arzal de 1995 à \Sexpr{CY},
+sources :
 1= Affaires Maritimes (données mareyeurs), 
 2= De Casamajor et Briand 2009 (OFIMER),
 3= Comité des pêches maritimes Auray-Vannes,
@@ -1125,12 +1126,12 @@ Année & Capture (t) & Source & Arrêt \\
 2019  & 5.13 &  4 & 9 mars \\
 2020  & 3.45 & 4 & 22 mars \\
 2021  & 4.53 & 4 & 17 mars  \\
-2022  &      &   &        \\ %TODO
+2022  & 5.63 & 4 & 19 mars   \\ 
 \bottomrule
 \end{tabular}
 \end{table}
 \normalsize
-Les arrivée de civelles sont estimées à l'échelle du stock par les données d'un
+Les arrivées de civelles sont estimées à l'échelle du stock par les données d'un
 ensemble de sites mesurant les arrivées sur le long terme sur l'ensemble du
 territoire européen. Ces sites peuvent être des passes, des zones où sont
 effectuées des suivis scientifiques, ou des séries de captures issues de la
@@ -1862,7 +1863,7 @@ dev.off()
 
 Les données de poids moyen proviennent essentiellement de la
 passe, mais elles peuvent également provenir d'échantillons collectés en
-estuaire, lorsque la pêche est continue sans arrêt dans la saison et que le
+estuaire (Figure \ref{pm}), lorsque la pêche est continue sans arrêt dans la saison et que le
 nombre de civelles montant sur la passe n'est pas suffisant pour collecter des
 informations sur les caractéristiques biométriques des civelles. 
 
@@ -2022,7 +2023,7 @@ La migration des civelles pour \Sexpr{CY} s'établit à
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Les tendances interannuelles de migration montrent des montées sur les passes
 extrêmement variables d'une année à l'autre (Figure
-\ref{figure_barchart_bmi_civelles}).
+\ref{barplot_civelles_an}).
 
 Cette variabilité de la migration en terme quantitatifs masque pourtant un
 phénomène migratoire essentiellement centré sur le mois d'avril avec un décalage
@@ -2121,7 +2122,7 @@ jusqu'à fin avril, la migration est  restée anecdotique.
 En \textcolor{orange_EV}{2018}, les captures ont été importantes dès le début de
 la saison. La pêche a été quasi continue, sans aucune migration sur les passes, et la fin de la
 saison a été précoce malgré le transfert de quota de 1300 kg depuis l'Adour.
-Bien que la fermeture soit intervenu le 13 mars, les migrations sont restées
+Bien que la fermeture soit intervenue le 13 mars, les migrations sont restées
 faibles par la suite.
 
 Les arrivées durant la saison \textcolor{orange_EV}{2019} ont été très précoces
@@ -2130,11 +2131,11 @@ sur les passes. Aucun transfert de quota n'a retardé la fin de saison qui est
 intervenue tôt, le 9 mars. La migration sur les passes s'est effectué à 80\% sur 2 semaines, la
 dernière de mars et la première d'avril.
 
-En \textcolor{orange_EV}{2020}, la saison de pêche s'est arrête le 22 mars.  Mais les montées ne débutent
-en grande quantité que à partir du 10 avril. Les montées de
-civelles restent bien en deça des années précédentes (Figure
-15). 
-% TODO rajouter 2021
+En \textcolor{orange_EV}{2020}, la saison de pêche s'est arrêtée le 22 mars. 
+Mais les montées ne débutent en grande quantité que à partir du 10 avril. Les
+montées mensuelles de civelles restent bien en deça des années précédentes, sauf
+pour le mois d'avril (Figure 15).
+
 En \textcolor{orange_EV}{2022}, la saison de pêche s'est arrêté le 17 mars. On
 a observé quelques montées sur la  passe en février et début mars
 avant l'arrêt de la pêcherie. Mais les montées n'ont débuté en grande quantité que à partir
@@ -2143,7 +2144,7 @@ précédentes (Figure \ref{figure_barchart_bmi_civelles}).
 Les deux premiers pics de migrations sont observés sur les
 deux passes à anguilles puis la migration s'est tarrie sur le mur guide eau
 alors qu'elle s'est poursuivie en mai et juin sur le gabion (Figures
-\ref{bmm_civelle_6} et\ref{bmm_civelle_12}).
+\ref{bmm_civelle_6} et \ref{bmm_civelle_12}).
 
 
 Le détail mensuel de la migration de 2022 (en effectif) est donné en annexe aux
@@ -2159,7 +2160,7 @@ an, à la fois en poids et en effectif.
   \begin{center}
   \includegraphics[width=0.8\textwidth]{barchart_bmi_civelles.png}
   \caption{Comparaison des migrations de civelles de l'année \Sexpr{CY} à la
-  tendance historique. Een gris, valeurs min et max et moyenne (hist\_mean), en
+  tendance historique. En gris, valeurs min et max et moyenne (hist\_mean), en
   bleu valeurs maximales, en bleu clair valeurs supérieures à la moyenne, en marron valeurs inférieures à la
   moyenne.}
   \label{figure_barchart_bmi_civelles}
