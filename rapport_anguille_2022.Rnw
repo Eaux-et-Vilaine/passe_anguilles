@@ -3359,7 +3359,7 @@ for (theCY in 2010:CY){
 	colnames(don)=c("01","02","03","04","05","06","07","08","09","10","11","12")
 	don <- don[,12:1]
 #==============================================================
-	png(str_c(imgwdy,"str_taille_mois_redress",CY,".png"))
+	png(str_c(imgwdy,"str_taille_mois_redress",theCY,".png"))
 	matplot(don,xaxt="n",type="n",ylab="effectif par classe",xlab="classe de taille",main=iconv(paste("Structures en tailles mensuelles redressées",year),"UTF8"))
 	lesgros <- match(c(seq(from=100, to =500,by=50)),vecteur_coupures)
 	abline(v=lesgros,col="grey60",lty=2)
