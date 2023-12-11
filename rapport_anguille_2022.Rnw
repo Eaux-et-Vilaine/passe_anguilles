@@ -2687,7 +2687,7 @@ g+ggplot2::scale_fill_manual(values=color_ope)+
 dev.off()
 #============================================
 plot(bilj,plot.type="barchart",timesplit="mois",silent=TRUE)
-g <- get("g_barchart1",envir=envir_stacomi)
+g <- get("g_barchart",envir=envir_stacomi)
 cols  <-  c("max" = "#012746","min" = "#6C3E00",">=moy" = "#327AB5", "<moy" = "#D29035","hist_mean"="black","hist_range"="grey","?"="#D26435")
 fills  <-  c("max" = "#043C6B","min" = "#6C3E00",">=moy" = "#558AB5", "<moy" = "#D2A25F","hist_mean"="black","hist_range"="grey","?"="#D26435")
 g  <-  g+scale_colour_manual(name=CY,values=cols,limits=c("min","max","<moy",">=moy","hist_mean","hist_range","?"))
