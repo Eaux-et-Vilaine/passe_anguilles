@@ -449,7 +449,7 @@ load_library('getPass')
 # 		gradient = c(lower = "#111111", upper = "#109B37"))
 #ggthemr(fresh2, type="outer", layout="scientific", spacing=0.8)
 #ggthemr_reset()
-# l'annee en cours (c'est la valeur à changer en début de script
+# l'annee en cours (c'est la valeur à changer en début de script)
 CY<-2022
 # le repertoire contenant les données
 datawdy<-str_c(datawd,CY,"/")
