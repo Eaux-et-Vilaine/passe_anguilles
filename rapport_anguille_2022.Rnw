@@ -652,7 +652,7 @@ options(sqldf.RPostgreSQL.user = user,
     non capturées. Les tendances du stock en place sont évaluées par un réseau de pêches électriques, et la
     dévalaison des anguilles argentées est suivie à l'aide d'un didson (radar
     multifaisceau) placé dans le pertuis de la quatrième vanne du barrage
-    d'Arzal .
+    d'Arzal.
     
 Les montées de civelles et d'anguilles jaunes sont suivies depuis 1996 au
     niveau de la passe à anguilles du barrage d'Arzal. Cette série de données,
@@ -671,8 +671,8 @@ Les montées de civelles et d'anguilles jaunes sont suivies depuis 1996 au
 \subsection{Site d'étude}
 
 L'estuaire de la Vilaine est limité à sa portion aval par le barrage d'Arzal,
-construit par l'IAV en 1970, et qui bloque l'onde de marée à 10 km de
-l'embouchure de l'estuaire.
+construit par l'Institution d'Aménagement de la Vilaine en 1970, et qui bloque
+l'onde de marée à 10 km de l'embouchure de l'estuaire.
 L'estuaire en amont, jusqu'à la limite historique de l'estuaire tital (barrages de Malon et de la Potinais 
 à 70- 80 km en amont) 
 a été transformé en rivière. Le plan d'eau ainsi créé a vu se développer de
@@ -1133,7 +1133,7 @@ Année & Capture (t) & Source & Arrêt \\
 \end{tabular}
 \end{table}
 \normalsize
-Les arrivées de civelles \rev{sont estimées} \rev[red]{à l'échelle du stock} par
+Les arrivées de civelles sont estimées à l'échelle du stock par
 les données d'un ensemble de sites mesurant les arrivées sur le long terme sur l'ensemble du
 territoire européen. Ces sites peuvent être des passes, des zones où sont
 effectuées des suivis scientifiques, ou des séries de captures issues de la
@@ -2134,20 +2134,23 @@ intervenue tôt, le 9 mars. La migration sur les passes s'est effectué à 80\% 
 dernière de mars et la première d'avril.
 
 En \textcolor{orange_EV}{2020}, la saison de pêche s'est arrêtée le 22 mars. 
-Mais les montées ne débutent en grande quantité que à partir du 10 avril. Les
-montées mensuelles de civelles restent bien en deça des années précédentes, sauf
-pour le mois d'avril (Figure 15).
+Mais les montées ne débutent en grande quantité que à partir du 10 avril.
 
-En \textcolor{orange_EV}{2022}, la saison de pêche s'est arrêté le 17 mars. On
+En \textcolor{orange_EV}{2021}, la saison de pêche s'est arrêté le 17 mars. On
 a observé quelques montées sur la  passe en février et début mars
 avant l'arrêt de la pêcherie. Mais les montées n'ont débuté en grande quantité que à partir
 du 10 avril. Les montées de civelles sont restées bien en deça des années
-précédentes (Figure \ref{figure_barchart_bmi_civelles}). 
-Les deux premiers pics de migrations sont observés sur les
-deux passes à anguilles puis la migration s'est tarrie sur le mur guide eau
-alors qu'elle s'est poursuivie en mai et juin sur le gabion (Figures
-\ref{bmm_civelle_6} et \ref{bmm_civelle_12}).
+précédentes. 
 
+En \textcolor{orange_EV}{2022}, aucune migration sur la passe n'a eu lieu
+fin janvier ni début février, puis on observe quelques montées avant
+l'arrêt de la saison de pêche le 19 mars. Contrairement à la moyenne historique,
+l'essentiel de la migration se concentre au mois d'avril (Figure
+\ref{figure_barchart_bmi_civelles}). Trois pics successifs de migration sont
+observés fin mars et mi-avril avec le pic du milieu moins marqué sur le gabion
+qui correspond à un fonctionnement en volets sur le volet 5 (coté Gabion) et un
+arrêt des volets du coté du mur Guide eau. Puis la migration s'est
+tarrie sur le mur guide eau alors qu'elle s'est poursuivie en mai et juin sur le gabion (Figures \ref{bmm_civelle_6} et \ref{bmm_civelle_12}). De plus,le poids moyen des civelles en 2022 est largement supérieur à ceux relevés les années précédentes.
 
 Le détail mensuel de la migration de 2022 (en effectif) est donné en annexe aux
 Tableaux \ref{table_civelle_mois_6} et \ref{table_civelle_mois_12}. Les Tableaux
@@ -2504,6 +2507,13 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
     facteur \num{160}. Globalement, la période récente montre une augmentation
     de la migration d'anguilles jaunes depuis la mise en \oe uvre du plan de gestion
     (Figure \ref{bilan_annuel_agj}).
+    L'année \Sexpr{CY} est particulière car la passe a subi un arrêt pendant
+    tout le mois de novembre (du 2 novembre au 14 décembre). La pompe a été
+    arrêtée pour nettoyage et vérification d'étanchéité. Des réparations ont été
+    nécessaires car il y avait de l'eau dans l'huile, la pompe a été
+    vidangée, nettoyée, repeinte (peinture époxy), l'étanchéité a été refaite,
+    le tuyau a été changé, et une pompe neuve a été achetée pour remplacement
+    ultérieur et pour avoir à disposition une pompe de secours.
 %==========================================================================
 \begin{figure}[htbp]
   \begin{center}
@@ -2518,9 +2528,11 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 %==========================================================================
 La majeure partie des effectifs concerne des petites anguilles d'âge zéro et un,
 puis la migration diminue pour les classes suivantes. La migration a un
-caractère saisonnier très marqué (Figure \ref{figure_saisonnalite_agj}) avec des
-pics de migration en avril-juin et septembre. Les débits de la Vilaine et les
-coefficients de marée sont des éléments prédicteurs de l'intensité migratoire.
+caractère saisonnier marqué avec une migration très importante en janvier puis
+décembre tout à fait inhabituelle et probablement liée aux arrêts de
+la pêcherie de civelle pendant la saison de pêche (Figure
+\ref{figure_saisonnalite_agj}).
+Les débits de la Vilaine et les coefficients de marée sont des éléments prédicteurs de l'intensité migratoire.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \small
 \input{\Sexpr{vvv[["AGJ"]][["path_agj"]]}}
@@ -2529,7 +2541,7 @@ coefficients de marée sont des éléments prédicteurs de l'intensité migratoi
 
 
 %==========================================================================
-\begin{figure}[!ht]
+\begin{figure}[htbp]
   \begin{center}
   \includegraphics[width=0.4\textwidth]{saisonnalite_agj.png}
   \caption{Saisonnalité des migrations d'anguilles jaunes, données combinées sur
@@ -2542,7 +2554,7 @@ L'extension de la saison migratoire aux mois de janvier, février et mars observ
 sur les années 2013-2015 semble aussi concerner les anguilles jaunes (Figure
 \ref{figure_seasonal_agj}).
 %==========================================================================
-\begin{figure}[!ht]
+\begin{figure}[htbp]
   \begin{center}
   \includegraphics[width=0.49\textwidth]{plot_seasonal_agj.png}
   \caption{Migrations d'anguilles jaunes sur les deux dispositifs du barrage
@@ -2559,16 +2571,22 @@ sur les années 2013-2015 semble aussi concerner les anguilles jaunes (Figure
 %==========================================================================
 
 La figure \ref{figure_barchart_bmi_agj} montre une migration \Sexpr{CY}
-inférieure à la moyenne interannuelle de janvier à juin et supérieure à la
-moyenne de juillet à septembre. Cette tendance contraste globalement avec celle
-de l'année précédente (2020 \footnote{
-\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EW-2QQTSoD9FpPhbYVu-a3AB9npKbMDot_uzgq5rmyPypQ?e=FFjakF}{
-lien vers rapport 2020, P 16 pour comparer les graphes}}) où des migrations
-importantes ont été observées de janvier à mai, puis des effectifs inférieurs à la moyenne ont été comptés de mai à septembre. 
-Pour les migrations estivales, elle s'explique surtout par la migration
-d'anguilles jaunes de faible taille correspondant à des arrivées de civelles de
-l'année (Figures \ref{boxplot_taille_agj} pour la structure en taille,
-\ref{civ_ang_cohorte}).
+inférieure à la moyenne interannuelle. A l'exception des mois d'octobre
+et décembre (pour lequel la migration est exceptionnelle) les migrations
+mensuelles sont inférieures à la moyenne interannuelle.
+Cette tendance contraste globalement avec celle de l'année précédente (2021 
+\footnote{ \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EabAMF4YvrJJhxYU8-pm6JwBSLrjt05hvlhTO2kxb84Aag?e=jin4mN}{
+lien vers rapport 2021, P 16 pour comparer les graphes}}) où des migrations
+importantes ont été observées, notament de juillet à novembre où les effectifs
+étaient supérieurs à la moyenne.
+Les migrations estivales correspondent à des anguilles de grande taille (autour
+de 180 mm) alors que les migrations de l'été 2021 correspondaient à des
+anguilles jaunes de petite taille
+(\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EabAMF4YvrJJhxYU8-pm6JwBSLrjt05hvlhTO2kxb84Aag?e=jin4mN}{Rapport
+2021}, et figure \ref{str_taille_mois_redress2021}). 
+C'est donc la cohorte de 2021 qui forme le gros des effectifs et il n'y a pas eu beaucoup
+de civelles en estuaire pour constituer la cohorte de 2022 (Figures
+\ref{boxplot_taille_agj}, pour la structure en taille Figure \ref{civ_ang_cohorte}).
 
 
 %==========================================================================
@@ -2756,15 +2774,8 @@ en taille des années précédentes (Figures \ref{str_taille_mois_redress2010},
 \ref{str_taille_mois_redress2020} et \ref{str_taille_mois_redress2021}) on observe 
 clairement la prédominance des anguilles de l'année en 2013 et 2014, et des arrivées 
 plus diffuses en 2010, 2011, 2012, 2016 et 2018. En 2017
-et 2019 le mode correspondant aux civelles de petite taille est absent. Ce
-constat est surprenant pour 2019 car la migration de civelles était importante.
-Peut être est-ce la conséquence de deux années de recrutement relativement
-faible au stade civelle (2017 et 2018) qui aurait libéré de la place en
-estuaire. En 2020 et 2022 on observe une bimodalité bien marquée avec des
-anguillettes de petite taille < 100 mm correspondant aux arrivées de l'année et
-des anguillettes de 150 mm en 2020 puis 160 mm en 2022 correspondant aux % TODO 
-civelles arrivées en 2019, qui confirme que la cohorte de 2019 aurait été plus
-importante. 
+ 2019 le mode correspondant aux civelles de
+ petite taille est absent et ce mode est très faible 2022.
 %==========================================================================
 \begin{figure}[!ht]
   \begin{center}
@@ -4437,8 +4448,11 @@ d'Arzal.}
 \toprule
 Année & Rapport \\
 \midrule
+2021 &
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EabAMF4YvrJJhxYU8-pm6JwBSLrjt05hvlhTO2kxb84Aag?e=jin4mN}{Gestion
+de l'anguille sur le bassin versant de la Vilaine, 2021}\\
 2020 & 
-\href{https://eptbvilaine56.sharepoint.com/extranet/Documents\%20partages/Dossiers\%20Publics/Suivi\%20de\%20la\%20d\%C3\%A9valaison\%20de\%20l\%27anguille\%20argent\%C3\%A9e\%20sur\%20la\%20Vilaine\%20\%C3\%A0\%20l\%27aide\%20d\%27un\20DIDSON_2018-2019.pdf}{Gestion
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EW-2QQTSoD9FpPhbYVu-a3AB9npKbMDot_uzgq5rmyPypQ?e=4mDh9c}{Gestion
 de l'anguille sur le bassin versant de la Vilaine, 2020}\\
 2019 & 
 \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/ETDtwCgRvDdNvaOV2v0c00UB8lpBnTtIIK0RdzMEgJ1Tdw?e=wLSPHY}{Gestion
