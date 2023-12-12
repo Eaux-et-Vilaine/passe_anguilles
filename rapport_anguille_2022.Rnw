@@ -255,6 +255,8 @@ table-figures-exponent=1}
 \titlespacing*{\subsection}{0}{3.5ex plus 1ex minus 1ex}{1ex plus .2ex}
 \titlespacing*{\subsubsection}{0}{2.5ex plus 1ex minus 1ex}{0.5ex plus .1ex}
 
+
+\newcommand{\rev}[2][orange]{\textcolor{#1}{#2}}
 %%===============================================%%
 %%==========    END OF THE PREAMBLE    ==========%%
 
@@ -1131,8 +1133,8 @@ Année & Capture (t) & Source & Arrêt \\
 \end{tabular}
 \end{table}
 \normalsize
-Les arrivées de civelles sont estimées à l'échelle du stock par les données d'un
-ensemble de sites mesurant les arrivées sur le long terme sur l'ensemble du
+Les arrivées de civelles \rev{sont estimées} \rev[red]{à l'échelle du stock} par
+les données d'un ensemble de sites mesurant les arrivées sur le long terme sur l'ensemble du
 territoire européen. Ces sites peuvent être des passes, des zones où sont
 effectuées des suivis scientifiques, ou des séries de captures issues de la
 pêche. Un indice de recrutement européen est calculé chaque année par le groupe
