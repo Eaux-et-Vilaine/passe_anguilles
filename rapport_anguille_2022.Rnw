@@ -310,7 +310,7 @@ Décembre 2023
 \end{minipage}
 }%
        
-    
+
 \hfill{ %
 \begin{minipage}{0.28\textwidth}
 \textbf{Réalisé avec le concours de} :\\ 
@@ -630,7 +630,7 @@ options(sqldf.RPostgreSQL.user = user,
     L'IUCN comme étant en danger critique d'extinction, et depuis 1998, l'avis
     du CIEM (Conseil pour l'Exploration de la Mer) est de réduire au plus bas
     niveau possible l'ensemble des mortalités affectant le stock d'anguilles
-    \url{https://doi.org/10.17895/ices.advice.19772374}.
+    (\href{https://doi.org/10.17895/ices.advice.19772374}{avis CIEM}).
     Pour tenter de restaurer le stock, les états membres de l'UE ont adopté en
     2007 un règlement européen pour la sauvegarde de l'espèce. Il s'est traduit
     en France par un Plan de Gestion de l'anguille visant à réduire les
