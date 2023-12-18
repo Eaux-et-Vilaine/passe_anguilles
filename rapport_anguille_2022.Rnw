@@ -2573,7 +2573,7 @@ sur les années 2013-2015 semble aussi concerner les anguilles jaunes (Figure
 La figure \ref{figure_barchart_bmi_agj} montre une migration \Sexpr{CY}
 inférieure à la moyenne interannuelle. A l'exception des mois d'octobre
 et décembre (pour lequel la migration est exceptionnelle) les migrations
-mensuelles sont inférieures à la moyenne interannuelle.
+mensuelles sont supérieures à la moyenne interannuelle.
 Cette tendance contraste globalement avec celle de l'année précédente (2021 
 \footnote{ \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EabAMF4YvrJJhxYU8-pm6JwBSLrjt05hvlhTO2kxb84Aag?e=jin4mN}{
 lien vers rapport 2021, P 16 pour comparer les graphes}}) où des migrations
