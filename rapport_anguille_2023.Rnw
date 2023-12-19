@@ -110,7 +110,7 @@ citecolor=bleuazur,
 filecolor=bleu_EV, 
 urlcolor=bleu_EV, 
 pdftitle= {Suivi des migrations d'anguilles (\textit{Anguilla anguilla}, L.)
-au barrage d'Arzal. Rapport 2022}, pdfauthor={Cédric Briand},
+au barrage d'Arzal. Rapport 2023}, pdfauthor={Cédric Briand},
 pdfsubject={anguille},
  pdfkeywords={anguille} {pêche électrique} {marquage}
 }
@@ -125,7 +125,7 @@ pdfsubject={anguille},
 \pagestyle{fancy}
 \fancyhf{}
 \rhead{\rightmark}
-\lhead{Rapport anguilles 2022}
+\lhead{Rapport anguilles 2023}
 \cfoot{Page \thepage}
 
 
@@ -146,7 +146,7 @@ pdfsubject={anguille},
 %% your report.
 
 %% Makes a path to your graphics' folder.
-\graphicspath{{C:/workspace/passe_anguilles/image/2022/}}
+\graphicspath{{C:/workspace/passe_anguilles/image/2023/}}
 
 %-----------------------------
 % package pour les unités
@@ -293,7 +293,7 @@ keepaspectratio]{../frontpage.png}%
 \vspace{4cm}
 \Large 
 Suivi des migrations d'anguilles (\textit{Anguilla anguilla}, L.)
-au barrage d'Arzal, rapport 2022.\\
+au barrage d'Arzal, rapport 2023.\\
 \vspace{2cm}\\
 \includegraphics[width=\textwidth]{../logo_EV} 
 \end{minipage}
@@ -363,7 +363,7 @@ Gérard Eriau\par
 { \huge  \bfseries{Suivi des migrations d'anguilles (\textit{Anguilla anguilla}, L.)
 au barrage d'Arzal, }}\\ 
 \bigskip
-{ \LARGE rapport 2022}
+{ \LARGE rapport 2023}
 
 \noindent
 {\color{turquoise_EV}\rule{0.9\textwidth}{1.8pt}}\\
@@ -381,7 +381,7 @@ Sauvaget, Gérard Eriau}}}
 \vspace{2cm}
 \begin{minipage}{0.8\textwidth}
 \begin{center}
-\hspace{3cm}{\color{white}{\huge \itshape{Novembre 2022}}}
+\hspace{3cm}{\color{white}{\huge \itshape{Décembre 2023}}}
 \end{center}
 \end{minipage}
 \restoregeometry
@@ -450,7 +450,7 @@ load_library('getPass')
 #ggthemr(fresh2, type="outer", layout="scientific", spacing=0.8)
 #ggthemr_reset()
 # l'annee en cours (c'est la valeur à changer en début de script
-CY<-2022
+CY<-2023
 # le repertoire contenant les données
 datawdy<-str_c(datawd,CY,"/")
 datawdym1<-str_c(datawd,CY-1,"/")
@@ -586,7 +586,7 @@ options(list(
 				stacomiR.port = "5432",
 				stacomiR.user = user,
 				stacomiR.password = password,
-				stacomiR.printqueries =FALSE
+				stacomiR.printqueries =TRUE
 		))
 stacomi(TRUE,sch="iav", datawd=datawd)
 
@@ -663,7 +663,7 @@ Les montées de civelles et d'anguilles jaunes sont suivies depuis 1996 au
     d'écluse dans des "éclusées" spécifiques pour les civelles fournissent une
     série chronologique de recrutements fluviaux annuels.
     
-    L'objectif de ce rapport est de présenter le bilan du suivi de l'année 2022
+    L'objectif de ce rapport est de présenter le bilan du suivi de l'année 2023
     sur le barrage d'Arzal.
     
 \section{Matériel et méthodes}
@@ -775,7 +775,7 @@ des civelles se fait par une conduite vers l'amont du barrage (trait pointillé 
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{../passe_gabion.png}
-\caption{La passe à anguilles du gabion, passe principale 1996-2022.}
+\caption{La passe à anguilles du gabion, passe principale 1996-2023.}
 \label{figure_passe_gabion}
 \end{figure}
 
@@ -805,7 +805,7 @@ passe du gabion.
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{../passe_guide_eau.png}
-\caption{La passe à anguilles du mur guide eau, passe secondaire, 2007-2022.}
+\caption{La passe à anguilles du mur guide eau, passe secondaire, 2007-2023.}
 \label{figure_passe_guide_eau}
 \end{figure}
 
@@ -959,7 +959,7 @@ g1<-ggplot(capt[capt$Saison>1995&capt$Saison<=2005,])+geom_col(aes(x=Saison,y=Q,
 # Create the external graphical elements
 # called a "grop" in Grid terminology
 g1_grob = ggplotGrob(g1)
-g<-g+annotation_custom(g1_grob, xmin=1985, xmax=2022, ymin=50, ymax=200)
+g<-g+annotation_custom(g1_grob, xmin=1985, xmax=2023, ymin=50, ymax=200)
 print(g)
 #ggthemr_reset()
 dev.off()
@@ -986,7 +986,7 @@ vil <- wger[wger$site=="VilG",c("value_std","year")]
 # ajout des données manquantes au début et à la fin de la série
 vil<-rbind(cbind("value_std"=NA,"year"=1960:1970),
 		vil,
-		cbind("value_std"=NA,"year"=c(2012:2014,2016,2017,2018,2019,2020,2021,2022))
+		cbind("value_std"=NA,"year"=c(2012:2014,2016,2017,2018,2019,2020,2021,2022,2023))
 )
 
 vil <- vil[order(as.numeric(vil$year)),]
@@ -1005,7 +1005,8 @@ vil1 <- tribble(~p_std_1960_1979, ~year,
 		5.13*co, 2019,
 		3.45*co, 2020,
 		4.53*co, 2021,
-    5.6*co, 2022 
+    	5.4*co, 2022,
+		4.677*co, 2023
 )
 vil1$year <- as.Date(lubridate::dmy(str_c("01","01",vil1$year)))
 # ajout manuel des valeurs avant le barrage d'Arzal, 1971 était à 44
@@ -1127,8 +1128,9 @@ Année & Capture (t) & Source & Arrêt \\
 2018  & 6.53 & 4 & 13 mars \\
 2019  & 5.13 &  4 & 9 mars \\
 2020  & 3.45 & 4 & 22 mars \\
-2021  & 4.53 & 4 & 17 mars  \\
-2022  & 5.63 & 4 & 19 mars   \\ 
+2021  & 4.53 & 4 & 17 mars \\
+2022  & 5.40 & 4 & 19 mars \\ 
+2023  & 4.68 & 4 & 17 mars \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1168,11 +1170,11 @@ r_df <- new("report_df")
 r_df_hist <- choice_c(r_df,
 		2,
 		horodatedebut="1996-01-01",
-		horodatefin="2022-12-31",
+		horodatefin="2023-12-31",
 		silent=TRUE)
 r_df_hist <- connect(r_df_hist)
 # attention très très long
-png(filename=paste0(imgwdy,"report_df_1996_2022.png"),width=8,height=20, units="in",res=300)
+png(filename=paste0(imgwdy,"report_df_1996_2023.png"),width=8,height=20, units="in",res=300)
 plot(r_df_hist, plot.type=1, 
 		color_type_oper = 	c(
 				"Fonc normal" = bleu_EV,
@@ -1192,10 +1194,10 @@ r_dc=new("report_dc")
 r_dc<-choice_c(r_dc,
 		6,
 		horodatedebut="1996-01-01",
-		horodatefin="2022-12-31",
+		horodatefin="2023-12-31",
 		silent=TRUE)
 r_dc1 <- connect(r_dc)
-png(filename=paste0(imgwdy,"report_dc_1996_2022.png"),width=8,height=20, units="in",res=300)
+png(filename=paste0(imgwdy,"report_dc_1996_2023.png"),width=8,height=20, units="in",res=300)
 plot(r_dc1,plot.type="1",main="")
 dev.off()
 
@@ -2142,17 +2144,21 @@ avant l'arrêt de la pêcherie. Mais les montées n'ont débuté en grande quant
 du 10 avril. Les montées de civelles sont restées bien en deça des années
 précédentes. 
 
-En \textcolor{orange_EV}{2022}, aucune migration sur la passe n'a eu lieu
-fin janvier ni début février, puis on observe quelques montées avant
-l'arrêt de la saison de pêche le 19 mars. Contrairement à la moyenne historique,
-l'essentiel de la migration se concentre au mois d'avril (Figure
-\ref{figure_barchart_bmi_civelles}). Trois pics successifs de migration sont
-observés fin mars et mi-avril avec le pic du milieu moins marqué sur le gabion
-qui correspond à un fonctionnement en volets sur le volet 5 (coté Gabion) et un
-arrêt des volets du coté du mur Guide eau. Puis la migration s'est
-tarrie sur le mur guide eau alors qu'elle s'est poursuivie en mai et juin sur le gabion (Figures \ref{bmm_civelle_6} et \ref{bmm_civelle_12}). De plus,le poids moyen des civelles en 2022 est largement supérieur à ceux relevés les années précédentes.
+En \textcolor{orange_EV}{2022}, l'essentiel des montées a été observé en trois
+pics entre fin mars et début avril.
 
-Le détail mensuel de la migration de 2022 (en effectif) est donné en annexe aux
+Les arrivées de civelles pour l'année \textcolor{orange_EV}{2023} ont été
+importantes et très précoces (dès début janvier) par rapport aux années
+précédentes. Ces montées correspondent à un arrêt de la pêcherie dès fin
+décembre et à une fenêtre de conditions environnementales favorables à la
+migration, avec fait exceptionnel, une migration des civelles pendant tout
+l'hiver. L'essentiel de la migration a eu lieu
+au mois de février qui dépasse largement la moyenne historique (Figure \ref{figure_barchart_bmi_civelles}).
+Au niveau des deux passes, quatres pics de migration sont observés en début
+janvier, début et fin février, et mi-mars (Figures \ref{bmm_civelle_6} et \ref{bmm_civelle_12}). La saison de
+pêche s'est arrêtée le 19 mars, periode après laquelle la migration a été faible.
+
+Le détail mensuel de la migration de 2023 (en effectif) est donné en annexe aux
 Tableaux \ref{table_civelle_mois_6} et \ref{table_civelle_mois_12}. Les Tableaux
 \ref{table_civelle_6} et \ref{table_civelle_12} synthétisent la migration par
 an, à la fois en poids et en effectif.
@@ -2219,7 +2225,7 @@ for (Y in 1996:CY){
 	}
 }
 # changer si il est nécessaire de recalculer des données
-for (Y in 2022:CY){
+for (Y in 2023:CY){
 	cat(str_c("Y=",Y))
 	bM <- choice_c(bM,
 			dc=c(12),
@@ -2442,8 +2448,8 @@ lsm[['12']][,3:6] <- round(lsm[['12']][,3:6]/1000,3)
 lsm[['6']][,3:6] <- round(lsm[['6']][,3:6]/1000,3)
 lsm[['12']]  <-  lsm[['12']][,c("mois","min","moyenne","max","valeur")]
 lsm[['6']]   <-  lsm[['6']][,c("mois","min","moyenne","max","valeur")]
-colnames(lsm[['12']])  <-  c("Mois","Min*","Moyenne*","Max*","N (2022)")
-colnames(lsm[['6']])   <-  c("Mois","Min*","Moyenne*","Max*","N (2022)")
+colnames(lsm[['12']])  <-  c("Mois","Min*","Moyenne*","Max*","N (2023)")
+colnames(lsm[['6']])   <-  c("Mois","Min*","Moyenne*","Max*","N (2023)")
 #==================== xtable6 ===================================
 xtsm6  <-  xtable(lsm[['6']],caption=str_c("Montées de civelles \\textsf{(en milliers)} dans la passe principale du barrage
 						d'Arzal (gabion en rive gauche), données par mois, \\textsf{N (",CY,")} effectifs par mois pour ",CY," , les trois statistiques * correspondent à la période
@@ -2507,13 +2513,6 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
     facteur \num{160}. Globalement, la période récente montre une augmentation
     de la migration d'anguilles jaunes depuis la mise en \oe uvre du plan de gestion
     (Figure \ref{bilan_annuel_agj}).
-    L'année \Sexpr{CY} est particulière car la passe a subi un arrêt pendant
-    tout le mois de novembre (du 2 novembre au 14 décembre). La pompe a été
-    arrêtée pour nettoyage et vérification d'étanchéité. Des réparations ont été
-    nécessaires car il y avait de l'eau dans l'huile, la pompe a été
-    vidangée, nettoyée, repeinte (peinture époxy), l'étanchéité a été refaite,
-    le tuyau a été changé, et une pompe neuve a été achetée pour remplacement
-    ultérieur et pour avoir à disposition une pompe de secours.
 %==========================================================================
 \begin{figure}[htbp]
   \begin{center}
@@ -2527,12 +2526,11 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 \end{figure}
 %==========================================================================
 La majeure partie des effectifs concerne des petites anguilles d'âge zéro et un,
-puis la migration diminue pour les classes suivantes. La migration a un
-caractère saisonnier marqué avec une migration très importante en janvier puis
-décembre tout à fait inhabituelle et probablement liée aux arrêts de
-la pêcherie de civelle pendant la saison de pêche (Figure
-\ref{figure_saisonnalite_agj}).
-Les débits de la Vilaine et les coefficients de marée sont des éléments prédicteurs de l'intensité migratoire.
+puis la migration diminue pour les classes suivantes.  La migration a un
+caractère saisonnier marqué avec une migration très importante en novembre et
+supérieures à la moyenne janvier (Figure \ref{figure_saisonnalite_agj} et Figure
+\ref{figure_seasonal_agj)}. Les débits de la Vilaine et les coefficients de
+marée sont des éléments prédicteurs de l'intensité migratoire.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \small
 \input{\Sexpr{vvv[["AGJ"]][["path_agj"]]}}
@@ -2571,22 +2569,23 @@ sur les années 2013-2015 semble aussi concerner les anguilles jaunes (Figure
 %==========================================================================
 
 La figure \ref{figure_barchart_bmi_agj} montre une migration \Sexpr{CY}
-inférieure à la moyenne interannuelle. A l'exception des mois d'octobre
-et décembre (pour lequel la migration est exceptionnelle) les migrations
-mensuelles sont inférieures à la moyenne interannuelle.
-Cette tendance contraste globalement avec celle de l'année précédente (2021 
-\footnote{ \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EabAMF4YvrJJhxYU8-pm6JwBSLrjt05hvlhTO2kxb84Aag?e=jin4mN}{
-lien vers rapport 2021, P 16 pour comparer les graphes}}) où des migrations
-importantes ont été observées, notament de juillet à novembre où les effectifs
-étaient supérieurs à la moyenne.
-Les migrations estivales correspondent à des anguilles de grande taille (autour
-de 180 mm) alors que les migrations de l'été 2021 correspondaient à des
-anguilles jaunes de petite taille
+globalement inférieure à la moyenne interannuelle de mars à juillet et pour les mois d'aout et de decembre. 
+Le mois de novembre montre un migration assez exeptionnelle,
+beaucoup plus importante que les années précedentes (Figure
+\ref{figure_seasonal_agj}).
+
+Cette tendance contraste globalement avec celle de l'année précédente (2022)
+où des migrations
+inférieures à la moyenne ont étés observées (excepté au mois de décembre).
+Cette année la migration printanière est consistuée d'anguilles jaunes de petite
+taille < 150 mm (Figures \ref{boxplot_taille_agj}, pour la structure en taille Figure
+\ref{civ_ang_cohorte}).
+\rev[red]{Il faut ajouter le lien vers le rapport 2022 sur le sharepoint puis
+pointer vers ce lien pour l'instant on pointe sur 2021
 (\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EabAMF4YvrJJhxYU8-pm6JwBSLrjt05hvlhTO2kxb84Aag?e=jin4mN}{Rapport
-2021}, et figure \ref{str_taille_mois_redress2021}). 
+2021}}, et figure \ref{str_taille_mois_redress2021}).
 C'est donc la cohorte de 2021 qui forme le gros des effectifs et il n'y a pas eu beaucoup
-de civelles en estuaire pour constituer la cohorte de 2022 (Figures
-\ref{boxplot_taille_agj}, pour la structure en taille Figure \ref{civ_ang_cohorte}).
+de civelles en estuaire pour constituer la cohorte de 2022. 
 
 
 %==========================================================================
@@ -2758,7 +2757,7 @@ des classes de taille (Tableau \ref{table_bilanannuel_ang}).
 
 Les données sont réparties par classe de
 taille de 5 mm puis redressées à partir des effectifs mensuels migrant sur les
-deux passes à anguilles d'Arzal (Figure \ref{str_taille_mois_redress2022}). La
+deux passes à anguilles d'Arzal (Figure \ref{str_taille_mois_redress2023}). La
 taille médiane des anguilles jaunes varie entre 124 et 180 mm.
 Lorsqu'on compare la structure en taille de \Sexpr{CY} aux structures
 en taille des années précédentes (Figures \ref{str_taille_mois_redress2010}, 
@@ -2771,18 +2770,20 @@ en taille des années précédentes (Figures \ref{str_taille_mois_redress2010},
 \ref{str_taille_mois_redress2017},
 \ref{str_taille_mois_redress2018}, 
 \ref{str_taille_mois_redress2019},
-\ref{str_taille_mois_redress2020} et \ref{str_taille_mois_redress2021}) on observe 
-clairement la prédominance des anguilles de l'année en 2013 et 2014, et des arrivées 
-plus diffuses en 2010, 2011, 2012, 2016 et 2018. En 2017
- 2019 le mode correspondant aux civelles de
- petite taille est absent et ce mode est très faible 2022.
+\ref{str_taille_mois_redress2020},
+\ref{str_taille_mois_redress2021} et \ref{str_taille_mois_redress2022}) on
+observe clairement la prédominance des anguilles de l'année en 2013 et 2014, et des arrivées 
+plus diffuses en 2010, 2011, 2012, 2016, 2018, 2020 et 2021. En
+2015, 2017 et 2019 le mode correspondant aux civelles de
+ petite taille est absent et ce mode est très faible en 2022. En 2023, le
+ mode est bien marqué mais on observe tout de même un prédominance des anguilles de taille 150.
 %==========================================================================
 \begin{figure}[!ht]
   \begin{center}
-  \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2022.png}
+  \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2023.png}
   \caption{Structure en taille des anguilles jaunes en \Sexpr{CY} (redressée par
   les effectifs mensuels en migration).}
-  \label{str_taille_mois_redress2022}
+  \label{str_taille_mois_redress2023}
   \end{center}
 \end{figure}
 %==========================================================================
@@ -4420,19 +4421,30 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 \end{figure}
 %==========================================================================
 %==========================================================================
-\begin{figure}[htpb]
-\centering
-\includegraphics[width=0.5\textwidth]{report_df_1996_2022.png}
-\caption{Fonctionnement de la passe de 1996 à 2022.}
-\label{report_df_1996_2022}
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2022.png}
+  \caption{Structure en taille des anguilles jaunes en 2022 (redressée par
+  les effectifs mensuels en migration).}
+  \label{str_taille_mois_redress2022}
+  \end{center}
 \end{figure}
 %==========================================================================
 %==========================================================================
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.5\textwidth]{report_dc_1996_2022.png} 
-\caption{Bilan du fonctionnement du dispositif de comptage (piège) de 1996 à 2022.}
-\label{report_dc_1996_2022}
+\includegraphics[width=0.5\textwidth]{report_df_1996_2023.png}
+\caption{Fonctionnement de la passe de 1996 à 2023.}
+\label{report_df_1996_2023}
+\end{figure}
+%==========================================================================
+%==========================================================================
+\begin{figure}[htpb]
+\centering
+\includegraphics[width=0.5\textwidth]{report_dc_1996_2023.png} 
+\caption{Bilan du fonctionnement du dispositif de comptage (piège) de 1996 à
+2023.}
+\label{report_dc_1996_2023}
 \end{figure}
 
 %==========================================================================
@@ -4447,6 +4459,8 @@ d'Arzal.}
 \begin{tabular}{lp{7cm}}
 \toprule
 Année & Rapport \\
+2022 & 
+\href{}
 \midrule
 2021 &
 \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EabAMF4YvrJJhxYU8-pm6JwBSLrjt05hvlhTO2kxb84Aag?e=jin4mN}{Gestion
