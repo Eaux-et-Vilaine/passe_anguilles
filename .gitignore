@@ -122,16 +122,16 @@ data/201*
 /**/[0-9]* # any subfolder starting with a number
 
 table/
-/rapport_anguille_2022.aux
-/rapport_anguille_2022.bcf
-/rapport_anguille_2022.log
-/rapport_anguille_2022.out
-/rapport_anguille_2022.pdf
-/rapport_anguille_2022.synctex(busy)
-/rapport_anguille_2022.tex
-/rapport_anguille_2022.toc
-/rapport_anguille_2022.synctex.gz
-/rapport_anguille_2022.bbl
-/rapport_anguille_2022.blg
-/rapport_anguille_2022.run.xml
-/rapport_anguille_2022.synctex.gz.sum.synctex
+*.aux
+*.bcf
+*.log
+*.out
+*.pdf
+*.synctex(busy)
+*.tex
+*.toc
+*.synctex.gz
+*.bbl
+*.blg
+*.run.xml
+*.synctex.gz.sum.synctex
