@@ -1567,7 +1567,7 @@ import_coe <- data.frame(
 bilPM@calcdata[["import_coe"]] <- import_coe	
 # DECOMMENTER CI DESSOUS POUR ECRIRE!!!!!!!!!!!!!!!
 import_coe[import_coe$coe_date_debut=="2023-08-01",]
-# write_database(bilPM) #  You have written 10228 rows in the database
+# write_database(bilPM) #  You have written 10594 rows in the database
 
 # récupération des composants du "summary"
 # deux composants pour le gam, l'un pour les termes fixes
