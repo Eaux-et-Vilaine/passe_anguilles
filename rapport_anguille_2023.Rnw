@@ -2528,8 +2528,9 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 La majeure partie des effectifs concerne des petites anguilles d'âge zéro et un,
 puis la migration diminue pour les classes suivantes.  La migration a un
 caractère saisonnier marqué avec une migration très importante en novembre et
-supérieures à la moyenne janvier (Figure \ref{figure_saisonnalite_agj} et Figure
-\ref{figure_seasonal_agj)}. Les débits de la Vilaine et les coefficients de
+supérieures à la moyenne janvier (Figures \ref{figure_saisonnalite_agj} et
+\ref{figure_seasonal_agj}).
+Les débits de la Vilaine et les coefficients de
 marée sont des éléments prédicteurs de l'intensité migratoire.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \small
@@ -4459,9 +4460,8 @@ d'Arzal.}
 \begin{tabular}{lp{7cm}}
 \toprule
 Année & Rapport \\
-2022 & 
-\href{}
 \midrule
+2022 & TODO\\
 2021 &
 \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EabAMF4YvrJJhxYU8-pm6JwBSLrjt05hvlhTO2kxb84Aag?e=jin4mN}{Gestion
 de l'anguille sur le bassin versant de la Vilaine, 2021}\\
@@ -4512,6 +4512,7 @@ de l'anguille sur le bassin versant de la Vilaine, 2007}\\
 \end{tabular}
 \label{table_references}
 \end{table}
+
 
 
 \printbibliography
