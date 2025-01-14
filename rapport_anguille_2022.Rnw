@@ -283,7 +283,7 @@ table-figures-exponent=1}
 \vfill
 \includegraphics[%width=\paperwidth,
 height=\paperheight,%
-keepaspectratio]{../frontpage.png}%
+keepaspectratio]{../2022/frontpage.png}%
 %\vfill
 }}}%
 
