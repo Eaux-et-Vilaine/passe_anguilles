@@ -39,6 +39,7 @@
 \usepackage{amsmath}
 \usepackage{unicode-math} % [math-style=ISO]
 \usepackage{microtype}
+\RequirePackage{fontspec}
 \defaultfontfeatures{Scale=MatchLowercase}
 \setmainfont{Segoe UI}[
    Scale = 1.0,
@@ -1720,7 +1721,7 @@ save(d2, file = str_c(datawdy,"d2.Rdata"))
 <<data_selection_size_weight, echo=FALSE, eval=FALSE, results='hide'>>=
 # this chunk is launched after data_treatment, it removes some data, so the
 # final coding is done depending on the number of dataset selected
-
+load(file = str_c(datawdy,"d2.Rdata"))
 #x11()
 #p<-ggplot(aes(x=date,y=size_cm,colour=loc),data=d2[d2$year==2000,])
 #p+geom_point(size=0.5)+scale_x_date(name="date")
@@ -1820,7 +1821,7 @@ plot(gamm_s,page=1)
 
 
 qq.gam(gamm_s,rep=100,level=1,type="pearson",pch=19,cex=.2)
-png(file=str_c(imgwd,"gamm_check.png"), width = 6, height = 6, units = 'in', res = 300)
+png(file=str_c(imgwdy,"gamm_check.png"), width = 6, height = 6, units = 'in', res = 300)
 gam.check(gamm_s)
 dev.off()
 # Vilaine only - effect of pigmentation stage --------------------------
