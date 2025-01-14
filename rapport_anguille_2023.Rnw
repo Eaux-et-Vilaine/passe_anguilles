@@ -2260,7 +2260,7 @@ for (Y in 1996:CY){
 	bM <- connect(bM,silent=FALSE)
 	bM <- calcule(bM,silent=FALSE)
 	if (nrow(bM@data)>0 ){
-		write_database(bM,silent=TRUE)
+		write_database(bM,silent=FALSE)
 	}
 }
 # changer si il est nécessaire de recalculer des données
@@ -3803,9 +3803,22 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 \setlength{\tabcolsep}{6pt} % defaut 6pt
 \normalsize
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+<<test, echo=FALSE, eval=FALSE, include=FALSE >>=
+bMM <- new("report_mig")
+bMM <- choice_c(bMM,
+    dc=c(6),
+    taxa=c("Anguilla anguilla"),
+    stage=c("CIV"),
+    datedebut=str_c(2016,"-01-01"),
+    datefin =str_c(2016,"-12-31"))
+bMM <- charge(bMM)
+bMM <- connect(bMM)
+bMM <- calcule(bMM)
 
-
-
+plot(bMM)
+summary(bMM)
+write_database(bMM)
+@
 
 <<bilan_migration, echo=FALSE, eval=FALSE, include=FALSE >>=
 
