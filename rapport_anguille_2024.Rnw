@@ -31,7 +31,7 @@
 \usepackage[T1]{fontenc}  %gestion des accents (pour les pdf) 
 
 %\usepackage[english]{babel}
-\usepackage[francais]{babel} % guillemets \og text \fg{}
+\usepackage[french]{babel} % guillemets \og text \fg{}
 \usepackage{aeguill} % guillemets
 
 %https://tex.stackexchange.com/questions/464585/what-tips-and-tricks-should-i-know-when-using-the-georgia-font-in-latex/464586
@@ -45,7 +45,8 @@
    Scale = 1.0,
    BoldFont = Segoe UI Semibold ,
    BoldItalicFont = Segoe UI Semibold Italic]
-\setmathfont{Segoe UI}
+%\setmathfont{Segoe UI}
+\setmathfont{latinmodern-math.otf}
 % define a new font family called with comment \titlefont{...}
 \newfontfamily\titlefont{Georgia} 
 
@@ -89,6 +90,7 @@
 %%============================================================
 %% BIBLIOGRAPHY SETUP
 %%============================================================
+\usepackage{csquotes} % recommended with biblatex
 \usepackage[style=authoryear, %numeric
             natbib=true, % citep and citet
             %backend=biber, % default for biblatex
@@ -111,9 +113,10 @@ citecolor=bleuazur,
 filecolor=bleu_EV, 
 urlcolor=bleu_EV, 
 pdftitle= {Suivi des migrations d'anguilles (\textit{Anguilla anguilla}, L.)
-au barrage d'Arzal. Rapport 2024}, pdfauthor={Cédric Briand},
+au barrage d'Arzal. Rapport 2024}, 
+pdfauthor={Cédric Briand},
 pdfsubject={anguille},
- pdfkeywords={anguille} {pêche électrique} {marquage}
+pdfkeywords={anguille} {pêche électrique} {marquage}
 }
 \renewcommand{\sectionmark}[1]{\markboth{}{\emph{\thesection~#1}}}
 \renewcommand{\subsectionmark}[1]{\markboth{}{\emph{\thesubsection~#1}}}
@@ -122,12 +125,6 @@ pdfsubject={anguille},
 
 
 
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\fancyhf{}
-\rhead{\rightmark}
-\lhead{Rapport anguilles 2024}
-\cfoot{Page \thepage}
 
 
 %% The \url{...} command does all the work: It sets the enclosed expression in the appropriate typewriter style font, it takes care of any necessary linebreaking, and it chooses break points intelligently (e.g., between components of an address), and it ensures that special symbols such as the tilde symbol or the "at" symbol get typeset correctly.
@@ -139,6 +136,17 @@ pdfsubject={anguille},
 \usepackage{longtable}
 \usepackage{booktabs}
 \usepackage[a4paper, inner=1.5cm, outer=1.5cm, top=2cm, bottom=3cm]{geometry}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\rightmark}
+\lhead{Rapport anguilles 2024}
+\cfoot{Page \thepage}
+
+% Adjust \\headheight for fancyhdr
+\setlength{\headheight}{13.59999pt}
+\addtolength{\topmargin}{-1.6pt}
 
 %%============================================================
 %%============================================================
@@ -294,7 +302,7 @@ keepaspectratio]{../2024/frontpage.png}%
 \vspace{4cm}
 \Large 
 Suivi des migrations d'anguilles (\textit{Anguilla anguilla}, L.)
-au barrage d'Arzal, rapport 2024.\\
+au barrage d'Arzal, rapport 2024.
 \vspace{2cm}\\
 \includegraphics[width=\textwidth]{../logo_EV} 
 \end{minipage}
@@ -590,8 +598,9 @@ options(list(
 				stacomiR.port = "5432",
 				stacomiR.user = user,
 				stacomiR.password = password,
-				stacomiR.printqueries =TRUE
+				stacomiR.printqueries =FALSE
 		))
+#printqueries mettre TRUE pour voir les requetes
 stacomi(TRUE,sch="iav", datawd=datawd)
 
 
@@ -1207,7 +1216,7 @@ r_dc<-choice_c(r_dc,
 		horodatefin="2024-12-31",
 		silent=TRUE)
 r_dc1 <- connect(r_dc)
-png(filename=paste0(imgwdy,"report_dc_1996_2023.png"),width=8,height=20, units="in",res=300)
+png(filename=paste0(imgwdy,"report_dc_1996_2024.png"),width=8,height=20, units="in",res=300)
 plot(r_dc1,plot.type="1",main="")
 dev.off()
 
