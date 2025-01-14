@@ -111,7 +111,7 @@ citecolor=bleuazur,
 filecolor=bleu_EV, 
 urlcolor=bleu_EV, 
 pdftitle= {Suivi des migrations d'anguilles (\textit{Anguilla anguilla}, L.)
-au barrage d'Arzal. Rapport 2023}, pdfauthor={Cédric Briand},
+au barrage d'Arzal. Rapport 2024}, pdfauthor={Cédric Briand},
 pdfsubject={anguille},
  pdfkeywords={anguille} {pêche électrique} {marquage}
 }
@@ -126,7 +126,7 @@ pdfsubject={anguille},
 \pagestyle{fancy}
 \fancyhf{}
 \rhead{\rightmark}
-\lhead{Rapport anguilles 2023}
+\lhead{Rapport anguilles 2024}
 \cfoot{Page \thepage}
 
 
@@ -147,7 +147,7 @@ pdfsubject={anguille},
 %% your report.
 
 %% Makes a path to your graphics' folder.
-\graphicspath{{C:/workspace/passe_anguilles/image/2023/}}
+\graphicspath{{C:/workspace/passe_anguilles/image/2024/}}
 
 %-----------------------------
 % package pour les unités
@@ -284,7 +284,7 @@ table-figures-exponent=1}
 \vfill
 \includegraphics[%width=\paperwidth,
 height=\paperheight,%
-keepaspectratio]{../2023/frontpage.png}%
+keepaspectratio]{../2024/frontpage.png}%
 %\vfill
 }}}%
 
@@ -294,7 +294,7 @@ keepaspectratio]{../2023/frontpage.png}%
 \vspace{4cm}
 \Large 
 Suivi des migrations d'anguilles (\textit{Anguilla anguilla}, L.)
-au barrage d'Arzal, rapport 2023.\\
+au barrage d'Arzal, rapport 2024.\\
 \vspace{2cm}\\
 \includegraphics[width=\textwidth]{../logo_EV} 
 \end{minipage}
@@ -365,7 +365,7 @@ Gérard Eriau\par
 { \huge  \bfseries{Suivi des migrations d'anguilles (\textit{Anguilla anguilla}, L.)
 au barrage d'Arzal, }}\\ 
 \bigskip
-{ \LARGE rapport 2023}
+{ \LARGE rapport 2024}
 
 \noindent
 {\color{turquoise_EV}\rule{0.9\textwidth}{1.8pt}}\\
@@ -409,11 +409,12 @@ options(encoding = "UTF-8")
 #pg_dump -U postgres -f "iav.sql" --schema iav -h w3.eptb-vilaine.fr bd_contmig_nat_iav
 # pour restauration en localhost
 # psql -U postgres -f "iav.sql" bd_contmig_nat
-###########################################################################
+
+
 # ci dessous nettoye tout sauf mes deux password
 # attention de bien configurer bd_contmig_nat pour qu'il pointe vers la base bd_contmig_nat_iav
 obj <- ls(all=TRUE)
-obj <- obj[!obj%in%c("pois","passworddistant","passwordlocal","userdistant","hostdistant","umysql","hostmysql","pwdmysql")]
+obj <- obj[!obj%in%c("pois","passworddistant","passwordlocal","userdistant","hostdistant","umysql","hostmysql","pwdmysql", "mainpass")]
 rm(list=obj) # nettoyage complet sauf passwords
 # fermeture de tous les graphiques
 graphics.off()
@@ -439,7 +440,7 @@ load_library('dplyr')
 load_library('stacomiR')
 require('ggthemr') # installation manuelle #  devtools::install_github('Mikata-Project/ggthemr')
 load_library('tables')
-load_library('getPass')
+load_library("ggplot2")
 
 #swatch()
 #barplot(rep(1,11),col=as.character(swatch()))
@@ -452,7 +453,7 @@ load_library('getPass')
 #ggthemr(fresh2, type="outer", layout="scientific", spacing=0.8)
 #ggthemr_reset()
 # l'annee en cours (c'est la valeur à changer en début de script
-CY<-2023
+CY<-2024
 # le repertoire contenant les données
 datawdy<-str_c(datawd,CY,"/")
 datawdym1<-str_c(datawd,CY-1,"/")
@@ -572,11 +573,12 @@ if (file.exists(file=str_c(datawdy,"vvv.Rdata"))){
 
 
 if (exists("userdistant") & exists("passworddistant") & exists("hostdistant")) {
-	if( !exists("pois"))  pois <- getPass(msg="main password")
+	if( !exists("pois"))  pois <- mainpass
 	host <- decrypt_string(hostdistant,pois)
 	user <- decrypt_string(userdistant,pois)
 	password<- decrypt_string(passworddistant,pois)
 } else {
+  load_library('getPass')
 	host <- getPass(msg="host")
 	user <- getPass(msg="user")
 	password <- getPass(msg="password")
@@ -665,7 +667,7 @@ Les montées de civelles et d'anguilles jaunes sont suivies depuis 1996 au
     d'écluse dans des "éclusées" spécifiques pour les civelles fournissent une
     série chronologique de recrutements fluviaux annuels.
     
-    L'objectif de ce rapport est de présenter le bilan du suivi de l'année 2023
+    L'objectif de ce rapport est de présenter le bilan du suivi de l'année 2024
     sur le barrage d'Arzal.
     
 \section{Matériel et méthodes}
@@ -778,7 +780,7 @@ des civelles se fait par une conduite vers l'amont du barrage (trait pointillé 
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{../passe_gabion.png}
-\caption{La passe à anguilles du gabion, passe principale 1996-2023.}
+\caption{La passe à anguilles du gabion, passe principale 1996-2024.}
 \label{figure_passe_gabion}
 \end{figure}
 
@@ -808,7 +810,7 @@ passe du gabion.
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{../passe_guide_eau.png}
-\caption{La passe à anguilles du mur guide eau, passe secondaire, 2007-2023.}
+\caption{La passe à anguilles du mur guide eau, passe secondaire, 2007-2024.}
 \label{figure_passe_guide_eau}
 \end{figure}
 
@@ -963,16 +965,16 @@ g1<-ggplot(capt[capt$Saison>1995&capt$Saison<=2005,])+geom_col(aes(x=Saison,y=Q,
 # Create the external graphical elements
 # called a "grop" in Grid terminology
 g1_grob = ggplotGrob(g1)
-g<-g+annotation_custom(g1_grob, xmin=1985, xmax=2023, ymin=50, ymax=200)
+g<-g+annotation_custom(g1_grob, xmin=1985, xmax=2024, ymin=50, ymax=200)
 print(g)
 #ggthemr_reset()
 dev.off()
 @
 
 <<figure_recrutement_vilaine, eval=FALSE, include=FALSE, echo=FALSE>>=
-#######################
-## graphique presentation Vilaine
-##########################
+
+## graphique presentation Vilaine ---------------
+
 # Ces deux fichiers sont générés par les traitements wgeel de Cédric
 # Il faut lui demander et les coller dans data/CY
 load(str_c(datawd,CY,"/dat_ge.Rdata"))
@@ -990,7 +992,8 @@ vil <- wger[wger$site=="VilG",c("value_std","year")]
 # ajout des données manquantes au début et à la fin de la série
 vil<-rbind(cbind("value_std"=NA,"year"=1960:1970),
 		vil,
-		cbind("value_std"=NA,"year"=c(2012:2014,2016,2017,2018,2019,2020,2021,2022,2023))
+		cbind("value_std"=NA,"year"=c(2012:2014,2016,2017,2018,2019,2020,2021,2022,
+		                              2023,2024))
 )
 
 vil <- vil[order(as.numeric(vil$year)),]
@@ -1010,7 +1013,8 @@ vil1 <- tribble(~p_std_1960_1979, ~year,
 		3.45*co, 2020,
 		4.53*co, 2021,
     	5.4*co, 2022,
-		4.677*co, 2023
+		4.677*co, 2023,
+		3.602*0.9*co, 2024
 )
 vil1$year <- as.Date(lubridate::dmy(str_c("01","01",vil1$year)))
 # ajout manuel des valeurs avant le barrage d'Arzal, 1971 était à 44
@@ -1136,6 +1140,7 @@ Année & Capture (t) & Source & Arrêt \\
 2021  & 4.53 & 4 & 17 mars \\
 2022  & 5.40 & 4 & 19 mars \\ 
 2023  & 4.68 & 4 & 17 mars \\
+2024  & 3.24 & 4 & 01 mars \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1175,11 +1180,11 @@ r_df <- new("report_df")
 r_df_hist <- choice_c(r_df,
 		2,
 		horodatedebut="1996-01-01",
-		horodatefin="2023-12-31",
+		horodatefin="2024-12-31",
 		silent=TRUE)
 r_df_hist <- connect(r_df_hist)
 # attention très très long
-png(filename=paste0(imgwdy,"report_df_1996_2023.png"),width=8,height=20, units="in",res=300)
+png(filename=paste0(imgwdy,"report_df_1996_2024.png"),width=8,height=20, units="in",res=300)
 plot(r_df_hist, plot.type=1, 
 		color_type_oper = 	c(
 				"Fonc normal" = bleu_EV,
@@ -1199,7 +1204,7 @@ r_dc=new("report_dc")
 r_dc<-choice_c(r_dc,
 		6,
 		horodatedebut="1996-01-01",
-		horodatefin="2023-12-31",
+		horodatefin="2024-12-31",
 		silent=TRUE)
 r_dc1 <- connect(r_dc)
 png(filename=paste0(imgwdy,"report_dc_1996_2023.png"),width=8,height=20, units="in",res=300)
@@ -1302,11 +1307,11 @@ options(list(
 				stacomiR.password = password,
 				stacomiR.printqueries =FALSE
 		))
-#####################
+
 # Ci dessous je combine les données provenante de l'estuaire ("pêche") et 
 # les données provenant de la passe ("passe")
 # je remet le tout dans data
-#########################
+
 peche$source <- "peche"
 passe <- bilPM@data
 passe$source <- "passe"
@@ -1331,6 +1336,7 @@ plot(bilPM, plot.type=2)
 # TODO Brice : vérifier les données en base
 #lots_trop_grands <- bilPM@data[bilPM@data$w>0.45,]
 lots_trop_grands <- bilPM@data[bilPM@data$w>0.45 & bilPM@data$annee%in%c(1996,1997,2006,2007),]
+#View(bilPM@data[bilPM@data$w>0.45 ,])
 
 bilPM@data <- bilPM@data[!bilPM@data$lot_identifiant%in%lots_trop_grands$lot_identifiant,]
 bilPM <- calcule(bilPM)
@@ -1415,9 +1421,9 @@ dev.off()
 #bilPM@calcdata[['import_coe']] <- import_coe2
 
 
-#########################
-# Modèle seasonal2 (non retenu)
-#########################
+
+# Modèle seasonal2 (non retenu) ---------------------
+
 
 bilPM <- model(bilPM,model.type="seasonal2")
 # edition manuelle de l'échelle des dates (illisible sinon)
@@ -1434,9 +1440,9 @@ dev.off()
 # DECOMMENTER CI DESSOUS POUR ECRIRE !!!!!!!!!!!!!
 #write_database(bilPM,dbname="bd_contmig_nat_iav")
 
-#########################
-# Modèle manual (le bon)
-#########################
+
+# Modèle manual (le bon) ---------------------
+
 #bilPM <- calcule(bilPM)
 bilPM <- model(bilPM,model.type="manual")
 predata <- get("newcoe",envir=envir_stacomi)
@@ -1542,7 +1548,7 @@ p <- ggplot(don)+ geom_point(aes(x=date,y=w,size=effectif),col="#043C6B")+
 		geom_ribbon(data=predata,aes(x=date,ymin=pred_weight_lwr,ymax=pred_weight_upr),alpha=0.3,fill="#BF8330")+	theme_minimal()+
 		theme(panel.border = element_blank(),
 				axis.line = element_line())+
-		scale_x_datetime(date_labels = "%Y",limits=as.POSIXct(c(as.Date("2006-01-01"),as.Date("2023-02-01"))),date_breaks="2 years")+
+		scale_x_datetime(date_labels = "%Y",limits=as.POSIXct(c(as.Date("2006-01-01"),as.Date("2024-02-01"))),date_breaks="2 years")+
 		xlab("Date")+
 		ylim(0.15,0.55)
 print(p)
@@ -1569,7 +1575,8 @@ import_coe <- data.frame(
 		"coe_commentaires"=com)
 bilPM@calcdata[["import_coe"]] <- import_coe	
 # DECOMMENTER CI DESSOUS POUR ECRIRE!!!!!!!!!!!!!!!
-import_coe[import_coe$coe_date_debut=="2023-08-01",]
+#  ICI ON REECRIT LES COEFFICIENTS EN BASE. Décommenter write database, attention ça prend du temps !
+ import_coe[import_coe$coe_date_debut==as.Date("2024-08-01"),]
 # write_database(bilPM) #  You have written 10594 rows in the database
 
 # récupération des composants du "summary"
@@ -1663,18 +1670,18 @@ vil2 <- vil[,c("date","size_cm","weight_g","pigm","loc","fulton")]
 
 dbDisconnect(con)
 
-#x11()
-#p <- ggplot(aes(x=date,y=weight_g,colour=loc),data=vil2)
-#p + geom_point(size=0.5) + 
-#    scale_x_date(name="date")
+# x11()
+# p <- ggplot(aes(x=date,y=weight_g,colour=loc),data=vil2)
+# p + geom_point(size=0.5) + 
+#     scale_x_date(name="date")
 
 save(vil2, file = str_c(datawdy,"vil2.Rdata"))
 @
 
 <<data_treatment_size_weight, echo=FALSE, eval=FALSE, results='hide'>>=
-##############
+
 # Work on dataset variables
-##############
+
 load( file = str_c(datawdy,"vil2.Rdata"))
 d2 <- vil2
 d2$fulton <- 100*(d2$weight_g/d2$size_cm^3)
@@ -1753,9 +1760,9 @@ d5 <- d4[d4$pigm%in%c("VB","VIA0","VIA1"),]
 all(complete.cases(d3[,c("yday","time","size_cm","intraseasonal","loc")]))
 
 
-###########################
-# dataset for predictions
-############################
+
+# dataset for predictions ----------------------
+
 fulldata=data.frame(date=seq.Date(as.Date("1997/1/1"), as.Date("2018/6/1"),by="day"))
 fulldata$yday=yday(fulldata$date)
 fulldata$year <- year(fulldata$date)
@@ -1867,9 +1874,9 @@ d2vil$gam_shat <- mgcv::influence.gam(gam_vil1) # note, le modele gamm n'a pas d
 ggplot(d2vil)+geom_point(aes(x=time,y=size_cm,col=gam_shat), position="jitter")
 # todo faire un graphique correct de la tendance interannuelle plus des
 
-######################
-# Response for time 
-#####################
+
+# Response for time ---------------------------
+
 # yday back to real date to show on the graph
 visreg::visreg2d(gam_vil1,xvar="time",yvar="yday",plot.type="gg")
 v2 <- visreg::visreg(gam_vil1,xvar="time")
@@ -2184,7 +2191,7 @@ la première semaine de mars. L'essentiel des montées a été observé fin mars
 Les arrivées de civelles ont été très précoces, 
 et il y a eu la plus forte migration pour un mois de décembre avec 61 kg lors de la dernière semaine.
 
-Les arrivées de civelles pour l'année \textcolor{orange_EV}{2023} ont été
+Les arrivées de civelles pour l'année \textcolor{orange_EV}{2024} ont été
 importantes et très précoces par rapport aux années
 précédentes. Ces montées correspondent à un arrêt de la pêcherie dès fin
 décembre 2022 et à une fenêtre de conditions environnementales favorables à la
@@ -2195,11 +2202,11 @@ Au niveau des deux passes, quatres pics de migration sont observés début
 janvier, début et fin février, et mi-mars (Figures \ref{bmm_civelle_6} et \ref{bmm_civelle_12}). La saison de
 pêche s'est arrêtée le 19 mars, période après laquelle la migration a été
 faible.
-Egalement, il est important de noter que le poids moyen des civelles en 2023
+Egalement, il est important de noter que le poids moyen des civelles en 2024
 est largement supérieur à ceux relevés les années pré‐
 cédentes.
 
-Le détail mensuel de la migration de \textcolor{orange_EV}{2023} (en effectif) est donné en annexe aux
+Le détail mensuel de la migration de \textcolor{orange_EV}{2024} (en effectif) est donné en annexe aux
 Tableaux \ref{table_civelle_mois_6} et \ref{table_civelle_mois_12}. Les Tableaux
 \ref{table_civelle_6} et \ref{table_civelle_12} synthétisent la migration par
 an, à la fois en poids et en effectif.
@@ -2266,7 +2273,7 @@ for (Y in 1996:CY){
 	}
 }
 # changer si il est nécessaire de recalculer des données
-for (Y in 2023:CY){
+for (Y in 2024:CY){
 	cat(str_c("Y=",Y))
 	bM <- choice_c(bM,
 			dc=c(12),
@@ -2371,9 +2378,9 @@ vvv[["CIV"]][["N"]] <- tab[tab$year==CY,"Ngl"]
 vvv[["CIV"]][["P"]] <- tab[tab$year==CY,"Pgl"]
 # rank in descending order
 vvv[["CIV"]][["rank"]] <- nrow(tab)+1-rank(tab[,"Pgl"])[tab$year==CY]
-#######################
-# Detail pour chaque DC (DC=6)
-######################
+
+# Detail pour chaque DC (DC=6) ----------------
+
 
 tab <- inner_join(
 		bilidat%>%filter(bjo_dis_identifiant==6)%>%filter(bjo_labelquantite%in%c("Effectif_total"))%>%
@@ -2407,9 +2414,9 @@ vvv[["CIV"]][["path_civ6"]] <- path_civ6
 vvv[["CIV"]][["6"]] <- list()
 vvv[["CIV"]][["6"]][["N"]] <- as.numeric(tab[tab[,1]==CY,"N"])
 vvv[["CIV"]][["6"]][["P"]] <- as.numeric(tab[tab[,1]==CY,"P"])
-#######################
-# Detail pour chaque DC (DC=12)
-######################
+
+# Detail pour chaque DC (DC=12) -------------
+
 
 tab <- inner_join(
 		bilidat%>%filter(bjo_dis_identifiant==12)%>%filter(bjo_labelquantite%in%c("Effectif_total"))%>%
@@ -2489,8 +2496,8 @@ lsm[['12']][,3:6] <- round(lsm[['12']][,3:6]/1000,3)
 lsm[['6']][,3:6] <- round(lsm[['6']][,3:6]/1000,3)
 lsm[['12']]  <-  lsm[['12']][,c("mois","min","moyenne","max","valeur")]
 lsm[['6']]   <-  lsm[['6']][,c("mois","min","moyenne","max","valeur")]
-colnames(lsm[['12']])  <-  c("Mois","Min*","Moyenne*","Max*","N (2023)")
-colnames(lsm[['6']])   <-  c("Mois","Min*","Moyenne*","Max*","N (2023)")
+colnames(lsm[['12']])  <-  c("Mois","Min*","Moyenne*","Max*","N (2024)")
+colnames(lsm[['6']])   <-  c("Mois","Min*","Moyenne*","Max*","N (2024)")
 #==================== xtable6 ===================================
 xtsm6  <-  xtable(lsm[['6']],caption=str_c("Montées de civelles \\textsf{(en milliers)} dans la passe principale du barrage
 						d'Arzal (gabion en rive gauche), données par mois, \\textsf{N (",CY,")} effectifs par mois pour ",CY," , les trois statistiques * correspondent à la période
@@ -2530,11 +2537,11 @@ print(xtsm12,
 		table.placement=c("htbp"))
 vvv[["CIV"]][["path_civ12m"]] <- path_civ12m
 
-################################################################
-# graphique montrant qu'il n'y a pas eu de migration historique
-#################################################################"
+
+# graphique montrant qu'il n'y a pas eu de migration historique -----------
+
 png(filename=str_c(imgwdy,"plot_seasonal_civelles.png"),width=14,height=10,unit="cm",res=300)
-plot(bili, plot.type="seasonal", timesplit="semaine") 
+plot(bili, plot.type="seasonal", timesplit="semaine",silent=TRUE) 
 dev.off()
 
 
@@ -2685,13 +2692,13 @@ print(xtbilA,
 		include.colnames = FALSE,
 		format.args = list(big.mark = " ", decimal.mark = ",")
 )
-#===================================================
+
 png(filename=str_c(imgwdy,"bilan_annuel_agj.png"))
 barplot(bilA,args.legend=list(x="topleft",bty = "n"),
 		col=c("#FF9400","#043C6B","#66A1D2"),
 		ylab="Effectif (anguilles jaunes)")
 dev.off()
-#===================================================
+
 # total ne correspond qu'aux effectifs sur les passes à anguilles
 total <- filter(bilA@data,ope_dic_identifiant!=5)%>%
 		group_by(annee)%>%
@@ -2709,6 +2716,8 @@ vvv[["AGJ"]][["rank"]] <- nrow(somme_agj)+1-rank(somme_agj)[indiceCY]
 vvv[["AGJ"]][["maxrank"]] <- nrow(somme_agj)
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
+
+
 <<bilan_interannuels_agj, echo=FALSE, eval=FALSE, include=FALSE >>=
 bilj <- new("report_mig_interannual")
 bilj <- choice_c(bilj,
@@ -2733,7 +2742,7 @@ nb_annee <- length(unique(bilj@data$bjo_annee))
 mycolorramp1 <- colorRampPalette(c("#011A2D","#4F7EA2"))
 mycolorramp2 <- colorRampPalette(c("#462800","#B68B52"))
 color_ope <- c(rev(mycolorramp1(10)),mycolorramp2(nb_annee-11),"#85A3BA")
-#============================================
+
 png(filename=str_c(imgwdy,"saisonnalite_agj.png"))
 g+ggplot2::scale_fill_manual(values=color_ope)+
 		ggplot2::ggtitle("")+
@@ -2744,7 +2753,7 @@ g+ggplot2::scale_fill_manual(values=color_ope)+
 				panel.grid.major = element_line(colour = "white"),
 				panel.grid.major.x = element_line(colour = "white"))
 dev.off()
-#============================================
+
 plot(bilj,plot.type="barchart",timesplit="mois",silent=TRUE)
 g <- get("g_barchart",envir=envir_stacomi)
 cols  <-  c("max" = "#012746","min" = "#6C3E00",">=moy" = "#327AB5", "<moy" = "#D29035","hist_mean"="black","hist_range"="grey","?"="#D26435")
@@ -2752,14 +2761,15 @@ fills  <-  c("max" = "#043C6B","min" = "#6C3E00",">=moy" = "#558AB5", "<moy" = "
 g  <-  g+scale_colour_manual(name=CY,values=cols,limits=c("min","max","<moy",">=moy","hist_mean","hist_range","?"))
 g  <-  g+scale_fill_manual(name=CY,values=fills,limits=c("min","max","<moy",">=moy","hist_mean","hist_range","?"))
 g <- g+ggtitle("")
-#============================================
+
+
 png(filename=str_c(imgwdy,"barchart_bmi_agj.png"))
 print(g)
 dev.off()
-#============================================
+
 
 png(filename=str_c(imgwdy,"plot_seasonal_agj.png"),width=14,height=10,unit="cm",res=300)
-plot(bilj,plot.type="seasonal",timesplit="semaine") 
+plot(bilj,plot.type="seasonal",timesplit="semaine", silent = TRUE) 
 dev.off()
 save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
@@ -2797,7 +2807,7 @@ des petites tailles (Tableau \ref{table_bilanannuel_ang}).
 
 Les données de taille individuelle sont réparties par classe de 5 mm 
 puis redressées à partir des effectifs mensuels migrant sur les
-deux passes à anguilles d'Arzal (Figure \ref{str_taille_mois_redress2023}). La
+deux passes à anguilles d'Arzal (Figure \ref{str_taille_mois_redress2024}). La
 taille médiane des anguilles jaunes varie entre 124 et 180 mm.
 Lorsqu'on compare la structure en taille de \Sexpr{CY} aux structures
 en taille des années précédentes (Figures \ref{str_taille_mois_redress2010} à \ref{str_taille_mois_redress2022}), on
@@ -2806,16 +2816,16 @@ plus diffuses en 2010, 2011, 2012, 2016, 2018, 2020 et 2021.
 
 
 En 2015, 2017 et 2019, le mode correspondant aux anguilles de petite taille est
-absent, et il est très faible en 2022. En 2023, le
+absent, et il est très faible en 2022. En 2024, le
  mode est bien marqué mais on observe tout de même une prédominance des
  anguilles de taille 150 à 200 mm. 
 %==========================================================================
 \begin{figure}[htbp]
   \begin{center}
-  \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2023.png}
+  \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2024.png}
   \caption{Structure en taille des anguilles jaunes en \Sexpr{CY} (redressée par
   les effectifs mensuels en migration).}
-  \label{str_taille_mois_redress2023}
+  \label{str_taille_mois_redress2024}
   \end{center}
 \end{figure}
 %==========================================================================
@@ -2903,9 +2913,9 @@ effectifs (Figure \ref{migration_par_cohorte}).
 vvv[["AGJ"]][["str_tail"]] <- list()
 
 cle=read.csv("C:/workspace/passe_anguilles/data/cletailleage.csv",sep=";")
-#########################################"
+
 # ci dessous une verification graphique
-##########################################
+
 str(cle)
 clem=subset(cle,cle$type=="mean")  # tableau des moyennes
 # identique à clem[cle$type=="mean",]
@@ -2914,9 +2924,9 @@ agem=clem$age*12+clem$mois
 agem[1:2] <- 1  #pour novembre et decembre
 
 
-#########################################"
-# creation des cles taille age loi normale
-##########################################
+
+# creation des cles taille age loi normale ----------
+
 vecteur_coupures=seq(from=65,to=600,by=5)
 tail=hist(vecteur_coupures,vecteur_coupures)$mids
 ar=array(dim=c(12,length(tail),5))
@@ -2967,7 +2977,8 @@ age2= marrons(13)
 age3= rouges(13)
 couleurs=cbind(age0,age1,age2,age3,"black")
 
-#==============================================================
+
+
 png(file=str_c(imgwdy,"cletailleage.png"),width=18,height=12,unit="cm",res=300)
 layout(matrix(c(1,2,2),1,3))
 plot(agem,clem$val,xlab="mois de croissance",ylab="taille mm",main="A",ylim=c(0,600))
@@ -2981,7 +2992,8 @@ for (i in 1:12) {
 legend(x=400,y=1,col=couleurs[1,],lty=1,legend=as.character(0:4),title="ages",bty="n")
 legend(x=500,y=1,age0,lty=1,legend=1:12,title="mois",bty="n")
 dev.off()
-#==============================================================
+
+
 
 # colSums(ar)  pour verif OK vecteur de 1
 stopifnot(rowSums(ar,dims=1)==rep(length(tail),12))
@@ -2989,10 +3001,10 @@ stopifnot(rowSums(ar,dims=1)==rep(length(tail),12))
 # save(ar,file=str_c(datawd,"ar.Rdata"))
 # 
 
-########################################
-# TRAITEMENT DES STRUCUTRES EN TAILLE
-# UTILISATION DE LA CLASSE REPORT MIG CHAR
-#########################################
+
+# TRAITEMENT DES STRUCUTRES EN TAILLE (UTILISATION DE LA CLASSE REPORT MIG CHAR)----
+
+
 
 r_mig_char <- new("report_mig_char")
 r_mig_char <- choice_c(r_mig_char,
@@ -3027,7 +3039,8 @@ r_mig_char2 <- setasqualitative(r_mig_char,par='1786',
 r_mig_char2 <- calcule(r_mig_char2)
 mycolorramp1<-colorRampPalette(c("#011A2D","#4F7EA2")) # blues
 mycolorramp2<-colorRampPalette(c("#462800","#B68B52"))
-#==============================================================
+
+
 png(file=str_c(imgwdy,"classes_taille.png"),width=12,height=12,unit="cm",res=300)
 plot(r_mig_char2, plot.type="qual", color_parm =c("pa" = mycolorramp1(4)[1],
         "ma"= mycolorramp1(4)[2],
@@ -3076,11 +3089,11 @@ sum(sumeffmois[,2]) #4710 # 5577 # 5901
 # boxplot tailles anguilles jaunes
 ndt1$mois <- as.factor(ndt1$mois)
 tapply(ndt1$taille, ndt1$mois, summary)
-###########################################"
+
 # table using the tables package
 # va créer un résumé bien formatté en calculant les stats de moyenne et écart type
 # et l'écrire dans table/ 2017
-#############################################
+
 # require(tables)
 
 
@@ -3102,10 +3115,10 @@ cat("\\end{center}", file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
 cat("\\end{table}", file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
 
 
-###########################################"
-# boxplot par mois des structures en taille
-#############################################
-#===============================================================================
+
+# boxplot par mois des structures en taille --------------
+
+
 png(str_c(imgwdy,"boxplot_taille_agj.png"),width=12,height=8,units="cm",res=300)
 p=ggplot(ndt)
 p+stat_boxplot(aes(x=mois,y=taille,fill=factor(mois))) +
@@ -3113,7 +3126,7 @@ p+stat_boxplot(aes(x=mois,y=taille,fill=factor(mois))) +
 		scale_fill_manual("mois",values=couleur_mois_tr)+
 		ylab("Taille (mm)")
 dev.off()
-#===============================================================================
+
 # boxplot tailles anguillettes
 #ndt2 <-  ndt1[ndt1$taille<300,]
 #x11(500,350)
@@ -3227,7 +3240,6 @@ save(eff, file=str_c(datawdy,"eff.Rdata"))
 eff$mois=as.POSIXlt(eff$ope_date_debut)
 eff$mois=eff$mois$mon +1 # récupère le mois de puis le format liste de posixlt
 #sumeff <-  tapply(eff$effectif,INDEX=list(eff$mois,eff$val_libelle),sum)
-# TODO 2023 
 sumeff <-  tapply(eff$effectif,INDEX=list(eff$mois),sum, na.rm=TRUE)
 sum(sumeff) # 21245 (2017) 19368 (2022)
 #sumeff <- sumeff[,1]
@@ -3281,9 +3293,9 @@ ndt$taille[ndt$taille < vecteur_coupures[1]] <- vecteur_coupures[1]
 #tailap extrait les anguilles d'un mois donné dans un élément de la liste.
 tailap=tapply(ndt$taille,INDEX=list(ndt$mois),function(X) X)
 # On stocke ça dans une matrice contenant des listes. Ici la matrice est simple
-#############################################################
+
 # Si il manque des effectifs certains mois, voir en 2013.
-#############################################################
+
 
 
 strtail=array(list(),dim=dim(tailap),dimnames=dimnames(tailap))
@@ -3328,9 +3340,9 @@ save(strtail_annee_mois,file=str_c(datawdy,"strtail_annee_mois.Rdata"))
 
 
 
-######################################
-# sauvegarde d'un tableau de données
-########################################
+
+# sauvegarde d'un tableau de données -----------
+
 #vecteur_coupures=seq(from=65,to=600,by=5)
 #dim(strtail_annee_mois)
 #unlist(strtail_annee_mois[12,18])
@@ -3363,7 +3375,7 @@ lapply(strtail_annee_mois[,as.character(CY)],sum) # vérifier que ça fait 1 cha
 
 save(strtail_annee_mois,file=str_c(datawdy,"strtail_annee_moisenpourcentage.Rdata"))
 
-################################################
+
 # YY est uun array, et il faut il coller la valeur de CY
 # donc on récupère celui de l'année d'avant
 # on coupe une tranche pour qu'elle ait la bonne structure
@@ -3371,6 +3383,7 @@ save(strtail_annee_mois,file=str_c(datawdy,"strtail_annee_moisenpourcentage.Rdat
 # On la colle à l'autre sur le côté avec un abind
 # On la remplit !
 # 
+
 YYCY <- tapply(eff$effectif,INDEX=list(eff$mois,eff$val_libelle),sum, na.rm=TRUE)
 YYCY[is.na(YYCY)] <- 0
 load(file=str_c(datawdym1,"YY.Rdata"))
@@ -3389,9 +3402,9 @@ save(YY, file=str_c(datawdy,"YY.Rdata"))
 
 # pour faire les graphes des tailles corrigées
 load(file=str_c(datawdy,"strtail_annee_mois.Rdata"))
-####################
-# Generation de plusieurs figures
-###################
+
+# Generation de plusieurs figures -----------------
+
 for (theCY in 2010:CY){
 	year <- as.character(theCY)
 	choix <- match(year,dimnames(strtail_annee_mois)[[2]])
@@ -3407,7 +3420,8 @@ for (theCY in 2010:CY){
 	rownames(don)= 1:107
 	colnames(don)=c("01","02","03","04","05","06","07","08","09","10","11","12")
 	don <- don[,12:1]
-#==============================================================
+
+	
 	png(str_c(imgwdy,"str_taille_mois_redress",theCY,".png"))
 	matplot(don,xaxt="n",type="n",ylab="effectif par classe",xlab="classe de taille",main=iconv(paste("Structures en tailles mensuelles redressées",year),"UTF8"))
 	lesgros <- match(c(seq(from=100, to =500,by=50)),vecteur_coupures)
@@ -3417,11 +3431,12 @@ for (theCY in 2010:CY){
 	legend("topright",legend=c(1:12), title="mois",col=couleur_mois,fill=rev(couleur_mois),horiz=FALSE)
 	axis(1,1:107,paste("[",vecteur_coupures[1:107],"-",vecteur_coupures[2:108],"]",sep=''))  
 	dev.off()
-#==============================================================
+
+	
 }
-###########################
-# TRAVAIL CY
-##########################
+
+# TRAVAIL CY -------------------------------------
+
 cat(CY)
 # Bien recharger le debut et pas le Rdata
 #save(file=str_c(datawdy,"strage_annee_mois.Rdata"))
@@ -3836,9 +3851,9 @@ dev.off()
 
 
 
-###########################
+
 # définition du thème de couleur pour les civelles
-###########################
+
 color=c(
 		"#052945",#working
 		"#ECDAC0",#stopped
@@ -3861,9 +3876,9 @@ color_ope<-sample(c(mycolorramp1(10),mycolorramp2(10)),20)
 #image(1:length(mycolorramp2(10)), 1, as.matrix(1:length(mycolorramp2(10))), 
 #		col=mycolorramp2(10),
 #		xlab="", ylab = "", xaxt = "n", yaxt = "n", bty = "n")
-##################################
-# Civelles gabion
-##################################
+
+# Civelles gabion ------------------
+
 # si je fais tourner un bilanmigration multiple
 # je peux ouvrir une fenetre graphique pour le premier
 # pour les suivants de nouvelles fenêtres vont s'ouvri
@@ -3888,9 +3903,9 @@ plot(bMM_Arzal,plot.type="standard",
 		type="h",
 		silent=TRUE)
 dev.off()
-##################################
-# Civelles mur guide eau
-##################################
+
+# Civelles mur guide eau -----------
+
 bMM_Arzal=choice_c(bMM_Arzal,
 		dc=c(12),
 		taxa=c("Anguilla anguilla"),
@@ -3909,9 +3924,9 @@ plot(bMM_Arzal,plot.type="standard",
 		type="h",
 		silent=TRUE)
 dev.off()
-##################################
+
 # Définition du thème de couleur pour les anguilles
-##################################
+
 
 color=c(
 		"#052945",#working
@@ -3926,9 +3941,9 @@ color=c(
 		"#B67B2D", #expert
 		"#4F7EA2" # ponctuel
 )
-##################################
-# Anguilles jaunes gabion
-##################################
+
+# Anguilles jaunes gabion -------------------------
+
 
 bMM_Arzal <- choice_c(bMM_Arzal,
 		dc=c(6),
@@ -3951,9 +3966,9 @@ plot(bMM_Arzal,plot.type="standard",
 		silent=TRUE)
 dev.off()
 
-##################################
-# Anguilles jaunes mur guide eau
-##################################
+
+# Anguilles jaunes mur guide eau -----------------
+
 bMM_Arzal <- choice_c(bMM_Arzal,
 		dc=c(12),
 		taxa=c("Anguilla anguilla"),
@@ -3976,9 +3991,9 @@ plot(bMM_Arzal,plot.type="standard",
 dev.off()
 
 
-##################################
-# Anguilles jaunes passe à bassins
-##################################
+
+# Anguilles jaunes passe à bassins ----------------
+
 bMM_Arzal <- choice_c(bMM_Arzal,
 		dc=c(5),
 		taxa=c("Anguilla anguilla"),
@@ -4068,9 +4083,9 @@ ccf(flu$denscs[3:16],flu$recr_flu_aj_m1[1:14]) # 2 year lag
 cor(flu$denscs[3:16],flu$recr_flu_aj_m1[1:14]) # 0.73
 cor(flu$denscs[3:16],flu$recr_flu_aj_m2[1:14]) # 0.77
 cor(flu$denscs[3:16],flu$recr_flu_aj_m3[1:14]) # 0.78
-##########################
-# graphique du rapport
-##########################
+
+# graphique du rapport (recr flu) ------------------------
+
 require(grDevices)
 X11()
 par("mar"=c(5.1,5.1,4.1,5.1))
@@ -4121,9 +4136,9 @@ legend("topright",legend=iconv(c("recrutement fluvial passe",
 		fill=c("blue","slateblue1","skyblue","red"),				
 		bty="n")
 legend(6,2,legend=iconv("densités en pêche électrique Y+2","utf8"),col="limegreen",pch=19,bty="n")
-########################################
-## premier graphique de l'animation
-##########################################
+
+## premier graphique de l'animation 
+
 ## les fichiers .png permettent de gérer la transparence
 #png(filename = "C:/Documents and Settings/cedric/Mes documents/Migrateur/programmes/workspace3.5/various/transport1.png", width = 800, height = 600, bg = "transparent")
 #par(fg="white",col.axis="white",col.lab="white",col.main="white",cex=2)
@@ -4137,9 +4152,9 @@ legend(6,2,legend=iconv("densités en pêche électrique Y+2","utf8"),col="limeg
 #par(fg="black",col.axis="black",col.lab="black",col.main="black",cex=1)
 #dev.off()
 ## returns to default setting
-########################################
+
 ## deuxième graphique de l'animation
-##########################################
+
 ## les fichiers .png permettent de gérer la transparence
 #png(filename = "C:/Documents and Settings/cedric/Mes documents/Migrateur/programmes/workspace3.5/various/transport2.png", width = 800, height = 600, bg = "transparent")
 #par(fg="white",col.axis="white",col.lab="white",col.main="white",cex=2)
@@ -4153,9 +4168,9 @@ legend(6,2,legend=iconv("densités en pêche électrique Y+2","utf8"),col="limeg
 #par(fg="black",col.axis="black",col.lab="black",col.main="black",cex=1)
 #dev.off()
 ## returns to default setting
-########################################
+
 ## troisième graphique de l'animation
-##########################################
+
 ## les fichiers .png permettent de gérer la transparence
 #png(filename = "C:/Documents and Settings/cedric/Mes documents/Migrateur/programmes/workspace3.5/various/transport3.png", width = 800, height = 600, bg = "transparent")
 #par(fg="white",col.axis="white",col.lab="white",col.main="white",cex=2)
@@ -4465,20 +4480,20 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 %==========================================================================
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.5\textwidth]{report_df_1996_2023.png}
+\includegraphics[width=0.5\textwidth]{report_df_1996_2024.png}
 \caption{Fonctionnement de la passe principale du barrage d'Arzal (gabion en
-rive gauche) de 1996 à 2023.}
-\label{report_df_1996_2023}
+rive gauche) de 1996 à 2024.}
+\label{report_df_1996_2024}
 \end{figure}
 %==========================================================================
 %==========================================================================
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.5\textwidth]{report_dc_1996_2023.png} 
+\includegraphics[width=0.5\textwidth]{report_dc_1996_2024.png} 
 \caption{Bilan du fonctionnement du dispositif de comptage (piège) de la passe principale du barrage d'Arzal (gabion en
 rive gauche) de 1996 à
-2023.}
-\label{report_dc_1996_2023}
+2024.}
+\label{report_dc_1996_2024}
 \end{figure}
 
 %==========================================================================
@@ -4582,7 +4597,7 @@ de l'anguille sur le bassin versant de la Vilaine, 2007}\\
     \Sexpr{vvv[["AGJ"]][["maxrank"]]} années de suivi.     
     Ce rapport détaille les
     conditions de recrutement, capture, migration ainsi que l'évolution des
-    caractéristiques biologiques des civelles en 2023.\par
+    caractéristiques biologiques des civelles en 2024.\par
     \vspace{8mm}
   \textbf{Abstract}\par
   
@@ -4602,7 +4617,7 @@ de l'anguille sur le bassin versant de la Vilaine, 2007}\\
     \Sexpr{vvv[["AGJ"]][["maxrank"]]} years of monitoring. 
     This report details
     the catch, migration, and evolution of biological characteristics of glass
-    eel in 2023.}\par
+    eel in 2024.}\par
     \vspace{8mm}
     \textbf{Mots clés:}\par
 	anguille jaune, \sep civelle, \sep capture, \sep recrutement fluvial, \sep
