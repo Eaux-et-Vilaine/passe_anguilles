@@ -31,7 +31,7 @@
 \usepackage[T1]{fontenc}  %gestion des accents (pour les pdf) 
 
 %\usepackage[english]{babel}
-\usepackage[francais]{babel} % guillemets \og text \fg{}
+\usepackage[french]{babel} % guillemets \og text \fg{}
 \usepackage{aeguill} % guillemets
 
 %https://tex.stackexchange.com/questions/464585/what-tips-and-tricks-should-i-know-when-using-the-georgia-font-in-latex/464586
@@ -45,7 +45,8 @@
    Scale = 1.0,
    BoldFont = Segoe UI Semibold ,
    BoldItalicFont = Segoe UI Semibold Italic]
-\setmathfont{Segoe UI}
+%\setmathfont{Segoe UI}
+\setmathfont{latinmodern-math.otf}
 % define a new font family called with comment \titlefont{...}
 \newfontfamily\titlefont{Georgia} 
 
@@ -86,9 +87,12 @@
 \definecolor{bleuazur}{RGB}{48,113,162}
 \definecolor{marron}{RGB}{70,40,0}
 \definecolor{graysudo}{RGB}{45,47,44}
+\definecolor{vert_clair_BGM}{RGB}{118, 198, 199}
+\definecolor{vert_fonce_BGM}{RGB}{5, 70, 88}
 %%============================================================
 %% BIBLIOGRAPHY SETUP
 %%============================================================
+\usepackage{csquotes} % recommended with biblatex
 \usepackage[style=authoryear, %numeric
             natbib=true, % citep and citet
             %backend=biber, % default for biblatex
@@ -111,9 +115,10 @@ citecolor=bleuazur,
 filecolor=bleu_EV, 
 urlcolor=bleu_EV, 
 pdftitle= {Suivi des migrations d'anguilles (\textit{Anguilla anguilla}, L.)
-au barrage d'Arzal. Rapport 2024}, pdfauthor={Cédric Briand},
+au barrage d'Arzal. Rapport 2024}, 
+pdfauthor={Cédric Briand},
 pdfsubject={anguille},
- pdfkeywords={anguille} {pêche électrique} {marquage}
+pdfkeywords={anguille} {pêche électrique} {marquage}
 }
 \renewcommand{\sectionmark}[1]{\markboth{}{\emph{\thesection~#1}}}
 \renewcommand{\subsectionmark}[1]{\markboth{}{\emph{\thesubsection~#1}}}
@@ -122,12 +127,6 @@ pdfsubject={anguille},
 
 
 
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\fancyhf{}
-\rhead{\rightmark}
-\lhead{Rapport anguilles 2024}
-\cfoot{Page \thepage}
 
 
 %% The \url{...} command does all the work: It sets the enclosed expression in the appropriate typewriter style font, it takes care of any necessary linebreaking, and it chooses break points intelligently (e.g., between components of an address), and it ensures that special symbols such as the tilde symbol or the "at" symbol get typeset correctly.
@@ -139,6 +138,17 @@ pdfsubject={anguille},
 \usepackage{longtable}
 \usepackage{booktabs}
 \usepackage[a4paper, inner=1.5cm, outer=1.5cm, top=2cm, bottom=3cm]{geometry}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\rightmark}
+\lhead{Rapport anguilles 2024}
+\cfoot{Page \thepage}
+
+% Adjust \\headheight for fancyhdr
+\setlength{\headheight}{13.59999pt}
+\addtolength{\topmargin}{-1.6pt}
 
 %%============================================================
 %%============================================================
@@ -275,6 +285,8 @@ table-figures-exponent=1}
 
 \begin{document}
 \newgeometry{right=0.5cm, left=1.5cm, top=1cm, bottom=1cm}
+\begin{document}
+\newgeometry{right=0.5cm, left=1.5cm, top=1cm, bottom=1cm}
 \begin{titlepage} 
 \thispagestyle{empty}
 \begingroup % similar to { with all settings are confined to this group ... 
@@ -284,60 +296,41 @@ table-figures-exponent=1}
 \vfill
 \includegraphics[%width=\paperwidth,
 height=\paperheight,%
-keepaspectratio]{../2024/frontpage.png}%
+keepaspectratio]{../frontpage.pdf}%
 %\vfill
 }}}%
-
-\hfill%
-\begin{minipage}{0.28\textwidth}
+\begin{minipage}{0.8\textwidth}
+\vspace{11cm}
 \par\sffamily\selectfont
-\vspace{4cm}
-\Large 
-Suivi des migrations d'anguilles (\textit{Anguilla anguilla}, L.)
-au barrage d'Arzal, rapport 2024.\\
-\vspace{2cm}\\
+\Large \textbf{
+    {\titlefont Suivi des migrations d'anguilles (\textit{Anguilla anguilla},
+    L.) sur la Vilaine.
+    \color{vert_clair_BGM} Rapport 2024.}} \par  
+ \vspace{0.5cm}
+\centering{\Large{\color{vert_fonce_BGM}{\titlefont
+Cédric Briand, Brice Sauvaget, Gérard Eriau \par}}}
+ \vspace{0.5cm}
+ \color{black}{\large{\titlefont Date d'édition :}}
+\qquad \color{vert_clair_BGM}\large{\titlefont Mars 2025}
+\end{minipage}
+%
+\begin{minipage}{0.28\textwidth}
 \includegraphics[width=\textwidth]{../logo_EV} 
 \end{minipage}
-\vfill
-\vspace{1.5cm}
-\hfill{ %
+%
 \begin{minipage}{0.28\textwidth}
-\textbf{
-Date d'édition :\\}
-\color{orange_EV}
-\begin{center}
-\Large
-Avril 2024
-\end{center}
-\vspace{1cm}\\
+\centering{\textbf{Réalisé avec le concours de} : \par} 
 \end{minipage}
-}%
-       
-
-\hfill{ %
-\begin{minipage}{0.28\textwidth}
-\textbf{Réalisé avec le concours de} :\\ 
-\vspace{0.1cm}
+\hfill{
+\begin{minipage}{0.4\textwidth}
 % le logo de l'agence doit au moins faire 25 mm de haut      
 \centering{\includegraphics[height=20mm]{../logo_agence.png}} 
 \includegraphics[height=20mm]{../logo_region_bretagne.png}
 \end{minipage}
-}%  
-\vfill
-\hfill{ %
-\begin{minipage}{0.3\textwidth}
-\large
-\color{bleu_EV}
-\leftskip=1cm
-Léa Patau\par
-Cédric Briand\par   
-Brice Sauvaget\par
-Gérard Eriau\par
-\vspace{1cm}
-\end{minipage}
-}% 
+}
 \endgroup
 \end{titlepage}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -370,7 +363,7 @@ au barrage d'Arzal, }}\\
 \noindent
 {\color{turquoise_EV}\rule{0.9\textwidth}{1.8pt}}\\
 \vspace{5mm}
-{\color{jaune_EV}{\Large \itshape{Léa Patau, Cédric Briand, Brice
+{\color{jaune_EV}{\Large \itshape{Cédric Briand, Brice
 Sauvaget, Gérard Eriau}}}
 \end{center}
 \end{minipage}
@@ -383,7 +376,7 @@ Sauvaget, Gérard Eriau}}}
 \vspace{2cm}
 \begin{minipage}{0.8\textwidth}
 \begin{center}
-\hspace{3cm}{\color{white}{\huge \itshape{Avril 2024}}}
+\hspace{3cm}{\color{white}{\huge \itshape{Mars 2025}}}
 \end{center}
 \end{minipage}
 \restoregeometry
@@ -590,8 +583,9 @@ options(list(
 				stacomiR.port = "5432",
 				stacomiR.user = user,
 				stacomiR.password = password,
-				stacomiR.printqueries =TRUE
+				stacomiR.printqueries =FALSE
 		))
+#printqueries mettre TRUE pour voir les requetes
 stacomi(TRUE,sch="iav", datawd=datawd)
 
 
@@ -647,14 +641,14 @@ options(sqldf.RPostgreSQL.user = user,
     
     Ainsi, la Vilaine est intégrée au
     réseau de suivi des rivières index dont l'objectif est la quantification des arrivées de civelles, 
-    du stock en place  et de la dévalaison.
+    du stock en place et de la dévalaison.
     
     Sur la
     Vilaine, les arrivées de civelles (recrutement) sont évaluées par un suivi
     de la pêcherie, des prélèvements biologiques
     réalisés auprès de la pêcherie professionnelle et des arrivées en estuaire
     non capturées. Les tendances du stock en place sont évaluées par un réseau de pêches électriques, et la
-    dévalaison des anguilles argentées est suivie à l'aide d'un didson (radar
+    dévalaison des anguilles argentées est suivie à l'aide d'un didson (sonar
     multifaisceau) placé dans le pertuis de la quatrième vanne du barrage
     d'Arzal.
     
@@ -677,16 +671,15 @@ Les montées de civelles et d'anguilles jaunes sont suivies depuis 1996 au
 L'estuaire de la Vilaine est limité à sa portion aval par le barrage d'Arzal,
 construit par l'Institution d'Aménagement de la Vilaine en 1970, et qui bloque
 l'onde de marée à 10 km de l'embouchure de l'estuaire.
-L'estuaire en amont, jusqu'à la limite historique de l'estuaire tital (barrages de la Potinais et de Malon, respectivement à 45 et 77 km en amont)
+L'estuaire en amont, jusqu'à la limite historique de l'estuaire tital 
+(barrages de la Potinais et de Malon, respectivement à 45 et 77 km en amont)
 a été transformé en rivière. Le plan d'eau ainsi créé a vu se développer de
-nouveaux usages dont les principaux sont la navigation et
-l'eau potable.
+nouveaux usages dont les principaux sont la navigation et l'eau potable.
 Le barrage d'Arzal joue aussi un rôle majeur dans la protection contre les crues de l'aval du bassin versant, 
-en empêchant les conjonctions de
-forts débits amont et de surcotes de marées.
-Ce barrage constitue ainsi une rupture nette entre des eaux saumâtres et douces. Il évacue le débit
-de la Vilaine qui avec \num{12400} km$^2$ couvre le tiers de la surface de la
-Bretagne.
+en empêchant les conjonctions de forts débits amont et de surcotes de marées.
+Ce barrage constitue ainsi une rupture nette entre des eaux saumâtres et douces. 
+Il évacue le débit de la Vilaine qui avec \num{12400} km$^2$ couvre le tiers de
+la surface de la Bretagne.
 L'embouchure, située au nord de la Loire, consitue une zone très favorable au
 recrutement de civelles, et la pêcherie installée au pied du barrage d'Arzal est
 très importante en volume de captures quand on la compare à l'ensemble des
@@ -708,7 +701,7 @@ Cette passe dispose de deux rampes.
 
 La première est accrochée au bajoyer du
 barrage, et plonge dans l'estuaire près des vannes (Figure
-\ref{figure_passe_gabion} D). Elle était sensée être placée au niveau d'un
+\ref{figure_passe_gabion} C). Elle était sensée être placée au niveau d'un
 contre courant, à un endroit où les navires de pêche rasant le barrage
 réalisaient les meilleures prises.
 En pratique elle est peu efficace, car les courants générés par les volets (ou clapets de surface) et les vannes (lorsque les
@@ -727,7 +720,8 @@ déterminer l'efficacité respective de chacune des rampes.
 \includegraphics[width=0.45\textwidth]{../plan_localisation.png}
 \caption{Situation géographique des deux passes à anguilles du barrage d'Arzal. 
 Le point au sud représente la passe en rive gauche, située sur le gabion, le
-point au nord représente la passe en rive droite, située sur le mur guideau à l'entrée de l'écluse. 
+point au nord représente la passe en rive droite, située sur le mur guide eau à
+l'entrée de l'écluse.
 Le rectangle orange correspond à l'emplacement de l'écluse.
 }
 \label{figure_plan_localisation}
@@ -753,7 +747,7 @@ gabion (Figure \ref{figure_passe_gabion_vue_aerienne} E), on trouve
 l'arrivée en estuaire des tuyaux des siphons. Ces tuyaux captent l'eau dans les
 fosses en amont immédiat du barrage et la rejettent en aval pour évacuer les lentilles d'eau salées qui s'accumulent en
 amont du barrage du fait du fonctionnement de l'écluse, avec un débit de
-l'ordre de 6 m $^3.s^{-1}$.
+l'ordre de 6 m$^3.s^{-1}$.
 En pratique, ces tuyaux rejettent l'essentiel du débit de la Vilaine lors des
 périodes d'étiage, et comme ils sont situés tout près de l'entrée de la rampe aval de la passe à
 anguilles du gabion, ils constituent un excellent débit d'attrait, qui vient
@@ -767,7 +761,7 @@ La passe du gabion dispose d'une conduite d'évacuation des anguilles. Ces
 dernières sont relâchées dans un bac où s'évacue le trop plein du piège à
 anguilles. Le tuyau traverse le barrage par la passe à bassins
 puis débouche en amont derrière les gabions (Figure
-\ref{figure_passe_gabion_vue_aerienne} trait en pointillés jaune)
+\ref{figure_passe_gabion_vue_aerienne}, trait en pointillés jaune)
 
 \begin{figure}[htpb]
 \centering
@@ -780,30 +774,28 @@ des civelles se fait par une conduite vers l'amont du barrage (trait pointillé 
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{../passe_gabion.png}
-\caption{La passe à anguilles du gabion, passe principale 1996-2024.}
+\caption{La passe à anguilles du gabion, passe principale, 1996-2024.}
 \label{figure_passe_gabion}
 \end{figure}
 
 Pour tenter d'augmenter l'efficacité de la passe à anguilles, une deuxième rampe
 a été construite en 2007, de l'autre côté du pertuis de vannes (Figure
 \ref{figure_passe_guide_eau} B). Cette rampe, aux dimensions plus modestes, 
-capte également l'eau en amont du barrage par une pompe de 70 m $^3.h^{-1}$
+capte également l'eau en amont du barrage par une pompe de 70 m$^3.h^{-1}$
 située en rive droite à l'amont immédiat de l'écluse. Elle est entourée d'un
 bâti blindé pour éviter le braconnage (Figure \ref{figure_passe_guide_eau} A).
 Cette rampe est équipée d'un bac de repos intermédiaire et d'un piège 
 (Figure \ref{figure_passe_guide_eau} C D). Elle ne dispose pas de conduite d'évacuation
 et en pratique, toutes les anguilles qui y sont collectées sont transportées
-dans des seaux, jusqu'à la passe du gabion, puis
+dans des seaux jusqu'à la passe du gabion, puis
 dénombrées, pesées et relâchées dans la conduite qui les ramène à l'amont du
 barrage (Figure \ref{figure_passe_gabion}).
 
 Comme la rampe aérienne de la passe du gabion, cette rampe relativement courte
 permet aux civelles de monter à partir de la mi-marée. Il arrive parfois que
-cette passe capture beaucoup de civelles, lorsque celles-ci s'accumulent le
-long du mur guide eau (Figure \ref{figure_passe_guide_eau} B), mais son efficacité 
-est en général plus réduite que la
-passe du gabion.
-
+cette passe capture beaucoup de civelles que celle du gabion, lorsque celles-ci
+s'accumulent le long du mur guide eau (Figure \ref{figure_passe_guide_eau} B), 
+mais son efficacité est en général plus réduite.
 
 
 
@@ -815,13 +807,12 @@ passe du gabion.
 \end{figure}
 
 \subsubsection{Protocole de suivi}
-Les
-opérations de relève sont quotidiennes, week-ends inclus quand les migrations sont importantes, mais plus espacées lorsque les effectifs d'anguilles jaunes et de
-civelles sont plus réduits (Figures \ref{bmm},
+
+Les opérations de relève sont quotidiennes, week-ends inclus quand les
+migrations sont importantes, mais plus espacées lorsque les effectifs d'anguilles jaunes et de civelles sont plus réduits (Figures \ref{bmm},
  \ref{bmm_agj_6}, \ref{bmm_agj_12}).
 Une webcam permet aux opérateurs de surveiller le bac, de s'assurer du
 fonctionnement de la pompe, et d'intervenir lorsque les effectifs augmentent.
-
 
 
 Le protocole de suivi dépend des effectifs présents dans le bac, les civelles
@@ -837,25 +828,27 @@ s'assurer, à la fin du mois, de la représentativité des échantillons, et
 anguilles de plus de 30 cm sont pesées et mesurées à part des autres, car elles peuvent
 former une proportion très importante du poids d'un lot pesé. Elles sont
 bancarisées à l'aide d'un code indiquant l'appartenance à la classe de taille
-des grandes anguilles > 30 cm (caractère qualitatif) et ce caractère permet de
+des grandes anguilles > 30 cm (caractère qualitatif), et ce caractère permet de
 les distinguer de l'échantillonnage aléatoire des anguilles pour la structure en taille.
 Des lots de civelles sont prélevés afin de faire l'objet d'une analyse
-de détail avec stades pigmentaires, taille et poids.
+en détail avec stades pigmentaires, taille et poids.
 
 \subsubsection{Saisie et calcul}
+
 Les données de migration sont saisies à l'aide de l'interface JAVA du logiciel
 stacomi, avec des opérations de durée variable en fonction de la fréquentation de la passe. 
 
 Dans les traitements, les effectifs journaliers sont calculés dans stacomiR au
 \textit{pro rata} de la durée de l'opération dans chaque journée. Pour obtenir
-des traitements cohérents, les effectifs à cheval sur deux années, sont
+des traitements cohérents, les effectifs à cheval sur deux années sont
 également répartis sur chaque année. 
 
 
 \subsubsection{Conversion poids - effectif}
+
 Comme il n'est pas possible de dénombrer les civelles lorsque les migrations
 sont importantes, la mesure de l'effectif de civelles est faite sur la base de
-pesées. Ensuite les effectifs sont recalculés sur la base d'un coefficient de
+pesées. Ensuite, les effectifs sont recalculés sur la base d'un coefficient de
 conversion basé sur le "poids humide" \footnote{Les civelles ne sont égoutées que partiellement lors
 des pesées pour éviter la perte de mucus, qui forme une barrière protectrice,
 et dont la dégradation peut entrainer des pathologies chez les civelles.} des
@@ -898,8 +891,8 @@ leur arrivée en estuaire (Formule \ref{eqn_guerault_desaunay}).
  doy&=jours juliens \\
 \end{aligned}
 \end{equation}
-Avec $t$ =jour, $T$= 365 jours, $a$, $b$, $c$ paramètres. Le jour $d'$ commence le
-premier août.
+Avec $t$ = jour, $T$= 365 jours, $a$, $b$, $c$ paramètres. Le jour $d'$ commence
+le premier août.
 Ce modèle a été utilisé lors des premières années de suivi de la passe, il
 permet d'ajuster une courbe par an.
 
@@ -924,6 +917,7 @@ compte une tendance "annuelle", une tendance interannuelle de long terme et un
 terme d'interactions.
 
 \subsubsection{Caractéristiques morphologiques des civelles de Vilaine}
+
 Des lots de civelles collectées dans la passe ou en estuaire font l'objet d'une
 analyse individuelle. Sur chaque individu, les paramètres suivants sont
 examinés : le stade pigmentaire, la taille au millimètre près, le poids à 0.001
@@ -1059,10 +1053,10 @@ dev.off()
 @
 Les captures de la pêcherie ont diminué depuis un maximum de
 209 tonnes en 1979 jusqu'à une valeur minimale de 2.1 tonnes en 2013.
-Globalement ces captures reflètent bien la fluctuation du recrutement. Le
+Globalement, ces captures reflètent bien la fluctuation du recrutement. Le
 médaillon en Figure \ref{figure_captures} illustre la part des échappements à la
-pêcherie, c'est à dire les montées sur la passe et l'estimation d'arrivées en
-estuaire non pêchées et n'ayant pas franchi la passe
+pêcherie, c'est à dire les montées sur la passe et l'estimation
+d'arrivées en estuaire non pêchées et n'ayant pas franchi la passe
 \citep{briand_DynamiquePopulationMigration_2009}.
 
 
@@ -1072,10 +1066,11 @@ estuaire non pêchées et n'ayant pas franchi la passe
 \caption{Tendances des captures de civelles en estuaire de Vilaine
 pour l'année \Sexpr{CY}.
 Les échappements estimés à l'aide du modèle GEMAC ou d'une hypothèse
-d'efficacité de la passe sont comparés aux captures en estuaire (données 1996-2005
-\citep{briand_DynamiquePopulationMigration_2009}).}
+d'efficacité de la passe sont comparés aux captures en estuaire 
+(données 1996-2005, \citep{briand_DynamiquePopulationMigration_2009}).}
 \label{figure_captures}
 \end{figure}
+
 Après 2005, pour estimer l'échappement à la pêche civelière, il serait
 nécessaire de disposer des données d'efforts journaliers de la pêcherie ainsi
 que des captures totales journalières. Ces données sont nécessaires à la
@@ -1091,9 +1086,10 @@ printanière, mais les chiffres obtenus alors que les
 conditions de température sont favorables à la montée sont difficiles à
 transposer à la capture des civelles en hiver. Il est nécessaire de rappeler
 ici que la mise en place des quotas de pêche a pu se traduire certaines années
-par des montées massives de civelles en janvier, alors que de telles montées n'avaient jamais lieu quand la pêche fonctionnait en continu
-au pied du barrage, les nuits de relève et les échappements à la pêcherie ne
-permettant pas aux civelles de disposer du temps nécessaire à leur changement de
+par des montées massives de civelles en janvier, alors que de telles montées 
+n'avaient jamais lieu quand la pêcherie fonctionnait en continu au pied du
+barrage, les nuits de relève et les échappements à la pêcherie ne permettant 
+pas aux civelles de disposer du temps nécessaire à leur changement de
 comportement les conduisant à utiliser les passes.
 
 \small
@@ -1101,10 +1097,10 @@ comportement les conduisant à utiliser les passes.
 \centering
 \caption{Captures de la pêcherie de civelles d'Arzal de 1995 à \Sexpr{CY},
 sources :
-1= Affaires Maritimes (données mareyeurs), 
-2= De Casamajor et Briand 2009 (OFIMER),
-3= Comité des pêches maritimes Auray-Vannes,
-4=télécapêche Vilaine (Comité des pêches maritimes Auray-Vannes). 
+1 = Affaires Maritimes (données mareyeurs), 
+2 = De Casamajor et Briand 2009 (OFIMER),
+3 = Comité des pêches maritimes Auray-Vannes,
+4 = télécapêche Vilaine (comité des pêches maritimes Auray-Vannes). 
 La date d'arrêt correspond à la date de fermeture de la pêche en fin de saison.}
 \label{tableau_captures}
 \begin{tabular}{llll}
@@ -1161,7 +1157,7 @@ station présentant le moins d'écart à la tendance moyenne des séries europé
 \caption{Indice de recrutement européen du WGEEL: moyenne géométrique des
 prédiction de recrutement (GLM) pour tous les sites en dehors de la mer du nord
 jusqu'à \Sexpr{CY}. Le modèle GLM ($recruit \sim area:year+site$) est calé sur
-les séries européennes de recrutement comprenant soit des civelles soit un
+les séries européennes de recrutement comprenant soit des civelles, soit un
 mélange de civelles et de jeunes anguilles jaunes. Ces données sont comparées à la
   série de recrutement de la Vilaine. Les deux séries sont
   ajustées pour que la moyenne des années 1960 et 1970 soit à 1. Les valeurs avant la fermeture du barrage 
@@ -1173,6 +1169,16 @@ mélange de civelles et de jeunes anguilles jaunes. Ces données sont comparées
 
 
 \subsection{Fonctionnement de la passe}
+
+La passe du gabion a fonctionné en continu toute l'année, jusqu'au 4 novembre
+où elle a été arrêtée pour cause de travaux sur les gabions aval (Figure
+\ref{fbmm_civelle_6}).
+
+La pompe de la passe du mur guide eau s'est arrêtée une nuit début mai. Les
+autres arrêts consistent en 4 week-ends, 2 semaines pendant les
+pêches électriques de septembre, et au 4 novembre pour les travaux sur les
+gabions aval (Figure \ref{fbmm_civelle_12}).
+
 
 <<report_df, echo=FALSE, eval=FALSE, include=FALSE>>=
 r_df <- new("report_df")
@@ -1207,7 +1213,7 @@ r_dc<-choice_c(r_dc,
 		horodatefin="2024-12-31",
 		silent=TRUE)
 r_dc1 <- connect(r_dc)
-png(filename=paste0(imgwdy,"report_dc_1996_2023.png"),width=8,height=20, units="in",res=300)
+png(filename=paste0(imgwdy,"report_dc_1996_2024.png"),width=8,height=20, units="in",res=300)
 plot(r_dc1,plot.type="1",main="")
 dev.off()
 
@@ -1377,7 +1383,7 @@ colnames(tnpm) <- c("annee","passe","estuaire $^*$")
 
 xtnpm <- xtable(tnpm,
 		caption=str_c("Nombre d'échantillons de poids moyen de civelles depuis ",start_year, " et jusqu'au 01 août ",
-				CY, " $^*$Données collectées en pêches expérimentales et par pêche professionnelle."),
+				CY." $^*$Données collectées en pêches expérimentales et par pêche professionnelle."),
 		label="tnpm",
 		digits=0)
 path_tmpm=file.path(tabwdy,"tnpm.tex",fsep ="")
@@ -1929,7 +1935,7 @@ Au total, en \Sexpr{CY} \footnote{jusqu'au 01/08/\Sexpr{CY})},
 \begin{figure}[!ht]
   \begin{center}
   \includegraphics[width=0.5\textwidth]{poids_sec.png}
-  \caption{\og Poids secs pour chaque individu \fg{} collectés en 
+  \caption{\og Poids secs individuels \fg{} collectés en 
   estuaire de Vilaine sur des échantillons achetés aux pêcheurs de civelles
   (source estuaire) et sur la passe en rive gauche du barrage d'Arzal (source
   passe). Chaque point représente un individu.}
@@ -1939,7 +1945,7 @@ Au total, en \Sexpr{CY} \footnote{jusqu'au 01/08/\Sexpr{CY})},
 %==========================================================================
  
  Parmi les modèles testés, le modèle des poids moyens
- \textsf{model.type="seasonal2"} ajuste bien la tendance de long terme.
+ \textsf{model.type = "seasonal2"} ajuste bien la tendance de long terme.
  Il traduit l'évolution positive du poids moyen des civelles
  depuis un minimum en 2009 jusqu'à un maximum en 2014 (Figure
  \ref{smpm_seasonal2}).
@@ -1948,22 +1954,22 @@ Au total, en \Sexpr{CY} \footnote{jusqu'au 01/08/\Sexpr{CY})},
   \begin{center}
   \includegraphics[width=0.45\textwidth]{smpm_seasonal2.png}
   \caption{Tendance saisonnière des poids moyens de 1996 à \Sexpr{CY}, calée
-  avec une tendance de long terme et une tendance saisonnière sinusoïde (model.type="seasonal2" dans
-  stacomiR). L'ajustement de long terme est correct mais les valeurs extrêmes
-  sont mal ajustées.}
+  avec une tendance de long terme et une tendance saisonnière sinusoïde
+  (model.type = "seasonal2" dans stacomiR). L'ajustement de long terme est
+  correct mais les valeurs extrêmes sont mal ajustées.}
   \label{smpm_seasonal2}
   \end{center}
 \end{figure}
 %==========================================================================
 
  Toutefois, ce modèle, ainsi que le modèle \textsf{model.type = "seasonal1"} -
- non présenté - basé sur des gam au lieu de sinusoides, imposent une tendance
+ non présenté - basé sur des gam au lieu de sinusoïdes, imposent une tendance
  cyclique commune à l'ensemble des années qui a du mal à ajuster les valeurs aux extrêmes.
  
  \textit{A contrario}, le modèle ajustant par année une tendance sinusoïde
  ajuste bien les tendances saisonnières de chaque année, mais pose deux autres problèmes.
- D'une part il introduit des ruptures de tendance d'une année sur l'autre,
- d'autre part il ajuste mal les années où des données sont manquantes (Figure
+ D'une part, il introduit des ruptures de tendance d'une année sur l'autre,
+ d'autre part, il ajuste mal les années où des données sont manquantes (Figure
  \ref{smpm_seasonal}).
  Dans l'ensemble, les données de poids moyen des premières 10 années, moins
  standardisées, sont plus difficiles à ajuster.
@@ -1991,7 +1997,7 @@ w \sim & s(yday, bs=cc, k=12) +\\
 \end{align}
 \end{equation}
 L'objectif est également de fournir dans le script
-de ce rapport, un exemple d'ajustement manuel tel que prévu dans le logiciel
+de ce rapport un exemple d'ajustement manuel tel que prévu dans le logiciel
 stacomiR.
 Les coefficients du modèle pour la partie linéaire (coefficients
 paramétriques) se réduisent à l'intercept (Tableau \ref{smpm.pc}).
@@ -2002,7 +2008,7 @@ cyclique pour la saison, une tendance de long terme, et une interaction à l'aid
 de produits tensoriels pour chaque saison \citep{wood_LowrankScaleinvariantTensor_2006} (Tableau
 \ref{smpm.st}, Figure \ref{smpm_t2}).
 
-Au final les prédictions du modèles et l'intervalle de confiance à 95\% sont
+Au final, les prédictions du modèles et l'intervalle de confiance à 95\% sont
 données en Figure \ref{smpm_manual}. 
 \small
 \input{\Sexpr{vvv[["PM"]][["path_spm_pc"]]}}
@@ -2055,6 +2061,10 @@ La migration des civelles pour \Sexpr{CY} s'établit à
     \Sexpr{vvv[["CIV"]][["rank"]]} ème rang sur
     \Sexpr{vvv[["AGJ"]][["maxrank"]]} années de suivi (Figure \ref{barplot_civelles_an}, tableau \ref{table_civelle}).
 
+L'année 2024 est particulière, avec des migrations
+sur la passe du mur guide eau (183 kg) très proches de celles de la passe du
+gabion (218 kg) (Figures \ref{bmm_civelle_6} et \ref{bmm_civelle_12}).
+
  %==========================================================================
 \begin{figure}[!ht]
   \begin{center}
@@ -2099,32 +2109,32 @@ active prendrait entre 15 et 30 jours pour une température de 8 à 12 degrés
 \citep[voir][p 186]{briand_DynamiquePopulationMigration_2009}. 
 Ainsi, sur la période historique précédant la mise en \oe uvre du plan de
 gestion, le constat a été effectué par modélisation que seules des mesures de gestion
-basées sur des fermetures saisonnières de la pêcherie, pouvaient conduire à un
+basées sur des fermetures saisonnières de la pêcherie pouvaient conduire à un
 échappement substantiel \citep[détails sur][figure 4]{beaulaton_EffectManagementMeasures_2007}.
 
 Les montées supérieures à quelques civelles par jour ont toujours
-débuté entre fin mars et début avril entre 1996 et 2009 (Figure
-\ref{figure_seasonal_civelles}). Après l'implémentation des plans de gestion, en
-2010 et 2011, l'exploitation a couvert l'ensemble de la saison, car les mesures
-de gestion saisonnières ont été retirées du plan de gestion dont la nouvelle
-mesure de régulation était le quota. Malheureusement, le quota a été basé sur
-des valeurs de captures qui correspondaient à un taux d'exploitation important
+débuté entre fin mars et début avril \textcolor{orange_EV}{entre 1996 et
+2009} (Figure \ref{figure_seasonal_civelles}). Après l'implémentation des 
+plans de gestion, \textcolor{orange_EV}{en 2010 et 2011}, l'exploitation a 
+couvert l'ensemble de lasaison, car les mesures de gestion saisonnières ont été 
+retirées du plan de gestion dont la nouvelle mesure de régulation était le
+quota. Malheureusement, le quota a été basé sur des valeurs de captures qui correspondaient à un taux d'exploitation important
 sur la Vilaine, et la poursuite de la baisse du recrutement s'est traduite par
 des niveaux de quotas supérieurs aux arrivées effectives sur la Vilaine. Les effectifs totaux en migration sur les passes d'Arzal se sont
 vraiment effondrés avec des poids de 5.9 et 2.7 kg (pour des captures de 3 et 3.9 tonnes - Tableau \ref{tableau_captures}). Du point de vue de la saisonnalité, ces deux
 années sont donc difficilement interprétables car les effectifs y sont trop
 faibles.
 
-A partir de 2012, les arrivées de civelles ont connu une augmentation (Figure
-\ref{figure_recrutement}).
+\textcolor{orange_EV}{A partir de 2012}, les arrivées de civelles ont connu
+une augmentation (Figure \ref{figure_recrutement}).
 Les quotas, qui étaient alors toujours calculés sur une
 tendance à la baisse, n'ont plus dépassé le recrutement. La pression de
 pêche a également diminué du fait d'une diminution du nombre de navires.
 Ainsi, l'estuaire a connu des périodes continues sans pêche.
 La saisonnalité des arrivées en a été bouleversée. Les températures parfois
-clémentes, ont autorisé la migration de civelles sur les passes, dont les
-effectifs hebdomadaires en janvier, février ou mars ont pu dépasser 1 million de
-civelles par semaine (Figure \ref{figure_seasonal_civelles}). 
+clémentes ont autorisé la migration de civelles sur les passes, dont les
+effectifs hebdomadaires en janvier, février ou mars ont pu dépasser 1 million
+d'individus (Figure \ref{figure_seasonal_civelles}).
 
 
 
@@ -2132,9 +2142,9 @@ civelles par semaine (Figure \ref{figure_seasonal_civelles}).
 \begin{figure}[!ht]
   \begin{center}
   \includegraphics[width=0.45\textwidth]{plot_seasonal_civelles.png}
-  \caption{Migrations de civelles sur les deux dispositifs du barrage d'Arzal,
-  chaque cluster indique l'effectif ayant migré cette semaine, la barre
-  horizontale indique les quantiles 5\% et 95\% de la migration.
+  \caption{Migrations de civelles sur les deux dispositifs du barrage d'Arzal.
+  Chaque cluster indique l'effectif ayant migré sur une semaine standard, la
+  barre horizontale indique les quantiles 5\% et 95\% de la migration.
   En couleur, période entre la première arrivée de civelles et la
   dernière, avec une couleur relative à l'importance des effectifs en migration.
   En gris, période inclue entre la première et la dernière arrivée de civelles
@@ -2191,26 +2201,35 @@ la première semaine de mars. L'essentiel des montées a été observé fin mars
 Les arrivées de civelles ont été très précoces, 
 et il y a eu la plus forte migration pour un mois de décembre avec 61 kg lors de la dernière semaine.
 
-Les arrivées de civelles pour l'année \textcolor{orange_EV}{2024} ont été
+En \textcolor{orange_EV}{2023}, les arrivées de civelles ont été
 importantes et très précoces par rapport aux années
-précédentes. Ces montées correspondent à un arrêt de la pêcherie dès fin
-décembre 2022 et à une fenêtre de conditions environnementales favorables à la
-migration, avec fait exceptionnel, une migration des civelles pendant tout
-l'hiver. L'essentiel de la migration a eu lieu
-au mois de février qui dépasse largement la moyenne historique (Figure \ref{figure_barchart_bmi_civelles}).
-Au niveau des deux passes, quatres pics de migration sont observés début
-janvier, début et fin février, et mi-mars (Figures \ref{bmm_civelle_6} et \ref{bmm_civelle_12}). La saison de
-pêche s'est arrêtée le 19 mars, période après laquelle la migration a été
-faible.
-Egalement, il est important de noter que le poids moyen des civelles en 2024
-est largement supérieur à ceux relevés les années pré‐
-cédentes.
+précédentes avec, fait exceptionnel, une migration pendant tout l'hiver. 
+Les mois de décembre 2022 et février constituent des nouveaux records
+historiques. La saison de pêche s'est arrêtée le 19 mars, période après laquelle
+la migration a été faible. Il est important de noter que le poids moyen des
+civelles en 2023 est largement supérieur à ceux relevés depuis le début des
+suivis.
+
+\textcolor{orange_EV}{2024}
+Points importants
+arrivées assez précoces, et le quota consommation a été atteint fin janvier
+faibles demandes pour les pêches de repeuplement
+fin de la saison professionnelle dès le 29 février-1er mars
+peu de migration lors des interruptions de pêche courant février, et peu
+d’arrivées par la suite
+? pic de migration a eu lieu le 7 avril avec 65 kg
+
+
+(Figure \ref{figure_barchart_bmi_civelles})
+(Figures \ref{bmm_civelle_6} et \ref{bmm_civelle_12}). 
+
 
 Le détail mensuel de la migration de \textcolor{orange_EV}{2024} (en effectif) est donné en annexe aux
 Tableaux \ref{table_civelle_mois_6} et \ref{table_civelle_mois_12}. Les Tableaux
 \ref{table_civelle_6} et \ref{table_civelle_12} synthétisent la migration par
 an, à la fois en poids et en effectif.
 \onecolumn
+
 \subsection{Migration des civelles en \Sexpr{CY} (graphiques)}
 
 
@@ -2219,9 +2238,9 @@ an, à la fois en poids et en effectif.
   \begin{center}
   \includegraphics[width=0.8\textwidth]{barchart_bmi_civelles.png}
   \caption{Comparaison des migrations de civelles de l'année \Sexpr{CY} à la
-  tendance historique. En gris, valeurs min et max et moyenne (hist\_mean), en
-  bleu valeurs maximales, en bleu clair valeurs supérieures à la moyenne, en marron valeurs inférieures à la
-  moyenne.}
+  tendance historique. En gris = valeurs min, max et moyenne (hist\_mean), en
+  bleu = valeurs maximales, en bleu clair = valeurs supérieures à la moyenne, 
+  en marron = valeurs inférieures à la moyenne.}
   \label{figure_barchart_bmi_civelles}
   \end{center}
 \end{figure}
@@ -2230,10 +2249,10 @@ an, à la fois en poids et en effectif.
 \begin{figure}[htbp]
   \begin{center}
   \includegraphics[width=\textwidth]{bmm_civelle_6}
-  \caption{Bilan migration du piège principal en rive gauche, le bilan montre
+  \caption{Bilan migration du piège principal en rive gauche. Le bilan montre
   aussi la conversion entre les poids et les effectifs, 
-  les fonctionnement du dispostif de franchissement (DF), du
-  piège (DC), et les opérations de contrôle (Op).}
+  les fonctionnements du dispostif de franchissement (DF), 
+  du piège (DC), et les opérations de contrôle (Op).}
   \label{bmm_civelle_6}
   \end{center}
 \end{figure}
@@ -2242,9 +2261,10 @@ an, à la fois en poids et en effectif.
 \begin{figure}[htbp]
   \begin{center}
   \includegraphics[width=\textwidth]{bmm_civelle_12}
-  \caption{Bilan migration du piège secondaire, en rive droite, le bilan montre aussi la conversion entre les poids et les effectifs, 
-  les fonctionnement du dispostif de franchissement (DF), du
-  piège (DC), et les opérations de contrôle (Op).}
+  \caption{Bilan migration du piège secondaire, en rive droite. Le bilan montre
+  aussi la conversion entre les poids et les effectifs, 
+  les fonctionnements du dispostif de franchissement (DF), 
+  du piège (DC), et les opérations de contrôle (Op).}
   \label{bmm_civelle_12}
   \end{center}
 \end{figure}
@@ -2394,8 +2414,8 @@ tab <- inner_join(
 colnames(tab) <- c("Année","N","P")
 tab[,2] <- round(tab[,2])
 tab[,3] <- round(tab[,3],1)
-xtbili6 <- xtable(tab,caption="Montées de civelles dans la passe principale du barrage d'Arzal (gabion en rive gauche), $N$ nombre,
-				$P$ poids (en kg).",
+xtbili6 <- xtable(tab,caption="Montées de civelles dans la passe principale du barrage d'Arzal (gabion en rive gauche). $N$ = nombre,
+				$P$ = poids (en kg).",
 		label="table_civelle_6",
 		digits=c(0,0,0,2),
 		display = c("s","s","f","f"))
@@ -2433,8 +2453,8 @@ tab[,3] <- round(tab[,3],1)
 vvv[["CIV"]][["12"]] <- list()
 vvv[["CIV"]][["12"]][["N"]] <- as.numeric(tab[tab[,1]==CY,"N"])
 vvv[["CIV"]][["12"]][["P"]] <- as.numeric(tab[tab[,1]==CY,"P"])
-xtbili12 <- xtable(tab,caption="Montées de civelles sur la passe secondaire du barrage d'Arzal (mur guide eau en rive droite), $N$ nombre,
-				$P$ poids (en kg).",
+xtbili12 <- xtable(tab,caption="Montées de civelles sur la passe secondaire du barrage d'Arzal (mur guide eau en rive droite). $N$ = nombre,
+				$P$ = poids (en kg).",
 		label="table_civelle_12",
 		digits=c(0,0,0,2),
 		display = c("s","s","f","f"))
@@ -2500,9 +2520,12 @@ colnames(lsm[['12']])  <-  c("Mois","Min*","Moyenne*","Max*","N (2024)")
 colnames(lsm[['6']])   <-  c("Mois","Min*","Moyenne*","Max*","N (2024)")
 #==================== xtable6 ===================================
 xtsm6  <-  xtable(lsm[['6']],caption=str_c("Montées de civelles \\textsf{(en milliers)} dans la passe principale du barrage
-						d'Arzal (gabion en rive gauche), données par mois, \\textsf{N (",CY,")} effectifs par mois pour ",CY," , les trois statistiques * correspondent à la période
-						1996-",CY,".	\\textsf{min}* minimum mensuel, \\textsf{max}* maximum mensuel, 
-						\\textsf{moyenne}* moyenne des effectifs mensuels."),
+						d'Arzal (gabion en rive gauche). Données par mois, \\textsf{N (",CY,")} = effectifs par mois pour ",CY,". 
+                        Les trois statistiques * correspondent à la période
+						1996-",CY,".
+                        \\textsf{min}* = minimum mensuel,
+                        \\textsf{max}* = maximum mensuel, 
+						\\textsf{moyenne}* = moyenne des effectifs mensuels."),
 		label="table_civelle_mois_6",
 		display = c("s","s","f","f","f","f"))
 path_civ6m  <-  file.path(tabwdy,
@@ -2517,12 +2540,13 @@ print(xtsm6,
 		table.placement=c("htbp"))
 vvv[["CIV"]][["path_civ6m"]] <- path_civ6m
 #==================== xtable12 ===================================
-xtsm12  <-  xtable(lsm[['12']],caption=str_c("Montées de civelles \\textsf{(en milliers)} sur la passe secondaire du barrage d'Arzal (mur guide eau en rive droite), données
-						par mois, les trois statistiques * correspondent à la période
-						2008-",CY,". \\textsf{N (",CY,")} effectif par mois pour ",CY,
-				"\\textsf{min}* minimum mensuel, 
-						\\textsf{max}* maximum mensuel, 
-						\\textsf{moyenne}* moyenne des effectifs mensuels."),
+xtsm12  <-  xtable(lsm[['12']],caption=str_c("Montées de civelles \\textsf{(en milliers)} sur la passe secondaire du barrage 
+                        d'Arzal (mur guide eau en rive droite). Données par mois. 
+                        Les trois statistiques * correspondent à la période
+						2008-",CY,". \\textsf{N (",CY,")} = effectif par mois pour ",CY,".
+				        \\textsf{min}* = minimum mensuel, 
+						\\textsf{max}* = maximum mensuel, 
+						\\textsf{moyenne}* = moyenne des effectifs mensuels."),
 		label="table_civelle_mois_12",
 		display = c("s","s","f","f","f","f"))
 path_civ12m  <-  file.path(tabwdy,
@@ -2566,19 +2590,21 @@ qui classe cette année comme la \Sexpr{vvv[["AGJ"]][["rank"]]} ème sur \Sexpr{
   \begin{center}
   \includegraphics[width=0.5\textwidth]{bilan_annuel_agj.png}
   \caption{Tendance de migration des anguilles jaunes sur les trois dispositifs
-  du barrage, les anguilles migrant par la passe à bassins, sont très peu
+  du barrage, les anguilles migrant par la passe à bassins sont très peu
   nombreuses et n'apparaissent pas pour cette raison.
-  12 mur guide-eau, 5 passe à bassins, 6 gabion.}
+  12 = mur guide eau, 5 = passe à bassins, 6 = gabion.}
   \label{bilan_annuel_agj}
   \end{center}
 \end{figure}
 %==========================================================================
-La majeure partie des effectifs concerne des petites anguilles d'âge zéro et un,
-puis la migration diminue pour les classes suivantes.  La migration a un
-caractère saisonnier marqué avec une migration très importante en novembre et supérieure à la moyenne en janvier
-(Figures \ref{figure_saisonnalite_agj} et \ref{figure_seasonal_agj}).
-Les débits de la Vilaine et les coefficients de
-marée sont des éléments prédicteurs de l'intensité migratoire.
+La majeure partie des effectifs concerne des petites anguilles d'âge 0 et 1,
+puis la migration diminue pour les classes suivantes. 
+La saisonnalité des migrations est marquée, avec les périodes les plus
+favorables au printemps - début d'été, puis en fin d'été et en automne 
+(Figure \ref{figure_saisonnalite_agj}.
+Les coefficients de marée (au printemps) et les débits de la Vilaine
+(généralement en automne) sont des éléments prédicteurs de l'intensité
+migratoire.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \small
 \input{\Sexpr{vvv[["AGJ"]][["path_agj"]]}}
@@ -2604,8 +2630,9 @@ sur les années 2013-2015 semble aussi concerner les anguilles jaunes (Figure
   \begin{center}
   \includegraphics[width=0.49\textwidth]{plot_seasonal_agj.png}
   \caption{Migrations d'anguilles jaunes sur les deux dispositifs du barrage
-  d'Arzal, chaque cluster indique l'effectif ayant migré cette semaine, la barre
-  horizontale indique les quantiles 5\% et 95\% de la migration.
+  d'Arzal. Chaque cluster indique l'effectif ayant migré sur une semaine
+  standard, la barre horizontale indique les quantiles 5\% et 95\% de la
+  migration.
   En couleur, période entre la première arrivée d'anguilles jaunes et la
   dernière, avec une couleur relative à l'importance des effectifs en migration.
   En gris, période inclue entre la première et la dernière arrivée d'anguille
@@ -2616,22 +2643,23 @@ sur les années 2013-2015 semble aussi concerner les anguilles jaunes (Figure
 \end{figure}
 %==========================================================================
 
-La figure \ref{figure_barchart_bmi_agj} montre une migration \Sexpr{CY}
-globalement inférieure à la moyenne interannuelle de mars à juillet et pour les
-mois d'août et de décembre.
-Le mois de novembre montre une migration exceptionnelle, beaucoup plus
-importante que les années précédentes (Figure \ref{figure_seasonal_agj}).
+La figure \ref{figure_barchart_bmi_agj} montre que la migration \Sexpr{CY}
+a été régulière toute l'année, avec des passages supérieurs à la moyenne sur les
+quatre premiers mois et en octobre avec l'arrivée de la première crue. Cette
+tendance automnale rappelle celle de l'année précédente (2023) où des migrations 
+importantes avaient été déclenchées en octobre et novembre par la première crue.
 
-Cette tendance contraste globalement avec celle de l'année précédente (2022)
-où des migrations
-inférieures à la moyenne ont étés observées (excepté au mois de décembre).
-Cette année la migration printanière est consistuée d'anguilles jaunes de petite
-taille < 150 mm (Figures \ref{boxplot_taille_agj}, pour la structure en taille Figure
-\ref{civ_ang_cohorte}).
-(\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/ESZvGDLLuz9KiIVdrwVnVYoBQSDRPKLAm-CiNwjjwmFVjw?e=b6YyVl}{Rapport
-2022}, et figure \ref{str_taille_mois_redress2021}).
-C'est donc la cohorte de 2021 qui forme le gros des effectifs et il n'y
-a pas eu beaucoup de civelles en estuaire pour constituer la cohorte de 2022.
+Cette année, la migration hivernale est constituée d'anguilles jaunes de
+petite taille < 150 mm. Les anguilles > 150 mm, peu nombreuses, ont migré au
+printemps et à l'automne. Les anguillettes d'âge 0 et 1 < 100 mm sont très peu
+représentées (Figures \ref{boxplot_taille_agj}, pour la structure par cohorte 
+Figure \ref{civ_ang_cohorte}).
+Après les fortes arrivées de civelles en 2023, le phénomène observé en 2013, et
+à moindre échelle en 2014, avec les importantes migrations d'anguillettes < 100
+mm était attendu mais n'a pas eu lieu (Figures \ref{str_taille_mois_redress2013}
+et \ref{str_taille_mois_redress2014}). Il est probable que la sédentarisation
+estuarienne ait été meilleure en 2012 et 2013 qu'en 2023, et qu'ainsi les
+civelles de 2024 ont bénéficié de place disponible en estuaire.
 
 
 %==========================================================================
@@ -2639,9 +2667,9 @@ a pas eu beaucoup de civelles en estuaire pour constituer la cohorte de 2022.
   \begin{center}
   \includegraphics[width=0.45\textwidth]{barchart_bmi_agj.png}
   \caption{Comparaison des migrations d'anguilles jaunes de l'année \Sexpr{CY} à la
-  tendance historique. En gris, valeurs min et max et moyenne (hist\_mean), en
-  bleu valeurs maximales, en bleu clair valeurs supérieures à la moyenne, en marron valeurs
-  inférieures à la moyenne.}
+  tendance historique. En gris = valeurs min, max et moyenne (hist\_mean), 
+  en bleu = valeurs maximales, en bleu clair = valeurs supérieures à la moyenne,
+  en marron = valeurs inférieures à la moyenne.}
   \label{figure_barchart_bmi_agj}
   \end{center}
 \end{figure}
@@ -2780,15 +2808,14 @@ anguilles jaunes mesurées sur la passe vont de la taille civelle (minimum 60 mm
 à des tailles de 480 mm. De plus grandes anguilles peuvent être rencontrées dans
 la passe à bassins mais la quantification des migrations sur les vitres de vidéo
 comptage est difficile et incomplète pour les plus petites anguilles (de moins
-de 25-30 cm).
+de 250-300 mm).
 En période de migration, des civelles sont parfois observées devant les vitres de la passe, lorsque cette
-dernière est fermée à pleine mer. Il est possible que certaines puissent venir
-de l'amont, pour des civelles et des anguillettes relâchées par la conduite
-d'évacuation de la passe à anguilles. Il semble que l'essentiel correspond à des
+dernière est fermée à pleine mer. Il est possible que certaines viennent de
+l'amont, pour des civelles et des anguillettes relâchées par la conduite d'évacuation de la passe à anguilles. Il semble que l'essentiel correspond à des
 civelles rentrées au droit de fuites à l'aval.
-Les migrations de petites anguilles dans la passe, si elles interviennent parfois, 
-sont quand même limitées par l'importance de la chute aval de la passe à bassins qui est
-généralement règlée à 300 mm. Elles n'interviennent en général qu'autour de
+Les migrations de petites anguilles dans la passe à bassins, si elles
+interviennent parfois, sont quand même limitées par l'importance de la chute aval de la passe à bassins qui est
+généralement réglée à 300 mm. Elles n'interviennent en général qu'autour de
 la marée haute, quand les vannes de la passe se ferment. Les effectifs très
 faibles des anguilles comptées dans la passe à bassins attestent d'eux même 
 de l'efficacité relative des passes, et de la sélectivité de la caméra vis à vis
@@ -2807,18 +2834,17 @@ des petites tailles (Tableau \ref{table_bilanannuel_ang}).
 
 Les données de taille individuelle sont réparties par classe de 5 mm 
 puis redressées à partir des effectifs mensuels migrant sur les
-deux passes à anguilles d'Arzal (Figure \ref{str_taille_mois_redress2024}). La
-taille médiane des anguilles jaunes varie entre 124 et 180 mm.
-Lorsqu'on compare la structure en taille de \Sexpr{CY} aux structures
-en taille des années précédentes (Figures \ref{str_taille_mois_redress2010} à \ref{str_taille_mois_redress2022}), on
-observe clairement la prédominance des anguilles de l'année en 2013 et 2014, et des arrivées 
-plus diffuses en 2010, 2011, 2012, 2016, 2018, 2020 et 2021.
-
-
-En 2015, 2017 et 2019, le mode correspondant aux anguilles de petite taille est
-absent, et il est très faible en 2022. En 2024, le
- mode est bien marqué mais on observe tout de même une prédominance des
- anguilles de taille 150 à 200 mm. 
+deux passes à anguilles d'Arzal (Figure \ref{str_taille_mois_redress2024}).
+Lorsqu'on compare la structure en taille de \Sexpr{CY} aux structures en taille 
+des années précédentes (Figures \ref{str_taille_mois_redress2010} à
+\ref{str_taille_mois_redress2023}), on observe clairement la prédominance des 
+anguilles de l'année en 2013 et 2014, et des arrivées plus diffuses pour les
+autres années, à l'exception de 2021 et de 2024 où l'on retrouve des bonnes
+proportions d'anguilles d'âge 0, mais en nombre limité. En 2015, 2017 et 2019,
+le mode correspondant aux anguilles de petite taille est absent, et il est très 
+faible en 2022.
+str_taille_mois_redress2020 EST FAUSSE !
+ 
 %==========================================================================
 \begin{figure}[htbp]
   \begin{center}
@@ -2874,7 +2900,7 @@ effectifs (Figure \ref{migration_par_cohorte}).
   \includegraphics[width=0.5\textwidth]{../civ_ang_cohorte.png}
   \caption{Migration des anguilles jaunes et des civelles sur les passes du
   barrage d'Arzal entre 1996 et \Sexpr{CY}. En haut, chaque tuile représente une
-  année et une cohorte à l'exception de la cohorte d'âge zéro (en haut) qui est
+  année et une cohorte à l'exception de la cohorte d'âge 0 (en haut) qui est
   séparée en une tuile correspondant aux civelles (à gauche) et une tuile
   correspondant aux anguillettes d'âge zéro (à droite). En ligne, on peut lire
   l'intensité migratoire d'une cohorte au cours de plusieurs années successives,
@@ -3110,7 +3136,7 @@ sink(file =vvv[["ANG"]][["path_angtaille"]] , append = TRUE)
 print(latex.tabular(tt))
 sink()
 cat("\\label{summary_taille_yellow}",file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
-cat(sprintf("\\caption{Moyenne et écart types des tailles d'anguilles $\\tau$ par mois, et nombre d'échantillons collectés en %s}", CY),file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
+cat(sprintf("\\caption{Moyenne et écart types des tailles d'anguilles $\\tau$ par mois, et nombre d'échantillons collectés en %s}", CY.),file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
 cat("\\end{center}", file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
 cat("\\end{table}", file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
 
@@ -3832,12 +3858,12 @@ grdata <- get('grdata',envir_stacomi)
 # je renomme le facteur DC pour les titres
 levels(grdata$DC) <- c(
 		"Passe bassins",
-		"Piege anguille gabion",
+		"Piege gabion",
 		"Piege guide eau")
 p <- ggplot(grdata,aes(x=debut_pas,y=effectif_total,fill=DC))+
 		geom_bar(position="stack", stat="identity")+
 		facet_grid(stage~.,scales="free_y")+
-		scale_fill_manual(values=c("Piege guide eau"="#66A1D2","Piege anguille gabion"="#043C6B","Passe bassins"="#D2A25F"))+ # couleurs à la main...
+		scale_fill_manual(values=c("Piege guide eau"="#66A1D2","Piege gabion"="#043C6B","Passe bassins"="#D2A25F"))+ # couleurs à la main...
 		ylab("Effectif par stade et DC")+	
 		xlab("Date")+
 		theme_bw()+
@@ -4224,10 +4250,8 @@ développement.
   \begin{center}
   \includegraphics[width=\textwidth]{bmm.png}
   \caption{Bilan migration multiple, combinant trois stades de développement et
-  les trois dispositifs de comptage d'Arzal. Le bilan montre qu'en effectif la
-  migration est dominée par les civelles, et que cette année comme les autres
-  années, la passe du gabion en rive gauche du barrage concentre la majeure
-  partie des effectifs.}
+  les trois dispositifs de comptage d'Arzal. Le bilan montre qu'en effectif, la
+  migration est largement dominée par les civelles.}
   \label{bmm}
   \end{center}
 \end{figure}
@@ -4289,10 +4313,10 @@ bilA <- connect(bilA)
 # the following works but xtable alone fails if the xtable package is loaded 
 xtbilA <- stacomiR::xtable(bilA,
 		caption="Migration du stade anguille argentée sur les trois
-				passes du barrage d'Arzal, (Piège RG = passe piège historique
-				sur le gabion, Piège RD = passe du mur guide eau). Les effectifs des opérations à cheval sur deux années sont re-
-				répartis au pro-rata des effectifs de chaque année. (\\textit{Note : Le stade des anguilles est difficile à déterminer
-				en suivi vidéo, et la plupart des anguilles migrant dans la passe à bassins sont classées comme jaunes}.)",
+				passes du barrage d'Arzal (Piège RG = passe piège historique
+				sur le gabion, Piège RD = passe du mur guide eau). Les effectifs des opérations à cheval sur deux années sont 
+				re-répartis au pro-rata des effectifs de chaque année (\\textit{Note : le stade des anguilles est difficile à déterminer
+				en suivi vidéo, et la plupart des anguilles migrant dans la passe à bassins sont classées comme jaunes}).",
 		label="table_bilanannuel_agg",
 		dc_name=c("Passe à bassins","Piège RG","Piège RD"),
 		tax_name="Anguille",
@@ -4509,6 +4533,9 @@ d'Arzal.}
 \toprule
 Année & Rapport \\
 \midrule
+2023 &
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/ER5GHvMhd7hIm7U0xgXtt5YBzTVgcGsewPAMu5IUjMxGKQ?e=oJfWao}{Gestion
+de l'anguille sur le bassin versant de la Vilaine, 2023}\\
 2022 &
 \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/ESZvGDLLuz9KiIVdrwVnVYoBQSDRPKLAm-CiNwjjwmFVjw?e=b6YyVl}{Gestion
 de l'anguille sur le bassin versant de la Vilaine, 2022}\\
@@ -4516,7 +4543,7 @@ de l'anguille sur le bassin versant de la Vilaine, 2022}\\
 \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EabAMF4YvrJJhxYU8-pm6JwBSLrjt05hvlhTO2kxb84Aag?e=jin4mN}{Gestion
 de l'anguille sur le bassin versant de la Vilaine, 2021}\\
 2020 & 
-\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EW-2QQTSoD9FpPhbYVu-a3AB9npKbMDot_uzgq5rmyPypQ?e=4mDh9c}{Gestion
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/Efo5G35HM99Dq-0cqLe4DrgBjXye8FjC1yNOflilC_NmFw?e=Hadm11}{Gestion
 de l'anguille sur le bassin versant de la Vilaine, 2020}\\
 2019 & 
 \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/ETDtwCgRvDdNvaOV2v0c00UB8lpBnTtIIK0RdzMEgJ1Tdw?e=wLSPHY}{Gestion
@@ -4546,7 +4573,7 @@ de l'anguille sur le bassin versant de la Vilaine, 2012}\\
 \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EZ0IH5pAPIZPhIeVRMSPyOQBhZLSSKhMQawnxSSojp9HYg?e=mrJ6QN}{Gestion
 de l'anguille sur le bassin versant de la Vilaine, 2011}\\
 2010 &
-\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EZ0IH5pAPIZPhIeVRMSPyOQBhZLSSKhMQawnxSSojp9HYg?e=jt6eGl}{Gestion
+\href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/ESLi1jHYH1RHjpI3cSoMCyUB1y6mOJZ87qmc5EyIzHvAQg?e=5FPiha}{Gestion
 de l'anguille sur le bassin versant de la Vilaine, 2010}\\
 2009 &
 \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/EaETHfUUMHxCjaQVHxUG9gkB84o0r67zc3eMOr9amZBzPw?e=arkrQP}{Gestion
@@ -4601,7 +4628,7 @@ de l'anguille sur le bassin versant de la Vilaine, 2007}\\
     \vspace{8mm}
   \textbf{Abstract}\par
   
-    \textit{ The migration on the two main eel fishways of the Arzal dam is
+    \textit{The migration on the two main eel fishways of the Arzal dam is
     estimated at \Sexpr{sn(vvv$CIV$N)} glass eel for a weight of \Sexpr{sn(vvv$CIV$P)} kg in 
     \Sexpr{CY}, which ranks this year as the
     \Sexpr{vvv[["CIV"]][["rank"]]}$^{th}$ on
