@@ -457,6 +457,8 @@ tabwd<-"C:/workspace/passe_anguilles/table/"
 # en vrai les données annuelles sont dans des sous répertoires par année
 imgwdy<-str_c(imgwd,CY,"/")
 tabwdy<-str_c(tabwd,CY,"/")
+dir.create(imgwdy, showWarnings = FALSE)
+dir.create(tabwdy, showWarnings = FALSE)
 # une petite option pour simplifier la construction des tableaux en latex
 # avec xtable, par défaut je ne veux pas des titres des lignes
 options("xtable.include.rownames"=FALSE)
@@ -931,37 +933,76 @@ après année, les caractéristiques biologiques des civelles arrivant de l'océ
 <<captures, eval=FALSE, include=FALSE, echo=FALSE>>=
 # les données ont été copiées depuis "X:\Migrateur\Migration\Arzal\Pêcherie civelle\serie_pro_vilaine.xls"
 # onglet feuille_base. elles correspondent aux données du tableau ci-dessous
-capt <- read.table(str_c(datawd,"serie_vilaine.csv"),header=TRUE, sep=";")
-# je passe en stack
-capt<-capt[,c(1,2,3)]
-colnames(capt)<-c("Saison","Capture","Echappement")
 
-capt<-melt(capt,id.vars="Saison",variable.name="type",value.name="Q")
-capt$type<-factor(capt$type,levels(capt$type)[c(2,1)])
+# formaté avec tidy_source
+if (!require("formatR"))
+  install.packages("formatR")
+library("formatR")
+if (!require("readxl"))
+  install.packages("readxl")
+library("readxl")
+orangetr <- makeTransparent("orange", alpha = 0.2)
+## décommenter pour recharcher les données
+serie <- read_excel(
+  path = str_c(
+    "T:/12-PoleMAB/Socle/Migrateurs/anguille/pecherie/",
+    "serie_pro_vilaine.xlsx"
+  ),
+  sheet = "bilan_gestion",
+  range = str_c("A2:AE", CY - 1996 + 4)
+)
+serie <- serie[-1, ]  # lignes avec kg ou effectif
+serie <- killfactor(serie)
+serie[2:ncol(serie)] <- apply(serie[2:ncol(serie)], 2, function(x)
+  as.numeric(x))
+col_with_number <- grep("[_n]{2}$", colnames(serie))
+## je ramène à des vrais effectifs
+serie[, col_with_number] <- 
+serie[, col_with_number] <- round(as.numeric(serie[, col_with_number]) * 10^6)
+## pour plus de sûreté on va chercher les résultats du rapport passe
+serie[, "passe_total_n"] <- vvv$CIV$data$Ngl
+serie$passe_relachees_n <- rowSums(
+  cbind(
+    serie$passe_total_n,
+    -serie$passe_mortes_n,
+    -serie$passe_marquage_n
+  ),
+  na.rm = TRUE
+)
+serie[, "passe_total_kg"] <- vvv$CIV$data$Pgl
+serie$passe_relachees_kg <- rowSums(
+  cbind(
+    serie$passe_total_kg,
+    -serie$passe_mortes_kg,
+    -serie$passe_marquage_kg
+  ),
+  na.rm = TRUE
+)
+## récupération de la structure en age des anguilles
+## A partir des calculs de cohorte pour l'instant effectués dans rapport_anguille
+serie$annee <- substr(serie$saison, 6, 9)
+serie$saison <- gsub("-", "_", serie$saison)
+serie[serie$annee > 2017, c("transport_CLPMEM_kg", "transport_CLPMEM_n")] <- NA # transport Aulne
+
+save(serie, file = str_c(datawd, "serie.Rdata"))
+
+capt <- serie[, c("saison", "capture_pecherie_kg")]
+colnames(capt)<-c("Saison","Capture")
+
+#capt<-melt(capt,id.vars="Saison",variable.name="type",value.name="Q")
+#capt$type<-factor(capt$type,levels(capt$type)[c(2,1)])
 
 
-transparent_theme <- theme(
-		axis.title.x = element_blank(),
-		axis.title.y = element_blank(),
-		#axis.text.x = element_blank(), 
-		axis.text.y = element_blank(),
-		axis.ticks = element_blank(),
-		panel.grid = element_blank(),
-		axis.line = element_blank(),
-		panel.background = element_rect(fill = "transparent",colour = NA),
-		plot.background = element_rect(fill = "transparent",colour = NA))
+
 
 png(filename=str_c(imgwdy,"captures.png"))
 #ggthemr(fresh2, type="outer", layout="scientific", spacing=0.8)
-g<-ggplot(capt)+geom_col(aes(x=Saison,y=Q,fill=type))+ylab("Civelle (Tonnes)")
-g1<-ggplot(capt[capt$Saison>1995&capt$Saison<=2005,])+geom_col(aes(x=Saison,y=Q,fill=type),show.legend=FALSE)+
-		transparent_theme+ scale_x_continuous(breaks=c(1996,2000,2004))
-# Create the external graphical elements
-# called a "grop" in Grid terminology
-g1_grob = ggplotGrob(g1)
-g<-g+annotation_custom(g1_grob, xmin=1985, xmax=2024, ymin=50, ymax=200)
+g <- ggplot(capt)+
+   geom_col(aes(x=Saison,y=Capture/1000), fill=bleu_clair_EV)+
+   scale_x_discrete(breaks=c("1995_1996","2000_2001","2005_2006","2010_2011","2015_2016","2020_2021")) +
+   theme_bw() +
+   ylab("Civelle (Tonnes)")
 print(g)
-#ggthemr_reset()
 dev.off()
 @
 
@@ -1047,9 +1088,6 @@ g1 <- ggplot(dat1,aes(x=year,y=p_std_1960_1979))+xlab("")+
 		scale_x_date(date_breaks= "10 years", date_minor_breaks= "5 years",date_labels = "%Y")
 print(g1)
 dev.off()		
-
-
-
 @
 Les captures de la pêcherie ont diminué depuis un maximum de
 209 tonnes en 1979 jusqu'à une valeur minimale de 2.1 tonnes en 2013.
@@ -1383,7 +1421,7 @@ colnames(tnpm) <- c("annee","passe","estuaire $^*$")
 
 xtnpm <- xtable(tnpm,
 		caption=str_c("Nombre d'échantillons de poids moyen de civelles depuis ",start_year, " et jusqu'au 01 août ",
-				CY." $^*$Données collectées en pêches expérimentales et par pêche professionnelle."),
+				CY,"$Données collectées en pêches expérimentales et par pêche professionnelle."),
 		label="tnpm",
 		digits=0)
 path_tmpm=file.path(tabwdy,"tnpm.tex",fsep ="")
@@ -1398,6 +1436,9 @@ vvv[["PM"]][["path_tnpm"]] <- path_tmpm
 #'========================================================
 
 png(file=str_c(imgwdy,"smpm_seasonal.png"),width=12,height=10,unit="cm",res=300)
+# il y a des données > CY ça fait planter le modèle
+bilPM@calcdata[["data"]] <-
+   bilPM@calcdata[["data"]][bilPM@calcdata[["data"]]$date < strptime(str_c(CY,"-12-31"), format ="%Y-%m-%d"),]
 bilPM <- model(bilPM,model.type="seasonal")
 dev.off()
 
@@ -1811,6 +1852,7 @@ p <- ggplot(aes(x=date,y=weight_g,colour=source),data=d2) +
 
 print(p)
 dev.off()
+names(d2)[names(d2) == "source"] <- "loc"
 @
 
 
@@ -1840,7 +1882,7 @@ dev.off()
 # Vilaine only - effect of pigmentation stage --------------------------
 
 
-d2vil<- d2[d2$intraseasonal=="Vilaine",]
+d2vil <- d2[d2$intraseasonal=="Vilaine",]
 d2vil$pigm[is.na(d2vil$pigm)]<-"0"
 
 d2vil <- d2vil[complete.cases(d2vil[,c("sample","pigm","time","loc","yday","size_cm")]),]
@@ -2211,17 +2253,15 @@ civelles en 2023 est largement supérieur à ceux relevés depuis le début des
 suivis.
 
 \textcolor{orange_EV}{2024}
-Points importants
-arrivées assez précoces, et le quota consommation a été atteint fin janvier
-faibles demandes pour les pêches de repeuplement
-fin de la saison professionnelle dès le 29 février-1er mars
-peu de migration lors des interruptions de pêche courant février, et peu
-d’arrivées par la suite
-? pic de migration a eu lieu le 7 avril avec 65 kg
-
-
-(Figure \ref{figure_barchart_bmi_civelles})
-(Figures \ref{bmm_civelle_6} et \ref{bmm_civelle_12}). 
+Les arrivées semblent avoir été assez précoces, et le quota
+consommation a été atteint fin janvier, dans un contexte de faibles demandes
+pour les pêches de repeuplement. Ainsi la fin de la saison professionnelle est
+intervenue très tôt par rapport aux autres années, dès le 29 février-1er mars.
+Malgré cette situation, il n'y a eu sur la passe que peu de
+migration lors des interruptions de pêche courant février, 
+et peu d’arrivées par la suite en fin de saison, ce qui est inattendu. Le pic
+de migration a eu lieu le 7 avril avec 65 kg (Figure
+\ref{figure_barchart_bmi_civelles}, \ref{bmm_civelle_6} et \ref{bmm_civelle_12}).
 
 
 Le détail mensuel de la migration de \textcolor{orange_EV}{2024} (en effectif) est donné en annexe aux
@@ -3136,7 +3176,7 @@ sink(file =vvv[["ANG"]][["path_angtaille"]] , append = TRUE)
 print(latex.tabular(tt))
 sink()
 cat("\\label{summary_taille_yellow}",file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
-cat(sprintf("\\caption{Moyenne et écart types des tailles d'anguilles $\\tau$ par mois, et nombre d'échantillons collectés en %s}", CY.),file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
+cat(sprintf("\\caption{Moyenne et écart types des tailles d'anguilles $\\tau$ par mois, et nombre d'échantillons collectés en %s.}", CY),file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
 cat("\\end{center}", file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
 cat("\\end{table}", file=vvv[["ANG"]][["path_angtaille"]],sep="\n",append=TRUE)
 
@@ -3839,7 +3879,7 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 
 
 
-<<bilan_migration, echo=FALSE, eval=FALSE, include=FALSE >>=
+<<bilan_migration, echo=FALSE, eval=TRUE, include=FALSE >>=
 
 bMM_Arzal <- new("report_mig_mult")
 bMM_Arzal <- choice_c(bMM_Arzal,
@@ -4294,7 +4334,7 @@ développement.
   \end{center}
 \end{figure}
 %==========================================================================
-<<bilan_annuels_anguilleargentee, echo=FALSE, eval=FALSE, include=FALSE >>=
+<<bilan_annuels_anguilleargentee, echo=FALSE, eval=TRUE, include=FALSE >>=
 require(stacomiR)
 # launching stacomi without selecting the scheme or interface
 # the following script will load the Arzal dataset if connected to iav schema
@@ -4676,8 +4716,6 @@ Dernière compilation : le \today\par
 \Sexpr{sanitizeLatexS(print(version["version.string"]))}\par
 \noindent\hrulefill\par
 \end{minipage}}
-
-
 
 
 \end{document}
