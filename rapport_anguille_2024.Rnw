@@ -1209,13 +1209,13 @@ mélange de civelles et de jeunes anguilles jaunes. Ces données sont comparées
 \subsection{Fonctionnement de la passe}
 
 La passe du gabion a fonctionné en continu toute l'année, jusqu'au 4 novembre
-où elle a été arrêtée pour cause de travaux sur les gabions aval (Figure
-\ref{fbmm_civelle_6}).
+où elle a été arrêtée pour cause de travaux sur les gabions aval (Figures
+\ref{fbmm_civelle_6}, \ref{report_df_1996_2024}, \ref{report_dc_1996_2024}).
 
 La pompe de la passe du mur guide eau s'est arrêtée une nuit début mai. Les
 autres arrêts consistent en 4 week-ends, 2 semaines pendant les
 pêches électriques de septembre, et au 4 novembre pour les travaux sur les
-gabions aval (Figure \ref{fbmm_civelle_12}).
+gabions aval (Figure \ref{fbmm_civelle_12}, \ref{report_dc12_1996_2024}).
 
 
 <<report_df, echo=FALSE, eval=FALSE, include=FALSE>>=
@@ -1255,6 +1255,15 @@ png(filename=paste0(imgwdy,"report_dc_1996_2024.png"),width=8,height=20, units="
 plot(r_dc1,plot.type="1",main="")
 dev.off()
 
+r_dc<-choice_c(r_dc,
+		12,
+		horodatedebut="1996-01-01",
+		horodatefin="2024-12-31",
+		silent=TRUE)
+r_dc1 <- connect(r_dc)
+png(filename=paste0(imgwdy,"report_dc12_1996_2024.png"),width=8,height=15, units="in",res=300)
+plot(r_dc1,plot.type="1",main="")
+dev.off()
 #save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 @
 
@@ -2052,6 +2061,7 @@ de produits tensoriels pour chaque saison \citep{wood_LowrankScaleinvariantTenso
 
 Au final, les prédictions du modèles et l'intervalle de confiance à 95\% sont
 données en Figure \ref{smpm_manual}. 
+
 \small
 \input{\Sexpr{vvv[["PM"]][["path_spm_pc"]]}}
 \normalsize
@@ -2874,16 +2884,19 @@ des petites tailles (Tableau \ref{table_bilanannuel_ang}).
 
 Les données de taille individuelle sont réparties par classe de 5 mm 
 puis redressées à partir des effectifs mensuels migrant sur les
-deux passes à anguilles d'Arzal (Figure \ref{str_taille_mois_redress2024}).
+deux passes à anguilles d'Arzal (Figure
+\ref{str_taille_mois_redress2024_in_report}).
 Lorsqu'on compare la structure en taille de \Sexpr{CY} aux structures en taille 
 des années précédentes (Figures \ref{str_taille_mois_redress2010} à
-\ref{str_taille_mois_redress2023}), on observe clairement la prédominance des 
+\ref{str_taille_mois_redress2024}), on observe clairement la prédominance des 
 anguilles de l'année en 2013 et 2014, et des arrivées plus diffuses pour les
-autres années, à l'exception de 2021 et de 2024 où l'on retrouve des bonnes
+autres années, à l'exception de 2021, 2023 et 2024 où l'on retrouve des bonnes
 proportions d'anguilles d'âge 0, mais en nombre limité. En 2015, 2017 et 2019,
 le mode correspondant aux anguilles de petite taille est absent, et il est très 
-faible en 2022.
-str_taille_mois_redress2020 EST FAUSSE !
+faible en 2022. En conclusion pour l'année en cours, les migrations d'anguilles
+d'âge 0 sont conséquentes, supérieures à la moyenne mais pas exceptionnelles
+(Figure \ref{civ_ang_cohorte}.
+
  
 %==========================================================================
 \begin{figure}[htbp]
@@ -2891,7 +2904,7 @@ str_taille_mois_redress2020 EST FAUSSE !
   \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2024.png}
   \caption{Structure en taille des anguilles jaunes en \Sexpr{CY} (redressée par
   les effectifs mensuels en migration).}
-  \label{str_taille_mois_redress2024}
+  \label{str_taille_mois_redress2024_in_report}
   \end{center}
 \end{figure}
 %==========================================================================
@@ -3675,8 +3688,8 @@ cols=
 p  <-  ggplot(sty, aes(x=annee,y=cohorte))
 (p <-  p + geom_tile(aes(fill=classe)) + 			
 			xlab("")+ylab("Cohorte")+
-			scale_y_continuous(breaks=c(1990,1995,2000,2005,2010,2015),minor_breaks=c(1991:2015))+
-			scale_x_continuous(breaks=c(1995,2000,2005,2010,2015),minor_breaks=c(1992:2015))+
+			scale_y_continuous(breaks=c(1990,1995,2000,2005,2010,2015,2020),minor_breaks=c(1991:CY))+
+			scale_x_continuous(breaks=c(1995,2000,2005,2010,2015,2020),minor_breaks=c(1992:CY))+
 			theme_black())
 #### CIVELLES
 stc=st[1:nbcol,]
@@ -3709,7 +3722,7 @@ p2 <- ggplot(civelles,aes(x=annee,y=N.e3))
 (p2 <- p2+geom_point(aes(size=N.e3,colour=classe),show.legend=FALSE)+
 			xlab("Annee")+ylab("Effectif civelles x1000")+
 			scale_colour_manual(name="Effectif",values =cols)+
-			scale_x_continuous(breaks=c(1995,2000,2005,2010,2015),minor_breaks=c(1992:2015))+
+			scale_x_continuous(breaks=c(1995,2000,2005,2010,2015, 2020),minor_breaks=c(1992:CY))+
 			theme_black())
 
 
@@ -3879,7 +3892,7 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 
 
 
-<<bilan_migration, echo=FALSE, eval=TRUE, include=FALSE >>=
+<<bilan_migration, echo=FALSE, eval=FALSE, include=FALSE >>=
 
 bMM_Arzal <- new("report_mig_mult")
 bMM_Arzal <- choice_c(bMM_Arzal,
@@ -4334,7 +4347,7 @@ développement.
   \end{center}
 \end{figure}
 %==========================================================================
-<<bilan_annuels_anguilleargentee, echo=FALSE, eval=TRUE, include=FALSE >>=
+<<bilan_annuels_anguilleargentee, echo=FALSE, eval=FALSE, include=FALSE >>=
 require(stacomiR)
 # launching stacomi without selecting the scheme or interface
 # the following script will load the Arzal dataset if connected to iav schema
@@ -4542,6 +4555,26 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 \end{figure}
 %==========================================================================
 %==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2023.png}
+  \caption{Structure en taille des anguilles jaunes en 2023 (redressée par
+  les effectifs mensuels en migration).}
+  \label{str_taille_mois_redress2023}
+  \end{center}
+\end{figure}
+%==========================================================================
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2024.png}
+  \caption{Structure en taille des anguilles jaunes en 2024 (redressée par
+  les effectifs mensuels en migration).}
+  \label{str_taille_mois_redress2024}
+  \end{center}
+\end{figure}
+%==========================================================================
+%==========================================================================
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.5\textwidth]{report_df_1996_2024.png}
@@ -4562,6 +4595,19 @@ rive gauche) de 1996 à
 
 %==========================================================================
 %==========================================================================
+\begin{figure}[htpb]
+\centering
+\includegraphics[width=0.5\textwidth]{report_dc12_1996_2024.png} 
+\caption{Bilan du fonctionnement du dispositif de comptage (piège) de la passe
+secondaire du barrage d'Arzal (gabion en rive droite) de 2007 à
+2024.}
+\label{report_dc12_1996_2024}
+\end{figure}
+
+%==========================================================================
+
+
+
 
 
 Versions précédentes des rapports annuels (table \ref{table_references}).
