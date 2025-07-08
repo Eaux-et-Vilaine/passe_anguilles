@@ -376,7 +376,7 @@ Sauvaget, Gérard Eriau}}}
 \vspace{2cm}
 \begin{minipage}{0.8\textwidth}
 \begin{center}
-\hspace{3cm}{\color{white}{\huge \itshape{Mars 2025}}}
+\hspace{3cm}{\color{white}{\huge \itshape{Juillet 2025}}}
 \end{center}
 \end{minipage}
 \restoregeometry
@@ -706,7 +706,8 @@ barrage, et plonge dans l'estuaire près des vannes (Figure
 \ref{figure_passe_gabion} C). Elle était sensée être placée au niveau d'un
 contre courant, à un endroit où les navires de pêche rasant le barrage
 réalisaient les meilleures prises.
-En pratique elle est peu efficace, car les courants générés par les volets (ou clapets de surface) et les vannes (lorsque les
+En pratique elle est peu efficace, car les courants générés par les volets (ou clapets de surface)
+et les vannes (lorsque les
 ouvertures se font par levée d'une vanne wagon) sont généralement assez
 violents dans la zone en hiver et au printemps. C'est à pleine mer, lorsque les
 niveaux mer dépassent le niveau Vilaine, et que la rampe est en eau, qu'elle est
@@ -773,6 +774,8 @@ aérienne du bajoyer, D local de stockage, E rampe dans le gabion. L'évacuation
 des civelles se fait par une conduite vers l'amont du barrage (trait pointillé jaune).}
 \label{figure_passe_gabion_vue_aerienne}
 \end{figure}
+
+
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{../passe_gabion.png}
@@ -1200,8 +1203,8 @@ mélange de civelles et de jeunes anguilles jaunes. Ces données sont comparées
   série de recrutement de la Vilaine. Les deux séries sont
   ajustées pour que la moyenne des années 1960 et 1970 soit à 1. Les valeurs avant la fermeture du barrage 
   (avant 1970) ne sont pas inclues dans cette standardisation ni dans la série de
-  recrutement européen. Les valeurs de 2012 à 2014 pour lesquelles les captures
-  ont été influencées par les quotas n'ont pas non plus été inclues (en orange).}
+  recrutement européen. Les valeurs de 2012 à \Sexpr{CY} pour lesquelles les
+  captures ont été influencées par les quotas n'ont pas non plus été inclues (en orange).}
 \label{figure_recrutement}
 \end{figure}
 
@@ -1210,12 +1213,12 @@ mélange de civelles et de jeunes anguilles jaunes. Ces données sont comparées
 
 La passe du gabion a fonctionné en continu toute l'année, jusqu'au 4 novembre
 où elle a été arrêtée pour cause de travaux sur les gabions aval (Figures
-\ref{fbmm_civelle_6}, \ref{report_df_1996_2024}, \ref{report_dc_1996_2024}).
+\ref{bmm_civelle_6}, \ref{report_df_1996_2024}, \ref{report_dc_1996_2024}).
 
 La pompe de la passe du mur guide eau s'est arrêtée une nuit début mai. Les
 autres arrêts consistent en 4 week-ends, 2 semaines pendant les
 pêches électriques de septembre, et au 4 novembre pour les travaux sur les
-gabions aval (Figure \ref{fbmm_civelle_12}, \ref{report_dc12_1996_2024}).
+gabions aval (Figure \ref{bmm_civelle_12}, \ref{report_dc12_1996_2024}).
 
 
 <<report_df, echo=FALSE, eval=FALSE, include=FALSE>>=
@@ -1430,7 +1433,7 @@ colnames(tnpm) <- c("annee","passe","estuaire $^*$")
 
 xtnpm <- xtable(tnpm,
 		caption=str_c("Nombre d'échantillons de poids moyen de civelles depuis ",start_year, " et jusqu'au 01 août ",
-				CY,"$Données collectées en pêches expérimentales et par pêche professionnelle."),
+				CY,". Données collectées en pêches expérimentales et par pêche professionnelle."),
 		label="tnpm",
 		digits=0)
 path_tmpm=file.path(tabwdy,"tnpm.tex",fsep ="")
@@ -2168,8 +2171,8 @@ Les montées supérieures à quelques civelles par jour ont toujours
 débuté entre fin mars et début avril \textcolor{orange_EV}{entre 1996 et
 2009} (Figure \ref{figure_seasonal_civelles}). Après l'implémentation des 
 plans de gestion, \textcolor{orange_EV}{en 2010 et 2011}, l'exploitation a 
-couvert l'ensemble de lasaison, car les mesures de gestion saisonnières ont été 
-retirées du plan de gestion dont la nouvelle mesure de régulation était le
+couvert l'ensemble de la saison, car les mesures de gestion saisonnières ont été 
+retirées du plan de gestion, dont la nouvelle mesure de régulation était le
 quota. Malheureusement, le quota a été basé sur des valeurs de captures qui correspondaient à un taux d'exploitation important
 sur la Vilaine, et la poursuite de la baisse du recrutement s'est traduite par
 des niveaux de quotas supérieurs aux arrivées effectives sur la Vilaine. Les effectifs totaux en migration sur les passes d'Arzal se sont
@@ -2648,7 +2651,7 @@ qui classe cette année comme la \Sexpr{vvv[["AGJ"]][["rank"]]} ème sur \Sexpr{
 \end{figure}
 %==========================================================================
 La majeure partie des effectifs concerne des petites anguilles d'âge 0 et 1,
-puis la migration diminue pour les classes suivantes. 
+puis la migration diminue pour les classes suivantes (Figure \ref{civ_ang_cohorte}). 
 La saisonnalité des migrations est marquée, avec les périodes les plus
 favorables au printemps - début d'été, puis en fin d'été et en automne 
 (Figure \ref{figure_saisonnalite_agj}.
@@ -2948,9 +2951,11 @@ Dans tous les cas, la migration du stade civelle domine numériquement les
 effectifs (Figure \ref{migration_par_cohorte}).
 
 %==========================================================================
+% new version, the file is svg exported by inkscape as pdf_tex
 \begin{figure}[htbp]
   \begin{center}
-  \includegraphics[width=0.5\textwidth]{../civ_ang_cohorte.png}
+  \def\svgwidth{\columnwidth}
+  \includegraphics[width=0.5\textwidth]{civ_ang_cohorte.pdf}
   \caption{Migration des anguilles jaunes et des civelles sur les passes du
   barrage d'Arzal entre 1996 et \Sexpr{CY}. En haut, chaque tuile représente une
   année et une cohorte à l'exception de la cohorte d'âge 0 (en haut) qui est
@@ -3727,7 +3732,7 @@ p2 <- ggplot(civelles,aes(x=annee,y=N.e3))
 
 
 require(grid)
-svg(str_c(imgwdy,"CIV_ANG_COHORTE.svg"))
+svg(str_c(imgwdy,"civ_ang_cohorte.svg"))
 vplayout  <-  function(x, y) {
 	viewport(layout.pos.row = x, layout.pos.col = y)  }
 grid::grid.newpage()
@@ -3737,6 +3742,19 @@ for (i in (40:35)){
 	print(p2,vp=vplayout(3,1:i))
 }
 dev.off()
+
+
+
+system2("inkscape",
+        args =  c( 
+                str_c(imgwdy,"civ_ang_cohorte.svg"),
+                 "--export-type=pdf",
+                 "--export-latex"))
+sytem
+# inkscape C:/workspace/passe_anguilles/image/2024/CIV_ANG_COHORTE.svg --export-type=pdf --export-latex
+
+
+
 
 #print(p)
 #print(p2)
