@@ -143,7 +143,7 @@ pdfkeywords={anguille} {pêche électrique} {marquage}
 \pagestyle{fancy}
 \fancyhf{}
 \rhead{\rightmark}
-\lhead{Rapport anguilles 2024}
+\lhead{Rapport anguilles 2025}
 \cfoot{Page \thepage}
 
 % Adjust \\headheight for fancyhdr
@@ -157,7 +157,7 @@ pdfkeywords={anguille} {pêche électrique} {marquage}
 %% your report.
 
 %% Makes a path to your graphics' folder.
-\graphicspath{{C:/workspace/passe_anguilles/image/2024/}}
+\graphicspath{{C:/workspace/passe_anguilles/image/2025/}}
 
 %-----------------------------
 % package pour les unités
@@ -305,7 +305,7 @@ keepaspectratio]{../frontpage.pdf}%
 \Large \textbf{
     {\titlefont Suivi des migrations d'anguilles (\textit{Anguilla anguilla},
     L.) sur la Vilaine.
-    \color{vert_clair_BGM} Rapport 2024.}} \par  
+    \color{vert_clair_BGM} Rapport 2025.}} \par  
  \vspace{0.5cm}
 \centering{\Large{\color{vert_fonce_BGM}{\titlefont
 Cédric Briand, Brice Sauvaget, Gérard Eriau \par}}}
@@ -358,7 +358,7 @@ Cédric Briand, Brice Sauvaget, Gérard Eriau \par}}}
 { \huge  \bfseries{Suivi des migrations d'anguilles (\textit{Anguilla anguilla}, L.)
 au barrage d'Arzal, }}\\ 
 \bigskip
-{ \LARGE rapport 2024}
+{ \LARGE rapport 2025}
 
 \noindent
 {\color{turquoise_EV}\rule{0.9\textwidth}{1.8pt}}\\
@@ -2334,7 +2334,7 @@ an, à la fois en poids et en effectif.
 # lancement manuel des bilans migration pour écrire dans la table les bilans journaliers
 # les données ont changé car j'ai re-modélisé les poids.
 # il faut relancer ça chaque année.
-bM=new("report_mig")
+bM <- new("report_mig")
 for (Y in 1996:CY){  
 	cat(str_c("Y=",Y))
 	bM <- choice_c(bM,
@@ -4591,6 +4591,16 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 \begin{figure}[!ht]
   \begin{center}
   \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2024.png}
+  \caption{Structure en taille des anguilles jaunes en 2024 (redressée par
+  les effectifs mensuels en migration).}
+  \label{str_taille_mois_redress2024}
+  \end{center}
+\end{figure}
+%==========================================================================
+%==========================================================================
+\begin{figure}[!ht]
+  \begin{center}
+  \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2025.png}
   \caption{Structure en taille des anguilles jaunes en 2024 (redressée par
   les effectifs mensuels en migration).}
   \label{str_taille_mois_redress2024}
