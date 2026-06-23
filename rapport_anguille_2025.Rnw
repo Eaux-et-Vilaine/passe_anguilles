@@ -115,7 +115,7 @@ citecolor=bleuazur,
 filecolor=bleu_EV, 
 urlcolor=bleu_EV, 
 pdftitle= {Suivi des migrations d'anguilles (\textit{Anguilla anguilla}, L.)
-au barrage d'Arzal. Rapport 2024}, 
+au barrage d'Arzal. Rapport 2025}, 
 pdfauthor={Cédric Briand},
 pdfsubject={anguille},
 pdfkeywords={anguille} {pêche électrique} {marquage}
@@ -143,7 +143,7 @@ pdfkeywords={anguille} {pêche électrique} {marquage}
 \pagestyle{fancy}
 \fancyhf{}
 \rhead{\rightmark}
-\lhead{Rapport anguilles 2024}
+\lhead{Rapport anguilles 2025}
 \cfoot{Page \thepage}
 
 % Adjust \\headheight for fancyhdr
@@ -305,13 +305,13 @@ keepaspectratio]{../frontpage.pdf}%
 \Large \textbf{
     {\titlefont Suivi des migrations d'anguilles (\textit{Anguilla anguilla},
     L.) sur la Vilaine.
-    \color{vert_clair_BGM} Rapport 2024.}} \par  
+    \color{vert_clair_BGM} Rapport 2025.}} \par  
  \vspace{0.5cm}
 \centering{\Large{\color{vert_fonce_BGM}{\titlefont
 Cédric Briand, Brice Sauvaget, Gérard Eriau \par}}}
  \vspace{0.5cm}
  \color{black}{\large{\titlefont Date d'édition :}}
-\qquad \color{vert_clair_BGM}\large{\titlefont Mars 2025}
+\qquad \color{vert_clair_BGM}\large{\titlefont Juillet 2026}
 \end{minipage}
 %
 \begin{minipage}{0.28\textwidth}
@@ -358,7 +358,7 @@ Cédric Briand, Brice Sauvaget, Gérard Eriau \par}}}
 { \huge  \bfseries{Suivi des migrations d'anguilles (\textit{Anguilla anguilla}, L.)
 au barrage d'Arzal, }}\\ 
 \bigskip
-{ \LARGE rapport 2024}
+{ \LARGE rapport 2025}
 
 \noindent
 {\color{turquoise_EV}\rule{0.9\textwidth}{1.8pt}}\\
@@ -663,8 +663,8 @@ Les montées de civelles et d'anguilles jaunes sont suivies depuis 1996 au
     d'écluse dans des "éclusées" spécifiques pour les civelles fournissent une
     série chronologique de recrutements fluviaux annuels.
     
-    L'objectif de ce rapport est de présenter le bilan du suivi de l'année 2024
-    sur le barrage d'Arzal.
+    L'objectif de ce rapport est de présenter le bilan du suivi de l'année
+    2025 sur le barrage d'Arzal.
     
 \section{Matériel et méthodes}
 
@@ -807,7 +807,7 @@ mais son efficacité est en général plus réduite.
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{../passe_guide_eau.png}
-\caption{La passe à anguilles du mur guide eau, passe secondaire, 2007-2024.}
+\caption{La passe à anguilles du mur guide eau, passe secondaire, 2007-2025.}
 \label{figure_passe_guide_eau}
 \end{figure}
 
@@ -1136,8 +1136,8 @@ comportement les conduisant à utiliser les passes.
 \small
 \begin{table}[htpb]
 \centering
-\caption{Captures de la pêcherie de civelles d'Arzal de 1995 à \Sexpr{CY},
-sources :
+\caption{Captures de la pêcherie de civelles d'Arzal de 1995 à \Sexpr{CY}.
+Sources :
 1 = Affaires Maritimes (données mareyeurs), 
 2 = De Casamajor et Briand 2009 (OFIMER),
 3 = Comité des pêches maritimes Auray-Vannes,
@@ -1154,30 +1154,31 @@ Année & Capture (t) & Source & Arrêt \\
 1998  & 17.50  &  1 & 06-avr \\
 1999  & 14.93  &  1 & 05-avr \\
 2000  & 13.94  &  1 & 15-avr \\
-2001  & 7.93   &  1 & 30-mars \\
-2002  & 14.51  &  1 & 23-mars \\
-2003  & 9.14 &  1   & 23-mars \\
-2004  & 7.26 &  1  & 27-mars \\
-2005  & 6.72 &  1  & 20-mars \\
-2006  & 6.99 &  1  & 23-mars \\
-2007  & 6.78 &  1  & 11-mars \\
-2008  & 4.57 (4.2) & 3 (2) & 11-mars\\
-2009  & 2.61 & 3  & 31-mars \\
-2010  & 3.03 & 3 & 30-avril \\
-2011  & 3.92 & 3  & 30-avril \\
-2012  & 2.99 & 3  & 30-avril \\
-2013  & 2.10 & 4  & 30-avril \\
-2014  & 2.68 & 4  & 25 avril \\
-2015  & 4.86 & 4  & 30 avril \\
-2016  & 4.62 & 4 & 19 avril \\ 
-2017  & 5.87 & 4 & 30 avril \\
-2018  & 6.53 & 4 & 13 mars \\
-2019  & 5.13 &  4 & 9 mars \\
-2020  & 3.45 & 4 & 22 mars \\
-2021  & 4.53 & 4 & 17 mars \\
-2022  & 5.40 & 4 & 19 mars \\ 
-2023  & 4.68 & 4 & 17 mars \\
-2024  & 3.24 & 4 & 01 mars \\
+2001  & 7.93   &  1 & 30-mar \\
+2002  & 14.51  &  1 & 23-mar \\
+2003  & 9.14 &  1   & 23-mar \\
+2004  & 7.26 &  1  & 27-mar \\
+2005  & 6.72 &  1  & 20-mar \\
+2006  & 6.99 &  1  & 23-mar \\
+2007  & 6.78 &  1  & 11-mar \\
+2008  & 4.57 (4.2) & 3 (2) & 11-mar\\
+2009  & 2.61 & 3  & 31-mar \\
+2010  & 3.03 & 3 & 30-avr \\
+2011  & 3.92 & 3  & 30-avr \\
+2012  & 2.99 & 3  & 30-avr \\
+2013  & 2.10 & 4  & 30-avr \\
+2014  & 2.68 & 4  & 25-avr \\
+2015  & 4.86 & 4  & 30-avr \\
+2016  & 4.62 & 4 & 19-avr \\ 
+2017  & 5.87 & 4 & 30-avr \\
+2018  & 6.53 & 4 & 13-mar \\
+2019  & 5.13 & 4 & 09-mar \\
+2020  & 3.45 & 4 & 22-mar \\
+2021  & 4.53 & 4 & 17-mar \\
+2022  & 5.40 & 4 & 19-mar \\ 
+2023  & 4.68 & 4 & 17-mar \\
+2024  & 3.24 & 4 & 01-mar \\
+2025  & 3.28 & 4 & 06-mar \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1211,14 +1212,13 @@ mélange de civelles et de jeunes anguilles jaunes. Ces données sont comparées
 
 \subsection{Fonctionnement de la passe}
 
-La passe du gabion a fonctionné en continu toute l'année, jusqu'au 4 novembre
-où elle a été arrêtée pour cause de travaux sur les gabions aval (Figures
-\ref{bmm_civelle_6}, \ref{report_df_1996_2024}, \ref{report_dc_1996_2024}).
+La passe du gabion a été relancée le 10 février suite aux travaux de réfection
+des gabions aval, puis a fonctionné en continu toute l'année (Figures \ref{bmm_civelle_6}, \ref{report_df_1996_2024}, \ref{report_dc_1996_2024}).
 
-La pompe de la passe du mur guide eau s'est arrêtée une nuit début mai. Les
-autres arrêts consistent en 4 week-ends, 2 semaines pendant les
-pêches électriques de septembre, et au 4 novembre pour les travaux sur les
-gabions aval (Figure \ref{bmm_civelle_12}, \ref{report_dc12_1996_2024}).
+La passe du mur guide eau a également été arrêtée pendant les
+travaux des gabions, remise en service le 11 février, puis arrêtée à nouveau
+pour les travaux sur l'écluse à partir du 30 octobre. Les autres arrêts consistent en 2
+week-ends et 2 semaines pendant les pêches électriques de septembre (Figure \ref{bmm_civelle_12}, \ref{report_dc12_1996_2024}).
 
 
 <<report_df, echo=FALSE, eval=FALSE, include=FALSE>>=
@@ -1432,7 +1432,7 @@ tnpm  <- dcast(npm,annee~source,value.var="N")
 colnames(tnpm) <- c("annee","passe","estuaire $^*$")
 
 xtnpm <- xtable(tnpm,
-		caption=str_c("Nombre d'échantillons de poids moyen de civelles depuis ",start_year, " et jusqu'au 01 août ",
+		caption=str_c("Nombre d'échantillons de poids moyen de civelles depuis ",start_year, " et jusqu'au 1er août ",
 				CY,". Données collectées en pêches expérimentales et par pêche professionnelle."),
 		label="tnpm",
 		digits=0)
@@ -2270,15 +2270,21 @@ la migration a été faible. Il est important de noter que le poids moyen des
 civelles en 2023 est largement supérieur à ceux relevés depuis le début des
 suivis.
 
-\textcolor{orange_EV}{2024}
-Les arrivées semblent avoir été assez précoces, et le quota
-consommation a été atteint fin janvier, dans un contexte de faibles demandes
+Les arrivées semblent avoir été assez précoces en \textcolor{orange_EV}{2024},
+et le quota consommation a été atteint fin janvier, dans un contexte de faibles demandes
 pour les pêches de repeuplement. Ainsi la fin de la saison professionnelle est
-intervenue très tôt par rapport aux autres années, dès le 29 février-1er mars.
+intervenue très tôt par rapport aux autres saisons, dès le 29 février-1er mars.
 Malgré cette situation, il n'y a eu sur la passe que peu de
 migration lors des interruptions de pêche courant février, 
-et peu d’arrivées par la suite en fin de saison, ce qui est inattendu. Le pic
-de migration a eu lieu le 7 avril avec 65 kg (Figure
+et peu d’arrivées par la suite en fin de saison, ce qui était inattendu.
+
+\textcolor{orange_EV}{2025}
+
+ouverture saison le 1er novembre, apparemment rien avant décembre, et peu avant
+janvier
+
+
+(Figure
 \ref{figure_barchart_bmi_civelles}, \ref{bmm_civelle_6} et \ref{bmm_civelle_12}).
 
 
