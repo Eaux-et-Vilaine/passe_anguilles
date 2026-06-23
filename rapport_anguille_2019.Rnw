@@ -489,7 +489,7 @@ baseODBC<-get("baseODBC",envir=envir_stacomi)
 options(sqldf.RPostgreSQL.user = baseODBC[2], 
 	sqldf.RPostgreSQL.password =baseODBC[3],
 	sqldf.RPostgreSQL.dbname = "bd_contmig_nat_iav", # "bd_contmig_nat_iav"
-	sqldf.RPostgreSQL.host =  "185.135.126.250", # "w3.eptb-vilaine.fr" "localhost"
+	sqldf.RPostgreSQL.host =  "db.mercure.eaux-et-vilaine.bzh", # "w3.eptb-vilaine.fr" "localhost"
 	sqldf.RPostgreSQL.port = "5432")
 sqldf.options<-get("sqldf.options",envir=envir_stacomi)
 sqldf.options["sqldf.host"]<-"w3.eptb-vilaine.fr" # "w3.eptb-vilaine.fr" "localhost"

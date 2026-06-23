@@ -446,7 +446,7 @@ load_library("ggplot2")
 #ggthemr(fresh2, type="outer", layout="scientific", spacing=0.8)
 #ggthemr_reset()
 # l'annee en cours (c'est la valeur à changer en début de script
-CY<-2024
+CY <- 2025
 # le repertoire contenant les données
 datawdy<-str_c(datawd,CY,"/")
 datawdym1<-str_c(datawd,CY-1,"/")
@@ -596,12 +596,12 @@ stacomi(TRUE,sch="iav", datawd=datawd)
 
 # the following script will load the Arzal dataset if connected to iav schema
 
-load_library("sqldf")
-options(sqldf.RPostgreSQL.user = user, 
-		sqldf.RPostgreSQL.password = password,
-		sqldf.RPostgreSQL.dbname = "bd_contmig_nat_iav", # "bd_contmig_nat_iav"
-		sqldf.RPostgreSQL.host =  host, # "w3.eptb-vilaine.fr" "localhost"
-		sqldf.RPostgreSQL.port = "5432")
+#load_library("sqldf")
+#options(sqldf.RPostgreSQL.user = user, 
+#		sqldf.RPostgreSQL.password = password,
+#		sqldf.RPostgreSQL.dbname = "bd_contmig_nat_iav", # "bd_contmig_nat_iav"
+#		sqldf.RPostgreSQL.host =  host, # "w3.eptb-vilaine.fr" "localhost"
+#		sqldf.RPostgreSQL.port = "5432")
 @
 \newpage
 \setcounter{page}{3}
@@ -1632,11 +1632,16 @@ import_coe <- data.frame(
 		"coe_date_fin"=Hmisc::roundPOSIXt(predata$date,digits="days")+as.difftime(1,units="days"),
 		"coe_valeur_coefficient"=1/predata$pred_weight,
 		"coe_commentaires"=com)
-bilPM@calcdata[["import_coe"]] <- import_coe	
+bilPM@calcdata[["import_coe"]] <- import_coe
+
+	
+			
 # DECOMMENTER CI DESSOUS POUR ECRIRE!!!!!!!!!!!!!!!
-#  ICI ON REECRIT LES COEFFICIENTS EN BASE. Décommenter write database, attention ça prend du temps !
+#  ICI ON REECRIT LES COEFFICIENTS EN BASE. Décommenter write database, attention ça prend du temps 
+!
  import_coe[import_coe$coe_date_debut==as.Date("2024-08-01"),]
-# write_database(bilPM) #  You have written 10594 rows in the database
+ 
+# write_database(bilPM) #  You have written 10959 rows in the database
 
 # récupération des composants du "summary"
 # deux composants pour le gam, l'un pour les termes fixes
@@ -2116,9 +2121,9 @@ La migration des civelles pour \Sexpr{CY} s'établit à
     \Sexpr{vvv[["CIV"]][["rank"]]} ème rang sur
     \Sexpr{vvv[["AGJ"]][["maxrank"]]} années de suivi (Figure \ref{barplot_civelles_an}, tableau \ref{table_civelle}).
 
-L'année 2024 est particulière, avec des migrations
-sur la passe du mur guide eau (183 kg) très proches de celles de la passe du
-gabion (218 kg) (Figures \ref{bmm_civelle_6} et \ref{bmm_civelle_12}).
+L'année 2025 est particulière, avec des migrations
+sur la passe du mur guide eau (xx kg) très proches de celles de la passe du
+gabion (xxx kg) (Figures \ref{bmm_civelle_6} et \ref{bmm_civelle_12}).
 
  %==========================================================================
 \begin{figure}[!ht]
@@ -3750,7 +3755,7 @@ system2("inkscape",
                 str_c(imgwdy,"civ_ang_cohorte.svg"),
                  "--export-type=pdf",
                  "--export-latex"))
-sytem
+
 # inkscape C:/workspace/passe_anguilles/image/2024/CIV_ANG_COHORTE.svg --export-type=pdf --export-latex
 
 
@@ -4735,7 +4740,7 @@ de l'anguille sur le bassin versant de la Vilaine, 2007}\\
     \textit{The migration on the two main eel fishways of the Arzal dam is
     estimated at \Sexpr{sn(vvv$CIV$N)} glass eel for a weight of \Sexpr{sn(vvv$CIV$P)} kg in 
     \Sexpr{CY}, which ranks this year as the
-    \Sexpr{vvv[["CIV"]][["rank"]]}$^{th}$ on
+    \Sexpr{vvv[["CIV"]][["rank"]]}$^{rd}$ on
     \Sexpr{vvv[["AGJ"]][["maxrank"]]} years of monitoring. The migration on the
     "gabion", the main fishway is estimated at
     \Sexpr{sn(vvv[["CIV"]][["6"]][["N"]])} glass eel, which correspond to a
