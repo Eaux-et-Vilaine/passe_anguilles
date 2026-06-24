@@ -2899,7 +2899,7 @@ des petites tailles (Tableau \ref{table_bilanannuel_ang}).
 Les données de taille individuelle sont réparties par classe de 5 mm 
 puis redressées à partir des effectifs mensuels migrant sur les
 deux passes à anguilles d'Arzal (Figure
-\ref{str_taille_mois_redress2024_in_report}).
+\ref{str_taille_mois_redress2025_in_report}).
 Lorsqu'on compare la structure en taille de \Sexpr{CY} aux structures en taille 
 des années précédentes (Figures \ref{str_taille_mois_redress2010} à
 \ref{str_taille_mois_redress2024}), on observe clairement la prédominance des 
@@ -4616,10 +4616,10 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 %==========================================================================
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.5\textwidth]{report_df_1996_2024.png}
+\includegraphics[width=0.5\textwidth]{report_df_1996_2025.png}
 \caption{Fonctionnement de la passe principale du barrage d'Arzal (gabion en
-rive gauche) de 1996 à 2024.}
-\label{report_df_1996_2024}
+rive gauche) de 1996 à 2025.}
+\label{report_df_1996_2025}
 \end{figure}
 %==========================================================================
 %==========================================================================
