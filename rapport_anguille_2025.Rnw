@@ -779,7 +779,7 @@ des civelles se fait par une conduite vers l'amont du barrage (trait pointillé 
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{../passe_gabion.png}
-\caption{La passe à anguilles du gabion, passe principale, 1996-2024.}
+\caption{La passe à anguilles du gabion, passe principale, 1996-2025.}
 \label{figure_passe_gabion}
 \end{figure}
 
@@ -1031,7 +1031,7 @@ vil <- wger[wger$site=="VilG",c("value_std","year")]
 vil<-rbind(cbind("value_std"=NA,"year"=1960:1970),
 		vil,
 		cbind("value_std"=NA,"year"=c(2012:2014,2016,2017,2018,2019,2020,2021,2022,
-		                              2023,2024))
+		                              2023,2024,2025))
 )
 
 vil <- vil[order(as.numeric(vil$year)),]
@@ -1052,7 +1052,8 @@ vil1 <- tribble(~p_std_1960_1979, ~year,
 		4.53*co, 2021,
     	5.4*co, 2022,
 		4.677*co, 2023,
-		3.602*0.9*co, 2024
+		3.602*0.9*co, 2024,
+		4.949*0.9*co, 2025		
 )
 vil1$year <- as.Date(lubridate::dmy(str_c("01","01",vil1$year)))
 # ajout manuel des valeurs avant le barrage d'Arzal, 1971 était à 44
@@ -1231,7 +1232,7 @@ r_df_hist <- choice_c(r_df,
 		silent=TRUE)
 r_df_hist <- connect(r_df_hist)
 # attention très très long
-png(filename=paste0(imgwdy,"report_df_1996_2024.png"),width=8,height=20, units="in",res=300)
+png(filename=paste0(imgwdy,"report_df_1996_",CY,".png"),width=8,height=20, units="in",res=300)
 plot(r_df_hist, plot.type=1, 
 		color_type_oper = 	c(
 				"Fonc normal" = bleu_EV,
@@ -1254,17 +1255,17 @@ r_dc<-choice_c(r_dc,
 		horodatefin="2024-12-31",
 		silent=TRUE)
 r_dc1 <- connect(r_dc)
-png(filename=paste0(imgwdy,"report_dc_1996_2024.png"),width=8,height=20, units="in",res=300)
+png(filename=paste0(imgwdy,"report_dc_1996_",CY,".png"),width=8,height=20, units="in",res=300)
 plot(r_dc1,plot.type="1",main="")
 dev.off()
 
 r_dc<-choice_c(r_dc,
 		12,
 		horodatedebut="1996-01-01",
-		horodatefin="2024-12-31",
+		horodatefin="2025-12-31",
 		silent=TRUE)
 r_dc1 <- connect(r_dc)
-png(filename=paste0(imgwdy,"report_dc12_1996_2024.png"),width=8,height=15, units="in",res=300)
+png(filename=paste0(imgwdy,"report_dc12_1996_2025.png"),width=8,height=15, units="in",res=300)
 plot(r_dc1,plot.type="1",main="")
 dev.off()
 #save(vvv,file=str_c(datawdy,"vvv.Rdata"))
@@ -1607,7 +1608,7 @@ p <- ggplot(don)+ geom_point(aes(x=date,y=w,size=effectif),col="#043C6B")+
 		geom_ribbon(data=predata,aes(x=date,ymin=pred_weight_lwr,ymax=pred_weight_upr),alpha=0.3,fill="#BF8330")+	theme_minimal()+
 		theme(panel.border = element_blank(),
 				axis.line = element_line())+
-		scale_x_datetime(date_labels = "%Y",limits=as.POSIXct(c(as.Date("2006-01-01"),as.Date("2024-02-01"))),date_breaks="2 years")+
+		scale_x_datetime(date_labels = "%Y",limits=as.POSIXct(c(as.Date("2006-01-01"),as.Date("2025-02-01"))),date_breaks="2 years")+
 		xlab("Date")+
 		ylim(0.15,0.55)
 print(p)
@@ -1639,7 +1640,7 @@ bilPM@calcdata[["import_coe"]] <- import_coe
 # DECOMMENTER CI DESSOUS POUR ECRIRE!!!!!!!!!!!!!!!
 #  ICI ON REECRIT LES COEFFICIENTS EN BASE. Décommenter write database, attention ça prend du temps 
 !
- import_coe[import_coe$coe_date_debut==as.Date("2024-08-01"),]
+ import_coe[import_coe$coe_date_debut==as.Date("2025-08-01"),]
  
 # write_database(bilPM) #  You have written 10959 rows in the database
 
@@ -2278,17 +2279,18 @@ Malgré cette situation, il n'y a eu sur la passe que peu de
 migration lors des interruptions de pêche courant février, 
 et peu d’arrivées par la suite en fin de saison, ce qui était inattendu.
 
-\textcolor{orange_EV}{2025}
+En \textcolor{orange_EV}{2025}, la saison de pêche est ouverte le 1er novembre,
+il n'y a apparamment pas de captures avant décembre, et les captures restent
+faibles avant janvier.
 
-ouverture saison le 1er novembre, apparemment rien avant décembre, et peu avant
-janvier
+
 
 
 (Figure
 \ref{figure_barchart_bmi_civelles}, \ref{bmm_civelle_6} et \ref{bmm_civelle_12}).
 
 
-Le détail mensuel de la migration de \textcolor{orange_EV}{2024} (en effectif) est donné en annexe aux
+Le détail mensuel de la migration de \textcolor{orange_EV}{2025} (en effectif) est donné en annexe aux
 Tableaux \ref{table_civelle_mois_6} et \ref{table_civelle_mois_12}. Les Tableaux
 \ref{table_civelle_6} et \ref{table_civelle_12} synthétisent la migration par
 an, à la fois en poids et en effectif.
@@ -2357,7 +2359,7 @@ for (Y in 1996:CY){
 	}
 }
 # changer si il est nécessaire de recalculer des données
-for (Y in 2024:CY){
+for (Y in 1996:CY){
 	cat(str_c("Y=",Y))
 	bM <- choice_c(bM,
 			dc=c(12),
@@ -2580,8 +2582,8 @@ lsm[['12']][,3:6] <- round(lsm[['12']][,3:6]/1000,3)
 lsm[['6']][,3:6] <- round(lsm[['6']][,3:6]/1000,3)
 lsm[['12']]  <-  lsm[['12']][,c("mois","min","moyenne","max","valeur")]
 lsm[['6']]   <-  lsm[['6']][,c("mois","min","moyenne","max","valeur")]
-colnames(lsm[['12']])  <-  c("Mois","Min*","Moyenne*","Max*","N (2024)")
-colnames(lsm[['6']])   <-  c("Mois","Min*","Moyenne*","Max*","N (2024)")
+colnames(lsm[['12']])  <-  c("Mois","Min*","Moyenne*","Max*","N (2025)")
+colnames(lsm[['6']])   <-  c("Mois","Min*","Moyenne*","Max*","N (2025)")
 #==================== xtable6 ===================================
 xtsm6  <-  xtable(lsm[['6']],caption=str_c("Montées de civelles \\textsf{(en milliers)} dans la passe principale du barrage
 						d'Arzal (gabion en rive gauche). Données par mois, \\textsf{N (",CY,")} = effectifs par mois pour ",CY,". 
@@ -2902,7 +2904,7 @@ deux passes à anguilles d'Arzal (Figure
 \ref{str_taille_mois_redress2025_in_report}).
 Lorsqu'on compare la structure en taille de \Sexpr{CY} aux structures en taille 
 des années précédentes (Figures \ref{str_taille_mois_redress2010} à
-\ref{str_taille_mois_redress2024}), on observe clairement la prédominance des 
+\ref{str_taille_mois_redress2025}), on observe clairement la prédominance des 
 anguilles de l'année en 2013 et 2014, et des arrivées plus diffuses pour les
 autres années, à l'exception de 2021, 2023 et 2024 où l'on retrouve des bonnes
 proportions d'anguilles d'âge 0, mais en nombre limité. En 2015, 2017 et 2019,
@@ -3762,7 +3764,7 @@ system2("inkscape",
                  "--export-type=pdf",
                  "--export-latex"))
 
-# inkscape C:/workspace/passe_anguilles/image/2024/CIV_ANG_COHORTE.svg --export-type=pdf --export-latex
+# inkscape C:/workspace/passe_anguilles/image/2025/CIV_ANG_COHORTE.svg --export-type=pdf --export-latex
 
 
 
@@ -4596,10 +4598,10 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 %==========================================================================
 \begin{figure}[!ht]
   \begin{center}
-  \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2024.png}
-  \caption{Structure en taille des anguilles jaunes en 2024 (redressée par
+  \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2025.png}
+  \caption{Structure en taille des anguilles jaunes en 2025 (redressée par
   les effectifs mensuels en migration).}
-  \label{str_taille_mois_redress2024}
+  \label{str_taille_mois_redress2025}
   \end{center}
 \end{figure}
 %==========================================================================
@@ -4625,22 +4627,22 @@ rive gauche) de 1996 à 2025.}
 %==========================================================================
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.5\textwidth]{report_dc_1996_2024.png} 
+\includegraphics[width=0.5\textwidth]{report_dc_1996_2025.png} 
 \caption{Bilan du fonctionnement du dispositif de comptage (piège) de la passe principale du barrage d'Arzal (gabion en
 rive gauche) de 1996 à
-2024.}
-\label{report_dc_1996_2024}
+2025.}
+\label{report_dc_1996_2025}
 \end{figure}
 
 %==========================================================================
 %==========================================================================
 \begin{figure}[htpb]
 \centering
-\includegraphics[width=0.5\textwidth]{report_dc12_1996_2024.png} 
+\includegraphics[width=0.5\textwidth]{report_dc12_1996_2025.png} 
 \caption{Bilan du fonctionnement du dispositif de comptage (piège) de la passe
 secondaire du barrage d'Arzal (gabion en rive droite) de 2007 à
-2024.}
-\label{report_dc12_1996_2024}
+2025.}
+\label{report_dc12_1996_2025}
 \end{figure}
 
 %==========================================================================
@@ -4749,7 +4751,7 @@ de l'anguille sur le bassin versant de la Vilaine, 2007}\\
     \Sexpr{vvv[["AGJ"]][["maxrank"]]} années de suivi.     
     Ce rapport détaille les
     conditions de recrutement, capture, migration ainsi que l'évolution des
-    caractéristiques biologiques des civelles en 2024.\par
+    caractéristiques biologiques des civelles en 2025.\par
     \vspace{8mm}
   \textbf{Abstract}\par
   
@@ -4769,7 +4771,7 @@ de l'anguille sur le bassin versant de la Vilaine, 2007}\\
     \Sexpr{vvv[["AGJ"]][["maxrank"]]} years of monitoring. 
     This report details
     the catch, migration, and evolution of biological characteristics of glass
-    eel in 2024.}\par
+    eel in 2025.}\par
     \vspace{8mm}
     \textbf{Mots clés:}\par
 	anguille jaune, \sep civelle, \sep capture, \sep recrutement fluvial, \sep
