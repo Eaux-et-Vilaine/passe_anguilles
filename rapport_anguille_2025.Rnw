@@ -2915,10 +2915,10 @@ d'âge 0 sont conséquentes, supérieures à la moyenne mais pas exceptionnelles
 %==========================================================================
 \begin{figure}[htbp]
   \begin{center}
-  \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2024.png}
+  \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2025.png}
   \caption{Structure en taille des anguilles jaunes en \Sexpr{CY} (redressée par
   les effectifs mensuels en migration).}
-  \label{str_taille_mois_redress2024_in_report}
+  \label{str_taille_mois_redress2025_in_report}
   \end{center}
 \end{figure}
 %==========================================================================
@@ -4607,9 +4607,9 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 \begin{figure}[!ht]
   \begin{center}
   \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2025.png}
-  \caption{Structure en taille des anguilles jaunes en 2024 (redressée par
+  \caption{Structure en taille des anguilles jaunes en 2025 (redressée par
   les effectifs mensuels en migration).}
-  \label{str_taille_mois_redress2024}
+  \label{str_taille_mois_redress2025}
   \end{center}
 \end{figure}
 %==========================================================================
