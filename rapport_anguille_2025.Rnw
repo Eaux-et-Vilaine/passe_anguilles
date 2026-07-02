@@ -2001,9 +2001,10 @@ Au total, en \Sexpr{CY} \footnote{jusqu'au 01/08/\Sexpr{CY})},
 \end{figure}
 
 %==========================================================================
- Pour l'année \Sexpr{CY}, on note une forte augmentation du poids humide des
- civelles (Figure \ref{pm}) par rapport aux années précedentes. En comparant
- l'évolution des poids humides à celle des poids secs individuels (Figure
+ Pour l'année \Sexpr{CY}, on note que le poids humide des
+ civelles (Figure \ref{pm}) est inférieur à ceux de 2023 et 2024, mais qu'il
+ reste supérieur à ceux des années précedentes.
+ En comparant l'évolution des poids humides à celle des poids secs individuels (Figure
  \ref{ps}), on remarque que la tendance reste la même.
  
  %==========================================================================
@@ -2137,9 +2138,9 @@ La migration des civelles pour \Sexpr{CY} s'établit à
     \Sexpr{vvv[["CIV"]][["rank"]]} ème rang sur
     \Sexpr{vvv[["AGJ"]][["maxrank"]]} années de suivi (Figure \ref{barplot_civelles_an}, tableau \ref{table_civelle}).
 
-L'année 2025 est particulière, avec des migrations
-sur la passe du mur guide eau (xx kg) très proches de celles de la passe du
-gabion (xxx kg) (Figures \ref{bmm_civelle_6} et \ref{bmm_civelle_12}).
+En 2025, le pourcentage de la migration sur la passe du mur guide eau
+(247 kg) est proche de la moyenne avec 25\% (moyenne : 18\%, hors périodes d'arrêt)
+(Figures \ref{bmm_civelle_6} et \ref{bmm_civelle_12}).
 
  %==========================================================================
 \begin{figure}[!ht]
@@ -2294,16 +2295,15 @@ Malgré cette situation, il n'y a eu sur la passe que peu de
 migration lors des interruptions de pêche courant février, 
 et peu d’arrivées par la suite en fin de saison, ce qui était inattendu.
 
-En \textcolor{orange_EV}{2025}, la saison de pêche est ouverte le 1er novembre,
-il n'y a apparamment pas de captures avant décembre, et les captures restent
-faibles avant janvier.
-
-
-
-
-(Figure
-\ref{figure_barchart_bmi_civelles}, \ref{bmm_civelle_6} et \ref{bmm_civelle_12}).
-
+\textcolor{orange_EV}{2025} La saison de pêche est ouverte le 1er novembre et
+stoppée le 6 mars. Il ne semble pas y avoir de captures avant décembre, et
+elles restent faibles avant janvier. La pêche est ensuite régulière jusqu'à fin février, à l'exception de
+la mi-janvier. Les passes, en arrêt jusqu'au 10 février, enregistrent quelques
+montées fin février, un premier pic de 62 kg le 15 mars et un second de 136kg
+le 28 mars, tous deux centrés sur les forts coefficients. La migration est
+concentrée sur mars avec 804 kg, soit le 3è plus fort total mensuel historique
+(Figure \ref{figure_barchart_bmi_civelles}, \ref{bmm_civelle_6} et
+\ref{bmm_civelle_12}).
 
 Le détail mensuel de la migration de \textcolor{orange_EV}{2025} (en effectif) est donné en annexe aux
 Tableaux \ref{table_civelle_mois_6} et \ref{table_civelle_mois_12}. Les Tableaux
@@ -2660,8 +2660,11 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 
 
 \Sexpr{sn(vvv[["AGJ"]][["NCY"]])} anguilles jaunes ont migré sur les passes, ce
-qui classe cette année comme la \Sexpr{vvv[["AGJ"]][["rank"]]} ème sur \Sexpr{vvv[["AGJ"]][["maxrank"]]}. Les migrations d'anguilles jaunes sont extrêmement variables d'une année sur l'autre. Le minimum des migrations a été connu en 2005 avec seulement 878 anguilles jaunes dans l'ensemble de l'année (Tableau \ref{table_bilanannuel_ang}). Le
-    maximum a été atteint en 2013 après deux saisons de fort échappement en
+qui classe cette année comme la \Sexpr{vvv[["AGJ"]][["rank"]]} ème sur \Sexpr{vvv[["AGJ"]][["maxrank"]]}. 
+Les migrations d'anguilles jaunes sont extrêmement variables d'une année sur l'autre. 
+Le minimum des migrations a été connu en 2005 avec seulement 878 anguilles jaunes dans 
+l'ensemble de l'année (Tableau \ref{table_bilanannuel_ang}). 
+Le maximum a été atteint en 2013 après deux saisons de fort échappement en
     civelles avec \num{145 000} anguilles jaunes, soit une fluctuation d'un
     facteur \num{160}. Globalement, la période récente montre une augmentation
     de la migration d'anguilles jaunes depuis la mise en \oe uvre du plan de gestion
@@ -2724,23 +2727,27 @@ sur les années 2013-2015 semble aussi concerner les anguilles jaunes (Figure
 \end{figure}
 %==========================================================================
 
-La figure \ref{figure_barchart_bmi_agj} montre que la migration \Sexpr{CY}
-a été régulière toute l'année, avec des passages supérieurs à la moyenne sur les
-quatre premiers mois et en octobre avec l'arrivée de la première crue. Cette
-tendance automnale rappelle celle de l'année précédente (2023) où des migrations 
-importantes avaient été déclenchées en octobre et novembre par la première crue.
+La figure \ref{figure_barchart_bmi_agj} montre que la migration \Sexpr{CY} a été
+faible sur les 4 premiers mois, malgré les forts passages de civelles qui incitent souvent 
+les jeunes anguillettes à migrer. Les passages sont supérieurs à la moyenne sur 
+le reste de l'année, et maximaux aux mois d'octobre et décembre. La nouvelle 
+rampe mise en service fin juin semble avoir une effet très positif sur l'efficacité 
+de la passe à anguilles du gabion.
 
-Cette année, la migration hivernale est constituée d'anguilles jaunes de
-petite taille < 150 mm. Les anguilles > 150 mm, peu nombreuses, ont migré au
-printemps et à l'automne. Les anguillettes d'âge 0 et 1 < 100 mm sont très peu
-représentées (Figures \ref{boxplot_taille_agj}, pour la structure par cohorte 
-Figure \ref{civ_ang_cohorte}).
+Cette année, la migration hivernale comporte très peu de petites anguilles
+jaunes < 100 mm. Par la suite, à l'exception du mois de juin bien fréquenté 
+par les individus < 100 mm, les tailles sont élevées avec des anguilles majoritairement 
+entre 150 et 200 mm. On remarque la présence d'anguilles > 400 mm qui étaient 
+quasi absentes avant la mise en service de la nouvelle rampe. Cela s'explique 
+par des brosses larges un peu plus espacées (Figures \ref{boxplot_taille_agj}).
+Les anguilles d'âge 0, 1 sont bien représentées, et celles d'âge 2 encore plus
+comme en 2023 (Figure \ref{civ_ang_cohorte}).
 Après les fortes arrivées de civelles en 2023, le phénomène observé en 2013, et
 à moindre échelle en 2014, avec les importantes migrations d'anguillettes < 100
-mm était attendu mais n'a pas eu lieu (Figures \ref{str_taille_mois_redress2013}
-et \ref{str_taille_mois_redress2014}). Il est probable que la sédentarisation
-estuarienne ait été meilleure en 2012 et 2013 qu'en 2023, et qu'ainsi les
-civelles de 2024 ont bénéficié de place disponible en estuaire.
+mm, était attendu, mais n'a eu lieu ni en 2024, ni en 2025 (Figures
+\ref{str_taille_mois_redress2013} et \ref{str_taille_mois_redress2014}). Il est probable que la sédentarisation
+estuarienne ait été meilleure en 2012 et 2013 qu'en 2023 et 2024, et qu'ainsi
+les civelles de 2025 ont bénéficié de place disponible en estuaire.
 
 
 %==========================================================================
@@ -2886,15 +2893,16 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 La taille de \Sexpr{sn(vvv[["AGJ"]][["str_tail"]][["effectif_mesure"]])} anguilles
 jaunes a été mesurée en \Sexpr{CY} (Figure \ref{boxplot_taille_agj}). Les
 anguilles jaunes mesurées sur la passe vont de la taille civelle (minimum 60 mm)
-à des tailles de 480 mm. De plus grandes anguilles peuvent être rencontrées dans
-la passe à bassins mais la quantification des migrations sur les vitres de vidéo
-comptage est difficile et incomplète pour les plus petites anguilles (de moins
-de 250-300 mm).
+à des tailles de près de 600 mm. Les brosses larges de la nouvelle rampe, un peu
+plus espacées que celles des anciennes rampes, expliquent la présence de tailles
+jamais vues jusque-là. De plus grandes anguilles peuvent être rencontrées dans la passe 
+à bassins mais la quantification des migrations sur les vitres de vidéo comptage est difficile 
+et incomplète pour les plus petites anguilles (de moins de 250-300 mm).
 En période de migration, des civelles sont parfois observées devant les vitres de la passe, lorsque cette
 dernière est fermée à pleine mer. Il est possible que certaines viennent de
-l'amont, pour des civelles et des anguillettes relâchées par la conduite d'évacuation de la passe à anguilles. Il semble que l'essentiel correspond à des
-civelles rentrées au droit de fuites à l'aval.
-Les migrations de petites anguilles dans la passe à bassins, si elles
+l'amont, pour des civelles et des anguillettes relâchées par la conduite d'évacuation de la passe à anguilles. 
+Il semble que l'essentiel correspond à des civelles rentrées au droit de fuites
+à l'aval. Les migrations de petites anguilles dans la passe à bassins, si elles
 interviennent parfois, sont quand même limitées par l'importance de la chute aval de la passe à bassins qui est
 généralement réglée à 300 mm. Elles n'interviennent en général qu'autour de
 la marée haute, quand les vannes de la passe se ferment. Les effectifs très
@@ -2919,14 +2927,12 @@ deux passes à anguilles d'Arzal (Figure
 \ref{str_taille_mois_redress2025_in_report}).
 Lorsqu'on compare la structure en taille de \Sexpr{CY} aux structures en taille 
 des années précédentes (Figures \ref{str_taille_mois_redress2010} à
-\ref{str_taille_mois_redress2025}), on observe clairement la prédominance des 
-anguilles de l'année en 2013 et 2014, et des arrivées plus diffuses pour les
-autres années, à l'exception de 2021, 2023 et 2024 où l'on retrouve des bonnes
-proportions d'anguilles d'âge 0, mais en nombre limité. En 2015, 2017 et 2019,
-le mode correspondant aux anguilles de petite taille est absent, et il est très 
-faible en 2022. En conclusion pour l'année en cours, les migrations d'anguilles
-d'âge 0 sont conséquentes, supérieures à la moyenne mais pas exceptionnelles
-(Figure \ref{civ_ang_cohorte}.
+\ref{str_taille_mois_redress2025}), on observe la prédominance des 
+anguilles de l'année, comme en 2021 et 2024, mais dans des proportions bien
+moindres qu'en 2013 et 2014. En 2015, 2017 et 2019, le mode correspondant aux
+anguilles de petite taille est absent, et il est très faible en 2022. 
+En conclusion pour l'année en cours, les migrations d'anguilles
+d'âge 0 redeviennent conséquentes et supérieures à la moyenne (Figure \ref{civ_ang_cohorte}).
 
  
 %==========================================================================
@@ -4613,10 +4619,10 @@ save(vvv,file=str_c(datawdy,"vvv.Rdata"))
 %==========================================================================
 \begin{figure}[!ht]
   \begin{center}
-  \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2025.png}
-  \caption{Structure en taille des anguilles jaunes en 2025 (redressée par
+  \includegraphics[width=0.5\textwidth]{str_taille_mois_redress2024.png}
+  \caption{Structure en taille des anguilles jaunes en 2024 (redressée par
   les effectifs mensuels en migration).}
-  \label{str_taille_mois_redress2025}
+  \label{str_taille_mois_redress2024}
   \end{center}
 \end{figure}
 %==========================================================================
@@ -4644,8 +4650,7 @@ rive gauche) de 1996 à 2025.}
 \centering
 \includegraphics[width=0.5\textwidth]{report_dc_1996_2025.png} 
 \caption{Bilan du fonctionnement du dispositif de comptage (piège) de la passe principale du barrage d'Arzal (gabion en
-rive gauche) de 1996 à
-2025.}
+rive gauche) de 1996 à 2025.}
 \label{report_dc_1996_2025}
 \end{figure}
 
@@ -4675,6 +4680,9 @@ d'Arzal.}
 \toprule
 Année & Rapport \\
 \midrule
+2024 &
+\href{ }{Gestion
+de l'anguille sur le bassin versant de la Vilaine, 2024}\\
 2023 &
 \href{https://eptbvilaine56.sharepoint.com/:b:/g/extranet/ER5GHvMhd7hIm7U0xgXtt5YBzTVgcGsewPAMu5IUjMxGKQ?e=oJfWao}{Gestion
 de l'anguille sur le bassin versant de la Vilaine, 2023}\\
