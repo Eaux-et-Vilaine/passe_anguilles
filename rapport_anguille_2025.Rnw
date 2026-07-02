@@ -1489,7 +1489,11 @@ bilPM <- model(bilPM,model.type="seasonal2")
 # edition manuelle de l'échelle des dates (illisible sinon)
 p <- get("p",envir_stacomi)
 png(file=str_c(imgwdy,"smpm_seasonal2.png"),width=12,height=10,unit="cm",res=300)
-p+scale_x_datetime(date_breaks="2 years",date_labels="%Y")
+p +
+		scale_x_datetime(date_breaks = "2 years",
+				date_labels = "%Y", 
+				limits = as.POSIXct(c(as.Date("1996-01-01"), as.Date("2025-12-31")))) +
+		theme(axis.text.x = element_text(angle = 90, hjust = 1))
 dev.off()
 #import_coe=get('import_coe',envir_stacomi)
 ##inspection des graphiques je choisis de ne modéliser que depuis août 2011
@@ -1608,7 +1612,8 @@ p <- ggplot(don)+ geom_point(aes(x=date,y=w,size=effectif),col="#043C6B")+
 		geom_ribbon(data=predata,aes(x=date,ymin=pred_weight_lwr,ymax=pred_weight_upr),alpha=0.3,fill="#BF8330")+	theme_minimal()+
 		theme(panel.border = element_blank(),
 				axis.line = element_line())+
-		scale_x_datetime(date_labels = "%Y",limits=as.POSIXct(c(as.Date("2006-01-01"),as.Date("2025-02-01"))),date_breaks="2 years")+
+		scale_x_datetime(date_labels = "%Y",
+		limits=as.POSIXct(c(as.Date("2006-01-01"),as.Date("2025-12-31"))),date_breaks="2 years")+
 		xlab("Date")+
 		ylim(0.15,0.55)
 print(p)
