@@ -798,8 +798,8 @@ barrage (Figure \ref{figure_passe_gabion}).
 
 Comme la rampe aérienne de la passe du gabion, cette rampe relativement courte
 permet aux civelles de monter à partir de la mi-marée. Il arrive parfois que
-cette passe capture beaucoup de civelles que celle du gabion, lorsque celles-ci
-s'accumulent le long du mur guide eau (Figure \ref{figure_passe_guide_eau} B), 
+cette passe capture beaucoup plus de civelles que celle du gabion, lorsque
+celles-ci s'accumulent le long du mur guide eau (Figure \ref{figure_passe_guide_eau} B), 
 mais son efficacité est en général plus réduite.
 
 
@@ -809,6 +809,14 @@ mais son efficacité est en général plus réduite.
 \includegraphics[width=0.45\textwidth]{../passe_guide_eau.png}
 \caption{La passe à anguilles du mur guide eau, passe secondaire, 2007-2025.}
 \label{figure_passe_guide_eau}
+\end{figure}
+
+
+\begin{figure}[htpb]
+\centering
+\includegraphics[width=0.45\textwidth]{../rampe1.JPG}
+\caption{Nouvelle rampe contruite en 2025.}
+\label{figure_nouvelle_rampe}
 \end{figure}
 
 \subsubsection{Protocole de suivi}
@@ -1214,12 +1222,14 @@ mélange de civelles et de jeunes anguilles jaunes. Ces données sont comparées
 \subsection{Fonctionnement de la passe}
 
 La passe du gabion a été relancée le 10 février suite aux travaux de réfection
-des gabions aval, puis a fonctionné en continu toute l'année (Figures \ref{bmm_civelle_6}, \ref{report_df_1996_2024}, \ref{report_dc_1996_2024}).
+des gabions aval, puis a fonctionné en continu toute l'année (Figures \ref{bmm_civelle_6}, 
+\ref{report_df_1996_2025}, \ref{report_dc_1996_2025}).
 
 La passe du mur guide eau a également été arrêtée pendant les
 travaux des gabions, remise en service le 11 février, puis arrêtée à nouveau
 pour les travaux sur l'écluse à partir du 30 octobre. Les autres arrêts consistent en 2
-week-ends et 2 semaines pendant les pêches électriques de septembre (Figure \ref{bmm_civelle_12}, \ref{report_dc12_1996_2024}).
+week-ends et 2 semaines pendant les pêches électriques de septembre (Figure
+\ref{bmm_civelle_12}, \ref{report_dc12_1996_2025}).
 
 
 <<report_df, echo=FALSE, eval=FALSE, include=FALSE>>=
@@ -1252,7 +1262,7 @@ r_dc=new("report_dc")
 r_dc<-choice_c(r_dc,
 		6,
 		horodatedebut="1996-01-01",
-		horodatefin="2024-12-31",
+		horodatefin="2025-12-31",
 		silent=TRUE)
 r_dc1 <- connect(r_dc)
 png(filename=paste0(imgwdy,"report_dc_1996_",CY,".png"),width=8,height=20, units="in",res=300)
@@ -1433,7 +1443,7 @@ tnpm  <- dcast(npm,annee~source,value.var="N")
 colnames(tnpm) <- c("annee","passe","estuaire $^*$")
 
 xtnpm <- xtable(tnpm,
-		caption=str_c("Nombre d'échantillons de poids moyen de civelles depuis ",start_year, " et jusqu'au 1er août ",
+		caption=str_c("Nombre d'échantillons de poids moyen de civelles depuis ",start_year, " et jusqu'au 31 juillet ",
 				CY,". Données collectées en pêches expérimentales et par pêche professionnelle."),
 		label="tnpm",
 		digits=0)
@@ -2672,7 +2682,7 @@ La majeure partie des effectifs concerne des petites anguilles d'âge 0 et 1,
 puis la migration diminue pour les classes suivantes (Figure \ref{civ_ang_cohorte}). 
 La saisonnalité des migrations est marquée, avec les périodes les plus
 favorables au printemps - début d'été, puis en fin d'été et en automne 
-(Figure \ref{figure_saisonnalite_agj}.
+(Figure \ref{figure_saisonnalite_agj}).
 Les coefficients de marée (au printemps) et les débits de la Vilaine
 (généralement en automne) sont des éléments prédicteurs de l'intensité
 migratoire.
