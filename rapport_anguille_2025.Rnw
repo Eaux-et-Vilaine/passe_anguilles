@@ -769,7 +769,7 @@ puis débouche en amont derrière les gabions (Figure
 \begin{figure}[htpb]
 \centering
 \includegraphics[width=0.45\textwidth]{../passe_gabion_vue_aerienne.png}
-\caption{Implantation de la passe du gabion, B pompe, C rampe
+\caption{Implantation de la passe du gabion (avant travaux), B pompe, C rampe
 aérienne du bajoyer, D local de stockage, E rampe dans le gabion. L'évacuation
 des civelles se fait par une conduite vers l'amont du barrage (trait pointillé jaune).}
 \label{figure_passe_gabion_vue_aerienne}
@@ -811,6 +811,25 @@ mais son efficacité est en général plus réduite.
 \label{figure_passe_guide_eau}
 \end{figure}
 
+L'année 2025 a été marquée par la mise en place de nouveaux gabions. 
+La modification de leur géométrie, passant d'une succession d'éléments circulaires à une structure
+rectangulaire, était susceptible d'influencer significativement l'efficacité des dispositifs de franchissement. 
+En particulier, la disparition des zones de repos auparavant créées dans les interstices des gabions circulaires
+pouvait affecter la capacité des civelles à progresser le long de la berge et à localiser l'entrée de la passe. 
+Par ailleurs, l'angle formé au bout du nouveau gabion pouvait générer, en
+période de forts débits, un contre-courant favorable à l'accumulation de civelles.
+Eaux & Vilaine a donc conçu une nouvelle rampe dont la partie basse (à mi marée)
+plonge au niveau de la zone d'arrivée du contre-courant située à l'extrémité du
+gabion.
+Cette rampe a été aménagée en cohérence avec le reste de la passe, avec une
+pente adoucie de 30 \% et l'intégration de bassins de repos destinés à faciliter la progression des civelles.
+Les travaux réalisés sur les siphons, notamment leur renforcement structurel, ont également permis de repositionner
+l'un des deux tubes plongeant en estuaire plus près de l'entrée de la passe,
+qui bénéficie maintenant directement de l'attrait du siphon en se situant à la
+limite des courants générés par ce dernier.
+Cette modification visait à accroître l'attractivité hydraulique du dispositif
+lors du fonctionnement des siphons, particulièrement durant la période estivale 
+où ceux-ci constituent la majeure partie du débit d'alimentation.
 
 \begin{figure}[htpb]
 \centering
@@ -901,10 +920,10 @@ leur arrivée en estuaire (Formule \ref{eqn_guerault_desaunay}).
 \begin{aligned}
  w &\sim a cos(2\pi(d'-T)/365)+b \\
  doy&=d_{0}+d'~avec~d_{0}=212 \\
- doy&=jours juliens \\
+ doy&=\text{jours juliens = day of year} \\
 \end{aligned}
 \end{equation}
-Avec $t$ = jour, $T$= 365 jours, $a$, $b$, $c$ paramètres. Le jour $d'$ commence
+Avec $t$ = jour, $T$= 365, $a$, $b$, $c$ paramètres. Le jour $d'$ commence
 le premier août.
 Ce modèle a été utilisé lors des premières années de suivi de la passe, il
 permet d'ajuster une courbe par an.
@@ -918,7 +937,8 @@ Un modèle gam ajustant une tendance de long terme et une sinusoïde
 La tendance saisonnière est ajustée à l'aide d'une sinusoïde commune à l'ensemble des années, 
 $sin(\omega vt) + cos(\omega vt)$, pour laquelle $vt$ est une variable temporelle et $\omega$ 
 une constante qui permet d'établir la tendance cyclique de la variable temporelle sur une année $2\pi/365=0.0172$. 
-Le modèle s'écrit alors $w~cos(0.0172doy)+sin(0.0172doy)+s(time)$.
+Le modèle s'écrit alors 
+$$w~cos(\frac{2pi.doy}{365})+sin(\frac{2pi.doy}{365})+s(time)$$.
 
 Un modèle équivalent \textsf{model.type="seasonal"} utilisant des smoother de
 gam au lieu des sinusoïdes est également testé. Ce modèle va ajuster la tendance
@@ -1238,7 +1258,7 @@ r_df <- new("report_df")
 r_df_hist <- choice_c(r_df,
 		2,
 		horodatedebut="1996-01-01",
-		horodatefin="2024-12-31",
+		horodatefin="2025-12-31",
 		silent=TRUE)
 r_df_hist <- connect(r_df_hist)
 # attention très très long
@@ -3445,8 +3465,8 @@ colnames(strtail_annee_mois)[length(colnames(strtail_annee_mois))] <- CY
 for (mo in mois){          
 	strtail_annee_mois[,as.character(CY)][[mo]] <- strtail[[mo]]$"effectifs_redresses"
 }
-strtail_annee_mois[,as.character(CY)]
-unlist(lapply(strtail_annee_mois[,as.character(CY)],sum))
+#strtail_annee_mois[,as.character(CY)]
+#unlist(lapply(strtail_annee_mois[,as.character(CY)],sum))
 vvv[["AGJ"]][["str_tail"]] <- list()
 vvv[["AGJ"]][["str_tail"]][["effectif_mesure"]] <- sum(apply(strtail,1,function(X)sum(X[[1]]$"counts"))) # 44007
 str(eff)
